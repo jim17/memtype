@@ -170,7 +170,7 @@ typedef struct
 read_t deviceRead;
 info_t deviceInfo;
 uint8_t flashMemory[MAX_FILE_LEN];
-
+void cmdKeyboard(usbDevice_t *dev);
 void cmdReset(ucp_cmd_t* cmd);
 void cmdRead(usbDevice_t *dev, uint16_t len);
 void cmdWrite(usbDevice_t *dev, uint8_t* buff, uint16_t len);
