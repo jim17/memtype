@@ -1,0 +1,46 @@
+# Object Files
+*.o
+
+# Executable Files
+*.elf
+*.hex
+*.eep
+*.map
+
+# Netbeans
+nbproject/
+
+# SourceInsight
+*.CF3
+*.IAB
+*.IAD
+*.IMB
+*.IMD
+*.PFI
+*.PO
+*.PR
+*.PRI
+*.PS
+*.WK3
+*.SearchResults
+
+#password configuration file
+password.c
+
+#Shitty files
+.DS_Store
+*.swp
+*.*~
+
+# Password files inside pc_comm
+pc_comm/*.xml
+
+# Executable File
+pc_comm/hidtool
+build-MemTypeGUI*
+
+# Eclipse files
+.project
+.map
+.cproject
+.settings/

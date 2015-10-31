@@ -1,0 +1,10 @@
+Reference, Quantity, Value, Footprint, Datasheet, mouser, Power
+C1 ,1,100n,SMD_Packages:SMD-0805,
+D1 ,1,3V6,SMD_Packages:SOT-23,,AZ23C3V6-E3-18,
+IC1 ,1,ATTINY85-S,SMD_Packages:SSOP-8,,556-ATTINY85-20SU,
+P1 ,1,USB,projectLib:usbA_std_pcb,,1-1734028-1,
+P2 ,1,JOYSTICK,projectLib:JOYSTICK,,SKQUAAA010,
+R1 ,1,1k5,SMD_Packages:SMD-0805,,ERJ-6GEYJ152V,1/8W
+R2 R3 ,2,68R,SMD_Packages:SMD-0805,,ERJ-6GEYJ680V,1/8W
+R4 ,1,560k,SMD_Packages:SMD-0805,,ERJ-6GEYJ564V,1/4W
+R5 R6 R7 R8 ,4,1k,SMD_Packages:SMD-0805,,ERJ-6GEYJ102V,1/4W

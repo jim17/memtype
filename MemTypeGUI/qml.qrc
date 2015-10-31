@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>TopBlock.qml</file>
+        <file>icons/fi-usb.svg</file>
+        <file>MenuBlock.qml</file>
+        <file>icons/fi-plus.svg</file>
+        <file>icons/fi-widget.svg</file>
+        <file>icons/fi-page-export.svg</file>
+        <file>icons/fi-page.svg</file>
+        <file>icons/fi-download.svg</file>
+        <file>icons/fi-upload.svg</file>
+        <file>Credential.qml</file>
+        <file>icons/fi-trash.svg</file>
+        <file>CredentialModel.qml</file>
+        <file>CredentialEdit.qml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg3882"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="architecture.svg">
+  <defs
+     id="defs3884">
+    <marker
+       inkscape:stockid="Tail"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Tail"
+       style="overflow:visible">
+      <g
+         id="g4864"
+         transform="scale(-1.2)">
+        <path
+           id="path4866"
+           d="M -3.8048674,-3.9585227 L 0.54352094,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path4868"
+           d="M -1.2866832,-3.9585227 L 3.0617053,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path4870"
+           d="M 1.3053582,-3.9585227 L 5.6537466,0"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path4872"
+           d="M -3.8048674,4.1775838 L 0.54352094,0.21974226"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path4874"
+           d="M -1.2866832,4.1775838 L 3.0617053,0.21974226"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+        <path
+           id="path4876"
+           d="M 1.3053582,4.1775838 L 5.6537466,0.21974226"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;stroke-linecap:round" />
+      </g>
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path4831"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.72580645"
+     inkscape:cx="379.93434"
+     inkscape:cy="329.37304"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="770"
+     inkscape:window-height="647"
+     inkscape:window-x="86"
+     inkscape:window-y="9"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata3887">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="206.66667"
+       y="41.073296"
+       id="text3890"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3892"
+         x="206.66667"
+         y="41.073296">Architecture</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.13808632px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="140.1951"
+       y="204.95189"
+       id="text3894"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3896"
+         x="140.1951"
+         y="204.95189">HID</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.13808632px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="411.66922"
+       y="205.51593"
+       id="text3898"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3900"
+         x="411.66922"
+         y="205.51593">BUTTON</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.13808632px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="123.20924"
+       y="352.93817"
+       id="text3902"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3904"
+         x="123.20924"
+         y="352.93817">CREDS</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.13808632px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="450.28555"
+       y="351.56039"
+       id="text3906"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3908"
+         x="450.28555"
+         y="351.56039">AES</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.13808632px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="277.702"
+       y="448.9603"
+       id="text3910"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3912"
+         x="277.702"
+         y="448.9603">  INIT</tspan><tspan
+         sodipodi:role="line"
+         x="277.702"
+         y="484.1329"
+         id="tspan3914">(main)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.38167572px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="119.20181"
+       y="237.62285"
+       id="text3916"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3918"
+         x="119.20181"
+         y="237.62285">sendString</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.38167572px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="414.39941"
+       y="238.01726"
+       id="text3920"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="414.39941"
+         y="238.01726"
+         id="tspan3924">eventManage</tspan><tspan
+         sodipodi:role="line"
+         x="414.39941"
+         y="258.49435"
+         id="tspan3928">readPattern</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.38167572px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="442.83685"
+       y="397.8421"
+       id="text3930"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3932"
+         x="442.83685"
+         y="397.8421">decrypt</tspan><tspan
+         sodipodi:role="line"
+         x="442.83685"
+         y="418.31918"
+         id="tspan3934">validate</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.38167572px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="274.30368"
+       y="522.84174"
+       id="text3936"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3938"
+         x="274.30368"
+         y="522.84174">initModules</tspan><tspan
+         sodipodi:role="line"
+         x="274.30368"
+         y="543.31885"
+         id="tspan3940">checkCRC</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3942"
+       width="126.75556"
+       height="37.199989"
+       x="106.08889"
+       y="176.0955"
+       ry="3.4085393" />
+    <rect
+       ry="3.4085393"
+       y="324.09552"
+       x="112.08889"
+       height="37.199989"
+       width="126.75556"
+       id="rect4634"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:3.61773944;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect4636"
+       width="184.3313"
+       height="37.199989"
+       x="384.88889"
+       y="176.67329"
+       ry="3.4085393" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect4638"
+       width="126.75556"
+       height="37.199989"
+       x="416.57779"
+       y="322.71774"
+       ry="3.4085393" />
+    <rect
+       ry="7.3554082"
+       y="418.00742"
+       x="255.60077"
+       height="80.275185"
+       width="145.59848"
+       id="rect4640"
+       style="fill:none;stroke:#000000;stroke-width:4.72318983;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Lend)"
+       d="m 262.83065,537.87408 -88.99343,0.45662 0.0907,-175.65741"
+       id="path4642"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect4640"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect4634"
+       inkscape:connection-end-point="d4"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 109.95706,342.00663 -34.704263,0.69177 0.29765,-149.85906 27.159163,-0.21051"
+       id="path6036"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect4634"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect3942"
+       inkscape:connection-end-point="d4"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow1Lend);display:inline"
+       d="m 406.78785,232.7562 -173.9434,-0.67561"
+       id="path6610"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#rect3942"
+       inkscape:connection-end-point="d4"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 544.56563,254.80064 57.6009,-0.17389 -1.59409,138.03083 -52.27348,0.32683"
+       id="path6992"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#text3920"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect4638"
+       inkscape:connection-end-point="d4"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow1Lend)"
+       d="m 416.57779,341.60451 -177.73334,0.80423"
+       id="path7184"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect4638"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect4634"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:27.88526535px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="42.025658"
+       y="672.53564"
+       id="text7585"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7587"
+         x="42.025658"
+         y="672.53564">HID: Manages HID communication</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:27.88526535px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="42.025658"
+       y="703.25452"
+       id="text7589"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="42.025658"
+         y="703.25452"
+         id="tspan7593">BUTTON: Manages button presses</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:27.88526535px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="43.196621"
+       y="736.78503"
+       id="text7597"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7599"
+         x="43.196621"
+         y="736.78503">CREDS: Credentials structure</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:27.88526535px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="44.44928"
+       y="764.69226"
+       id="text7601"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7603"
+         x="44.44928"
+         y="764.69226">AES: Encryption related routines</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:27.88526535px;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:ETH;-inkscape-font-specification:ETH Heavy"
+       x="42.025658"
+       y="796.43915"
+       id="text7605"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7607"
+         x="42.025658"
+         y="796.43915">INIT (main): Initialization, flow and checks</tspan></text>
+  </g>
+</svg>

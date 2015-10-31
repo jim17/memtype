@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="SourceForge presents the sxmlc project. sxmlc is an open source application. SourceForge provides the world's largest selection of Open Source Software. Simple XML parser written in C. \"Simple\" means that it does not implement all XML specifications, only the most widely used ones. It is not an attempt to re-write the fine 'libxmlc'! :)" />
+<meta name="keywords" content="Open Source, Software, Development, Developers, Projects, SourceForge, All POSIX (Linux/BSD/UNIX-like OSes), 32-bit MS Windows (NT/2000/XP), C, XML, Developers, GNU Library or Lesser General Public License (LGPL), sxmlc" />
+<title>SXMLC - Simple XML C parser - Philosophy</title>
+<style type="text/css">
+body
+{
+		background: url("prweb-sidebar.png") top left fixed no-repeat;
+		font-family: sans-serif;
+		line-height: 140%;
+		font-size: 90%;
+}
+
+a img
+{
+		border-style: none;
+		text-decoration: none;
+		vertical-align: middle;
+}
+
+h1 { margin: 0 0 1em 5%; width: 80%; font-size: 160%; line-height: normal;}
+small {margin: .5em 0 0 5%; font-size: 80%; position: relative; display: block;}
+h3 { margin-top: 2em; font-size: 100%; }
+h2 { margin-top: 1em; font-size: 120%; }
+
+/* layout */
+.host
+{
+		position: absolute;
+		right: 1em;
+		top: 2em;
+		width: 25em;
+		text-align: center;
+		font-size: 80%;
+		font-weight: bold;
+}
+
+.host a { text-decoration: none; }
+
+pre.code
+{
+	border: #000 dashed 1px;
+	background: #eee;
+	padding: 3px 5px;
+}
+
+div.left
+{
+		float: left;
+		width: 20%;
+		margin: 0 1% 0 5%;
+}
+
+div.middle
+{
+		float: left;
+		width: 60%;
+		padding: 0 2%;
+		margin: 0;
+		border: #000 solid 1px;
+min-width: 300px;
+}
+
+div.right
+{
+		float: left;
+		width: 24%;
+margin-left: 2%;
+}
+
+/* footer */
+#ft
+{
+		clear: both;
+		display: block;
+		padding: 1em;
+		margin-left: -5%;
+		font-size: 80%;
+		text-align: center;
+}
+
+#fad
+{
+		height: 250px; overflow: hidden;
+		line-height: 120%; font-size: 80%;
+}
+</style>
+</head>
+
+<body>
+<div id="projectinfo">
+
+<div class="left">
+
+<h2>Users</h2>
+<p><strong>Coding Philosophy</strong></p>
+<p><strong><a href="datastruct.html">Data structures</a></strong></p>
+<p><strong><a href="howto.html">How to</a></strong></p>
+<p><strong><a href="unicode.html">Handling Unicode</a></strong></p>
+<hr/>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/files">Download sxmlc files</a></strong></p>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/">Project detail and discuss</a></strong></p>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/support">Get support</a></strong></p>
+
+</div>
+
+<div class="middle">
+<h2>Coding philosophy</h2>
+
+<p>
+Most of the code was kept in as few files as possible, with the smallest possible number of parameters.
+Whenever more parameters are required, it should always be possible to give <code>NULL</code> or <code>0</code>
+as values to get a default behavior.
+</p>
+
+<p>
+For example, the <code>read_line_alloc</code> takes many parameters:
+<pre class="code">
+int read_line_alloc(void* in, DataSourceType in_type, char** line,
+			int* sz_line, int i0, char from, char to, int keep_fromto,
+			char interest, int* interest_count);
+</pre>
+The only <em>really</em> mandatory parameters are obviously <code>in</code> and <code>line</code>.
+All others can be set to <code>NULL</code>, <code>0</code> or <code>'\0'</code>:<br/>
+Calling <code><strong>read_line_alloc(f, DATA_SOURCE_FILE, &line, NULL, 0, 0, 0, 0, 0, NULL);</strong></code> will
+read bytes from <code>f</code> into <code>line</code> starting from current position in <code>f</code> until
+a newline character (or end-of-file) has been reached. <code>line</code> will be allocated but its size will
+not be returned (only the number of characters read). No special character will be counted during file reading.
+</p>
+
+<p>
+So, if you are not too sure what to put as a parameter, just zero it, it should be fine! :)
+</p>
+</div>
+
+<div id="ft">
+<p>
+<a href="http://sourceforge.net/">
+Project Web Hosted by <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=351439&amp;type=16" alt="SourceForge.net" />
+</a>
+</p>
+
+<p>
+&copy;Copyright 1999-2010 -
+<a href="http://geek.net" title="Network which provides and promotes Open Source software downloads, development, discussion and news.">
+Geeknet</a>, Inc., All Rights Reserved
+</p>
+
+<p>
+<a href="http://sourceforge.net/about">About</a>
+-
+<a href="http://sourceforge.net/tos/tos.php">Legal</a>
+-
+<a href="http://p.sf.net/sourceforge/getsupport">Help</a>
+</p>
+</div>
+
+</body>
+</html>

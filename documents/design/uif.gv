@@ -1,0 +1,45 @@
+
+digraph G {
+    rankdir=LR;
+
+    uif  [label="User Interface\nTask"]
+
+    cred [label="CREDENTIALS"];
+    prev [label="previous cred"];
+    next [label="next cred"];
+    apply [label="apply cred"];
+    selopt [label="menu->opt"];
+
+    opt [label="OPTIONS"];
+    prevopt [label="previous options"];
+    nextopt [label="next options"];
+    applyopt [label="apply options"];
+    selcred [label="menu->cred"];
+    
+    subgraph cluster_credentials {
+        cred->prev [label=up];
+        prev->cred;
+        cred->next [label=down];
+        next->cred;
+        cred->apply [label=right];
+        apply->cred;
+        cred->selopt [label=left];
+    }
+
+    subgraph cluster_options {
+        opt->prevopt [label=up];
+        prevopt->opt;
+        opt->nextopt [label=down];
+        nextopt->opt;
+        opt->applyopt [label=right];
+        applyopt->opt;
+        opt->selcred [label=left];
+    }
+   
+    uif->cred:sw [label="menu=cred"];
+    uif->opt:w [label="menu=opt"];
+    opt:nw->uif;
+    cred:w->uif;
+    selcred->cred;
+    selopt->opt;
+}

@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="SourceForge presents the sxmlc project. sxmlc is an open source application. SourceForge provides the world's largest selection of Open Source Software. Simple XML parser written in C. \"Simple\" means that it does not implement all XML specifications, only the most widely used ones. It is not an attempt to re-write the fine 'libxmlc'! :)" />
+<meta name="keywords" content="Open Source, Software, Development, Developers, Projects, SourceForge, All POSIX (Linux/BSD/UNIX-like OSes), 32-bit MS Windows (NT/2000/XP), C, XML, Developers, GNU Library or Lesser General Public License (LGPL), sxmlc" />
+<title>SXMLC - Simple XML C parser - Unicode</title>
+<style type="text/css">
+body
+{
+		background: url("prweb-sidebar.png") top left fixed no-repeat;
+		font-family: sans-serif;
+		line-height: 140%;
+		font-size: 90%;
+}
+
+a img
+{
+		border-style: none;
+		text-decoration: none;
+		vertical-align: middle;
+}
+
+h1 { margin: 0 0 1em 5%; width: 80%; font-size: 160%; line-height: normal;}
+small {margin: .5em 0 0 5%; font-size: 80%; position: relative; display: block;}
+h3 { margin-top: 2em; font-size: 100%; }
+h2 { margin-top: 1em; font-size: 120%; }
+
+/* layout */
+.host
+{
+		position: absolute;
+		right: 1em;
+		top: 2em;
+		width: 25em;
+		text-align: center;
+		font-size: 80%;
+		font-weight: bold;
+}
+
+.host a { text-decoration: none; }
+
+pre.code
+{
+	border: #000 dashed 1px;
+	background: #eee;
+	padding: 3px 5px;
+}
+
+div.left
+{
+		float: left;
+		width: 20%;
+		margin: 0 1% 0 5%;
+}
+
+div.middle
+{
+		float: left;
+		width: 60%;
+		padding: 0 2%;
+		margin: 0;
+		border: #000 solid 1px;
+min-width: 300px;
+}
+
+div.right
+{
+		float: left;
+		width: 24%;
+margin-left: 2%;
+}
+
+/* footer */
+#ft
+{
+		clear: both;
+		display: block;
+		padding: 1em;
+		margin-left: -5%;
+		font-size: 80%;
+		text-align: center;
+}
+
+#fad
+{
+		height: 250px; overflow: hidden;
+		line-height: 120%; font-size: 80%;
+}
+</style>
+</head>
+
+<body>
+<div id="projectinfo">
+
+<div class="left">
+
+<h2>Users</h2>
+<p><strong><a href="philo.html">Coding Philosophy</a></strong></p>
+<p><strong><a href="datastruct.html">Data structures</a></strong></p>
+<p><strong><a href="howto.html">How to</a></strong></p>
+<p><strong>Handling Unicode</strong></p>
+<hr/>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/files">Download sxmlc files</a></strong></p>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/">Project detail and discuss</a></strong></p>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/support">Get support</a></strong></p>
+
+</div>
+
+<div class="middle">
+<h2>Handling Unicode</h2>
+<ul>
+<li><a href="#USE">Using Unicode</a></li>
+<li><a href="#CODE">Coding Unicode</a></li>
+<li><a href="#WRITE">Writing Unicode XML</a></li>
+</ul>
+
+<hr/>
+
+<p>Unicode is available since version 4.0.0.</p>
+<p>
+It required quite a lot of work to mutualize code between Unicode and non-Unicode functions, as <code>char</code>
+became <code>wchar_t</code> and all functions related to character handling had to be changed to their wide version.<br/>
+Hence, the code has complexified somehow due to the <code>#ifdef/#else/#endif</code> that has to cope with Unicode being
+used or not.<br/>
+</p>
+
+<a name="USING"/><h3>Using Unicode</h3>
+
+<p>
+Unicode is handled through the definition of <code>SXMLC_UNICODE</code> in preprocessor. To activate it, give <code>-DSXMLC_UNICODE</code>
+to the compiler (to most of them anyway).<br/>
+Defining it changes the definition of <code>SXML_CHAR</code> type to <code>wchar_t</code> instead of <code>char</code>.<br/>
+It also adds three more members to the <code>XMLDoc</code> struct to deal with Byte Order Mark (BOM):
+<ul>
+<li><code>bom_type</code> represents the BOM that has been read in the file. It is <code>BOM_NONE</code> when no BOM
+has been detected, or one of the <code>BOM_*</code> enum.</li>
+<li><code>bom</code> is the BOM byte content.</li>
+<li><code>sz_bom</code> is the size of the BOM (i.e. how many bytes is the BOM, usefull when writing the file).</li>
+</ul>
+</p>
+
+<p>
+The function <code>freadBOM</code> has been added to determine the BOM and skip it, so that the file can be read straight.<br/>
+It can recognize several BOMs:
+<ul>
+<li>No BOM</li>
+<li>UTF-8 (file starts with sequence <code>0xef 0xbb 0xbf</code>)</li>
+<li>UTF-16LE (Little Endian, file starts with sequence <code>0xff 0xfe</code>)</li>
+<li>UTF-16BE (Big Endian, file starts with sequence <code>0xfe 0xff</code>)</li>
+<li>UTF-32LE (Little Endian, file starts with sequence <code>0xff 0xfe 0x00 0x00</code>)</li>
+<li>UTF-32BE (Big Endian, file starts with sequence <code>0x00 0x00 0xfe 0xff</code>)</li>
+</ul>
+</p>
+
+<p>
+<strong><u>/!\</u> Warning!</strong><br/>
+Though it can recognize (and skip) UTF-32 BOM, SXMLC can handle it only to the extent of <code>wchar_t</code>. That
+means that under Microsoft OS, Unicode handling stops at UTF-16.<br/>
+Also, UTF-8 is handled only on a one-byte-per-character basis as, internally, SXMLC opens the file in text mode when
+detecting UTF-8 BOM. If you know fancier portable <code>fopen/fgetc/fprintf</code> functions to process UTF-8, please
+tell me! :-)
+</p>
+
+<a name="CODE"/><h3>Coding Unicode</h3>
+
+<p>
+To ease creating Unicode-portable code, several macros are defined when opening/reading/writing streams. All of them
+start with <code>sx_</code> and should be used instead of the "regular" ones. E.g use <code>sx_fopen</code> instead of
+<code>fopen</code> or <code>sx_strcpy</code> instead of <code>strcpy</code>.<br/>
+A special macro <code>C2SX()</code> adds the <code>L</code> in front of constant strings and characters when <code>SXMLC_UNICODE</code>
+is defined. This allows to use string constants with or without Unicode.<br/>
+Of course, when writing your application, if you know for sure whether you will be using Unicode, you don't have to use these macros and
+can use the direct function calls instead. The following three examples are equivalent:
+<p>
+<em>No Unicode, <strong>SXMLC_UNICODE</strong> is undefined</em>
+<pre class="code">
+<strong>char</strong> tag[128];
+XMLNode node;
+
+XMLNode_init(&node);
+<strong>strcpy</strong>(tag, "element");
+XMLNode_set_tag(&node, tag);
+XMLNode_add_attribute(&node, "name", "toto");
+</pre>
+</p>
+
+<p>
+<em>Pure Unicode, <strong>SXMLC_UNICODE</strong> is defined</em>
+<pre class="code">
+<strong>wchar_t</strong> tag[128];
+XMLNode node;
+
+XMLNode_init(&node);
+<strong>wcscpy</strong>(tag, <strong>L</strong>"element");
+XMLNode_set_tag(&node, tag);
+XMLNode_add_attribute(&node, <strong>L</strong>"name", <strong>L</strong>"toto");
+</pre>
+</p>
+
+<p>
+<em>Portable code, works if <strong>SXMLC_UNICODE</strong> is defined or not</em>
+<pre class="code">
+<strong>SXML_CHAR</strong> tag[128];
+XMLNode node;
+
+XMLNode_init(&node);
+<strong>sx_strcpy</strong>(tag, <strong>C2SX(</strong>"element"<strong>)</strong>);
+XMLNode_set_tag(&node, tag);
+XMLNode_add_attribute(&node, <strong>C2SX(</strong>"name"<strong>)</strong>, <strong>C2SX(</strong>"toto"<strong>)</strong>);
+</pre>
+</p>
+<p>
+The full list of <code>sx_*</code> function is available in <code>utils.h</code>.
+</p>
+
+<a name="WRITE"/><h3>Writing Unicode XML</h3>
+
+<p>
+<strong><u>/!\</u> Be careful</strong> when writing files with <code>XMLDoc_print</code>! The <code>FILE*</code> object has to be opened
+in <strong>binary mode</strong> when dealing with UTF-16 encoding! (either Little or Big Endian).<br/>
+Other encodings such as ASCII or "regular" UTF-8 have to be opened in text mode as they are one-byte characters.<br/>
+Note that you <strong>HAVE TO</strong> define <code>SXMLC_UNICODE</code> if you plan to write or read Unicode files.
+</p>
+
+<p>
+Usually, you can open the <code>FILE*</code> in binary mode when there is a BOM to write in the document (<code>doc.sz_bom &gt; 0</code>).<br/>
+The following code would write a document to a file according to whether the XML document is Unicode:
+<pre class="code">
+int write_doc(XMLDoc* doc, SXML_CHAR* filename)
+{
+	SXML_CHAR* mode;
+	FILE* f;
+	
+	if (doc->sz_bom > 0 && doc->bom_type != BOM_UTF_8) /* Use text mode for UTF-8 */
+		mode = C2SX("w+b");
+	else
+		mode = C2SX("w+t");
+	
+	f = sx_fopen(filename, mode);
+	
+	return XMLDoc_print(doc, f, NULL, NULL, false, 0, 0);
+}
+</pre>
+</p>
+
+</div>
+
+<div id="ft">
+<p>
+<a href="http://sourceforge.net/">
+Project Web Hosted by <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=351439&amp;type=16" alt="SourceForge.net" />
+</a>
+</p>
+
+<p>
+&copy;Copyright 1999-2010 -
+<a href="http://geek.net" title="Network which provides and promotes Open Source software downloads, development, discussion and news.">
+Geeknet</a>, Inc., All Rights Reserved
+</p>
+
+<p>
+<a href="http://sourceforge.net/about">About</a>
+-
+<a href="http://sourceforge.net/tos/tos.php">Legal</a>
+-
+<a href="http://p.sf.net/sourceforge/getsupport">Help</a>
+</p>
+</div>
+
+</body>
+</html>

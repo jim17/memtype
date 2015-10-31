@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xml>
+	<structure name="st1sub2" valid="true">
+		<property name="toti" value="2"/>
+		<property name="tita" value="3"/>
+	</structure>
+</xml>

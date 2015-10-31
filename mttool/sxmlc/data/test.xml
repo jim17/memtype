@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE auteur [
+  <!-- Ici les différentes instructions de la DTD interne -->
+  <!ELEMENT auteur (nom,prenom)>
+  <!ELEMENT nom (#PCDATA)>
+  <!ELEMENT prenom (#PCDATA)>
+]>
+<#[MONTAG-Genre
+CDATA-]>
+<!DOCTYPE élément-racine PUBLIC "-//Propriétaire//Description de la DTD//Langue" "URL">
+<xml>
+	<configuration1>
+		<structure name="st1">
+			<structure name="st1sub1" valid="true">
+				<property name="toto" value="0"/>
+				<property name="tata" value="1"/>
+			</structure>
+			<structure name="st1sub2" valid="true">
+				<property name="toti" value="2"/>
+				<property name="tita" value="3"/>
+			</structure>
+		</structure>
+	</configuration1>
+	<configuration2>
+		<structure name="st2">
+			<structure name="st2sub1" valid="false">
+				<property name="titi" value="4"/>
+			</structure>
+			<structure name="nost2sub1" valid="true">
+				<property name="titi" value="4.1"/>
+			</structure>
+			<structure name="st2sub2" valid="true">
+				<property name="tutu" value="5"/>
+			</structure>
+		</structure>
+		<structure name="st3">
+			<property name="readonly" value="true"/>
+		</structure>
+	</configuration2>
+	<a2 comment="Le premier"/>
+	<a id="0">
+		<a1>
+			<a1a>
+				<a1a1/>
+				<a1a2 valid="true">text inside node</a1a2>
+				<a1a3 valid="true">inside</a1a3>
+				<a1a4/>
+			</a1a>
+			<a1b>
+				<a1b1/>
+				<a1b2/>
+				<a1b3/>
+			</a1b>
+		</a1>
+		<a2 name="nomA" value="valeurA" id="8">
+			<a2a>
+				<a2a1/>
+				<a2a2 comment="oui"/>
+				<a2 id="9"/>
+				<a2a3/>
+			</a2a>
+			<a2b>
+				<a2b1/>
+				<a2b2/>
+				<a2b3/>
+			</a2b>
+		</a2>
+		<b2dansa comment=""/>
+		<a3>
+			<a3a>
+				<a3a1/>
+				<a3a3/>
+				<a3a3/>
+			</a3a>
+			<a3b>
+				<a3b1/>
+				<a3b2 id="8" comment=""/>
+				<a3b3/>
+			</a3b>
+		</a3>
+	</a>
+	<b>
+		<b1>
+			<b1b>
+				<b1b1/>
+				<b1b2/>
+				<b1b3/>
+			</b1b>
+			<b1b>
+				<b1b1/>
+				<b1b2/>
+				<b1b3/>
+			</b1b>
+		</b1>
+		<b2>
+			<b2a comment="">
+				<b2a1/>
+				<![CDATA[IMG_TYPE114BC4E2C8998DF0A8]]>
+				<b2a2/>
+				<b2a3/>
+			</b2a>
+			<b2b>
+				<b2b1/>
+				<b2b2/>
+				<b2b3/>
+			</b2b>
+		</b2>
+		<b3>
+			<b3a>
+				<b3a1/>
+				<b3a3/>
+				<b3a3/>
+			</b3a>
+			<b3b>
+				<b3b1/>
+				<b3b2/>
+				<b3b3/>
+			</b3b>
+		</b3>
+	</b>
+	<b2 comment="Le second"/>
+	<![CDATA[
+	#define COMMENT '>'
+	printf("Commentaire: <tag> %c", COMMENT);
+	]]>
+</xml>

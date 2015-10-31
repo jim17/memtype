@@ -1,0 +1,94 @@
+Cmp-Mod V01 Created by Cvpcb (2014-jul-16 BZR unknown)-product   date = Sun 16 Nov 2014 11:17:35 AM CET
+
+BeginCmp
+TimeStamp = /5432C46A;
+Reference = C1;
+ValeurCmp = 100n;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /546248F6;
+Reference = D1;
+ValeurCmp = 3V6;
+IdModule  = projectLib:SOT-23;
+EndCmp
+
+BeginCmp
+TimeStamp = /5432C05B;
+Reference = IC1;
+ValeurCmp = ATTINY85-S;
+IdModule  = projectLib:SOIC-8-W;
+EndCmp
+
+BeginCmp
+TimeStamp = /5432DE6D;
+Reference = P1;
+ValeurCmp = USB;
+IdModule  = projectLib:usbA_std_pcb;
+EndCmp
+
+BeginCmp
+TimeStamp = /5461193C;
+Reference = P2;
+ValeurCmp = JOYSTICK;
+IdModule  = projectLib:JOYSTICK;
+EndCmp
+
+BeginCmp
+TimeStamp = /5432D93B;
+Reference = R1;
+ValeurCmp = 1k5;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /5432D997;
+Reference = R2;
+ValeurCmp = 68R;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /5432D99D;
+Reference = R3;
+ValeurCmp = 68R;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /543D97EE;
+Reference = R4;
+ValeurCmp = 560k;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /543DDBE5;
+Reference = R5;
+ValeurCmp = 1k;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /543DDC38;
+Reference = R6;
+ValeurCmp = 1k;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /543DDC92;
+Reference = R7;
+ValeurCmp = 1k;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /543DE0DD;
+Reference = R8;
+ValeurCmp = 1k;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+EndListe

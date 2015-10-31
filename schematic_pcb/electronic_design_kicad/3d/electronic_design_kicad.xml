@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<export version="D">
+    <design>
+        <source>/home/borrego/mypass/schematic_pcb/electronic_design_kicad/electronic_design_kicad.sch</source>
+        <date>Sat 15 Nov 2014 05:09:26 PM CET</date>
+        <tool>Eeschema (2014-jul-16 BZR unknown)-product</tool>
+    </design>
+    <components>
+        <comp ref="IC1">
+            <value>ATTINY85-S</value>
+            <footprint>SMD_Packages:SSOP-8</footprint>
+            <fields>
+                <field name="mouser">556-ATTINY85-20SU</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="ATTINY85-S"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5432C05B</tstamp>
+        </comp>
+        <comp ref="C1">
+            <value>100n</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <libsource lib="electronic_design_kicad-cache" part="C"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5432C46A</tstamp>
+        </comp>
+        <comp ref="R1">
+            <value>1k5</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/8W</field>
+                <field name="mouser">ERJ-6GEYJ152V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5432D93B</tstamp>
+        </comp>
+        <comp ref="R2">
+            <value>68R</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/8W</field>
+                <field name="mouser">ERJ-6GEYJ680V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5432D997</tstamp>
+        </comp>
+        <comp ref="R3">
+            <value>68R</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/8W</field>
+                <field name="mouser">ERJ-6GEYJ680V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5432D99D</tstamp>
+        </comp>
+        <comp ref="P1">
+            <value>USB</value>
+            <footprint>projectLib:usbA_std_pcb</footprint>
+            <fields>
+                <field name="mouser">1-1734028-1</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="CONN_4"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5432DE6D</tstamp>
+        </comp>
+        <comp ref="R4">
+            <value>560k</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/4W</field>
+                <field name="mouser">ERJ-6GEYJ564V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>543D97EE</tstamp>
+        </comp>
+        <comp ref="R5">
+            <value>1k</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/4W</field>
+                <field name="mouser">ERJ-6GEYJ102V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>543DDBE5</tstamp>
+        </comp>
+        <comp ref="R6">
+            <value>1k</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/4W</field>
+                <field name="mouser">ERJ-6GEYJ102V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>543DDC38</tstamp>
+        </comp>
+        <comp ref="R7">
+            <value>1k</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/4W</field>
+                <field name="mouser">ERJ-6GEYJ102V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>543DDC92</tstamp>
+        </comp>
+        <comp ref="R8">
+            <value>1k</value>
+            <footprint>SMD_Packages:SMD-0805</footprint>
+            <fields>
+                <field name="Power">1/4W</field>
+                <field name="mouser">ERJ-6GEYJ102V</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>543DE0DD</tstamp>
+        </comp>
+        <comp ref="P2">
+            <value>JOYSTICK</value>
+            <footprint>projectLib:JOYSTICK</footprint>
+            <fields>
+                <field name="mouser">SKQUAAA010</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="CONN_5"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5461193C</tstamp>
+        </comp>
+        <comp ref="D1">
+            <value>3V6</value>
+            <footprint>SMD_Packages:SOT-23</footprint>
+            <fields>
+                <field name="mouser">AZ23C3V6-E3-18</field>
+            </fields>
+            <libsource lib="electronic_design_kicad-cache" part="ZENER_DUAL"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>546248F6</tstamp>
+        </comp>
+    </components>
+    <libparts>
+        <libpart lib="electronic_design_kicad-cache" part="ATTINY25-S">
+            <aliases>
+                <alias>ATTINY45-S</alias>
+                <alias>ATTINY85-S</alias>
+            </aliases>
+            <fields>
+                <field name="Reference">IC</field>
+                <field name="Value">ATTINY25-S</field>
+                <field name="Footprint">SO8-200</field>
+            </fields>
+            <pins>
+                <pin num="1" name="PB5(~RESET~/dW/ADC0/PCINT5)" type="BiDi"/>
+                <pin num="2" name="PB3(XTAL1/CLKI/OC1B/ADC3/PCINT3)" type="BiDi"/>
+                <pin num="3" name="PB4(XTAL2/CLKO/OC1B/ADC2/PCINT4)" type="BiDi"/>
+                <pin num="4" name="GND" type="power_in"/>
+                <pin num="5" name="PB0(MOSI/DI/SDA/AIN0/OC0A/OC1A/AREF/PCINT0)" type="BiDi"/>
+                <pin num="6" name="PB1(MISO/DO/AIN1/OC0B/OC1A/PCINT1)" type="BiDi"/>
+                <pin num="7" name="PB2(SCK/USCK/SCL/T0/INT0/ADC1/PCINT2)" type="BiDi"/>
+                <pin num="8" name="VCC" type="power_in"/>
+            </pins>
+        </libpart>
+        <libpart lib="electronic_design_kicad-cache" part="CONN_4">
+            <fields>
+                <field name="Reference">P</field>
+                <field name="Value">CONN_4</field>
+            </fields>
+            <pins>
+                <pin num="1" name="P1" type="passive"/>
+                <pin num="2" name="P2" type="passive"/>
+                <pin num="3" name="P3" type="passive"/>
+                <pin num="4" name="P4" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="electronic_design_kicad-cache" part="ZENER_DUAL">
+            <footprints>
+                <fp>D?</fp>
+                <fp>SO*</fp>
+                <fp>SM*</fp>
+            </footprints>
+            <fields>
+                <field name="Reference">D</field>
+                <field name="Value">ZENER_DUAL</field>
+            </fields>
+            <pins>
+                <pin num="1" name="K" type="passive"/>
+                <pin num="2" name="K" type="passive"/>
+                <pin num="3" name="A" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="electronic_design_kicad-cache" part="R">
+            <footprints>
+                <fp>R?</fp>
+                <fp>SM0603</fp>
+                <fp>SM0805</fp>
+                <fp>R?-*</fp>
+                <fp>SM1206</fp>
+            </footprints>
+            <fields>
+                <field name="Reference">R</field>
+                <field name="Value">R</field>
+            </fields>
+            <pins>
+                <pin num="1" name="~" type="passive"/>
+                <pin num="2" name="~" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="electronic_design_kicad-cache" part="CONN_5">
+            <fields>
+                <field name="Reference">P</field>
+                <field name="Value">CONN_5</field>
+            </fields>
+            <pins>
+                <pin num="1" name="~" type="passive"/>
+                <pin num="2" name="~" type="passive"/>
+                <pin num="3" name="~" type="passive"/>
+                <pin num="4" name="~" type="passive"/>
+                <pin num="5" name="~" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="electronic_design_kicad-cache" part="C">
+            <footprints>
+                <fp>SM*</fp>
+                <fp>C?</fp>
+                <fp>C1-1</fp>
+            </footprints>
+            <fields>
+                <field name="Reference">C</field>
+                <field name="Value">C</field>
+            </fields>
+            <pins>
+                <pin num="1" name="~" type="passive"/>
+                <pin num="2" name="~" type="passive"/>
+            </pins>
+        </libpart>
+    </libparts>
+    <libraries>
+        <library logical="electronic_design_kicad-cache">
+            <uri>/home/borrego/mypass/schematic_pcb/electronic_design_kicad/electronic_design_kicad-cache.lib</uri>
+        </library>
+    </libraries>
+    <nets>
+        <net code="1" name="/ADC">
+            <node ref="IC1" pin="7"/>
+            <node ref="R4" pin="1"/>
+            <node ref="P2" pin="4"/>
+        </net>
+        <net code="2" name="/DOWN">
+            <node ref="R7" pin="1"/>
+            <node ref="R6" pin="2"/>
+            <node ref="P2" pin="3"/>
+        </net>
+        <net code="3" name="DGND">
+            <node ref="P1" pin="4"/>
+            <node ref="D1" pin="3"/>
+            <node ref="IC1" pin="4"/>
+            <node ref="C1" pin="2"/>
+            <node ref="R8" pin="2"/>
+            <node ref="R4" pin="2"/>
+        </net>
+        <net code="4" name="+5V">
+            <node ref="C1" pin="1"/>
+            <node ref="R1" pin="1"/>
+            <node ref="IC1" pin="8"/>
+            <node ref="R5" pin="1"/>
+            <node ref="P1" pin="1"/>
+            <node ref="P2" pin="1"/>
+        </net>
+        <net code="5" name="Net-(IC1-Pad1)">
+            <node ref="IC1" pin="1"/>
+        </net>
+        <net code="6" name="Net-(IC1-Pad6)">
+            <node ref="IC1" pin="6"/>
+        </net>
+        <net code="7" name="Net-(IC1-Pad5)">
+            <node ref="IC1" pin="5"/>
+        </net>
+        <net code="8" name="/LEFT">
+            <node ref="P2" pin="2"/>
+            <node ref="R6" pin="1"/>
+            <node ref="R5" pin="2"/>
+        </net>
+        <net code="9" name="/RIGHT">
+            <node ref="R7" pin="2"/>
+            <node ref="R8" pin="1"/>
+            <node ref="P2" pin="5"/>
+        </net>
+        <net code="10" name="Net-(IC1-Pad2)">
+            <node ref="R2" pin="2"/>
+            <node ref="IC1" pin="2"/>
+        </net>
+        <net code="11" name="Net-(IC1-Pad3)">
+            <node ref="R3" pin="2"/>
+            <node ref="IC1" pin="3"/>
+        </net>
+        <net code="12" name="D+">
+            <node ref="D1" pin="2"/>
+            <node ref="P1" pin="3"/>
+            <node ref="R3" pin="1"/>
+        </net>
+        <net code="13" name="D-">
+            <node ref="R1" pin="2"/>
+            <node ref="R2" pin="1"/>
+            <node ref="D1" pin="1"/>
+            <node ref="P1" pin="2"/>
+        </net>
+    </nets>
+</export>

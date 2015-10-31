@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="SourceForge presents the sxmlc project. sxmlc is an open source application. SourceForge provides the world's largest selection of Open Source Software. Simple XML parser written in C. \"Simple\" means that it does not implement all XML specifications, only the most widely used ones. It is not an attempt to re-write the fine 'libxmlc'! :)" />
+<meta name="keywords" content="Open Source, Software, Development, Developers, Projects, SourceForge, All POSIX (Linux/BSD/UNIX-like OSes), 32-bit MS Windows (NT/2000/XP), C, XML, Developers, GNU Library or Lesser General Public License (LGPL), sxmlc" />
+<title>SXMLC - Simple XML C parser - HOW TO</title>
+<style type="text/css">
+body
+{
+		background: url("prweb-sidebar.png") top left fixed no-repeat;
+		font-family: sans-serif;
+		line-height: 140%;
+		font-size: 90%;
+}
+
+a img
+{
+		border-style: none;
+		text-decoration: none;
+		vertical-align: middle;
+}
+
+h1 { margin: 0 0 1em 5%; width: 80%; font-size: 160%; line-height: normal;}
+small {margin: .5em 0 0 5%; font-size: 80%; position: relative; display: block;}
+h3 { margin-top: 2em; font-size: 100%; }
+h2 { margin-top: 1em; font-size: 120%; }
+
+/* layout */
+.host
+{
+		position: absolute;
+		right: 1em;
+		top: 2em;
+		width: 25em;
+		text-align: center;
+		font-size: 80%;
+		font-weight: bold;
+}
+
+.host a { text-decoration: none; }
+
+pre.code
+{
+	border: #000 dashed 1px;
+	background: #eee;
+	padding: 3px 5px;
+}
+
+div.left
+{
+		float: left;
+		width: 20%;
+		margin: 0 1% 0 5%;
+}
+
+div.middle
+{
+		float: left;
+		width: 60%;
+		padding: 0 2%;
+		margin: 0;
+		border: #000 solid 1px;
+min-width: 300px;
+}
+
+div.right
+{
+		float: left;
+		width: 24%;
+margin-left: 2%;
+}
+
+/* footer */
+#ft
+{
+		clear: both;
+		display: block;
+		padding: 1em;
+		margin-left: -5%;
+		font-size: 80%;
+		text-align: center;
+}
+
+#fad
+{
+		height: 250px; overflow: hidden;
+		line-height: 120%; font-size: 80%;
+}
+</style>
+</head>
+
+<body>
+<div id="projectinfo">
+
+<div class="left">
+
+<h2>Users</h2>
+<p><strong><a href="philo.html">Coding Philosophy</a></strong></p>
+<p><strong><a href="datastruct.html">Data structures</a></strong></p>
+<p><strong>How to</strong></p>
+<p><strong><a href="unicode.html">Handling Unicode</a></strong></p>
+<hr/>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/files">Download sxmlc files</a></strong></p>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/">Project detail and discuss</a></strong></p>
+<p><strong><a href="http://sourceforge.net/projects/sxmlc/support">Get support</a></strong></p>
+
+</div>
+
+<div class="middle">
+<h2>How to</h2>
+
+<ul>
+<li><a href="#READ">Read an XML document from a file</a></li>
+	<ul>
+		<li><a href="#SAX">SAX parser</a></li>
+		<li><a href="#DOM">DOM parser</a></li>
+	</ul>
+</li>
+<li><a href="#WRITE">Create an XML document</a></li>
+<li><a href="#SEARCH">Search an XML document</a>
+	<ul>
+		<li><a href="#XPATH">XPath-like queries</a></li>
+	</ul>
+</li>
+<li><a href="#CUSTOM">Handle new tags</a>
+</ul>
+
+<hr/>
+
+<h3>Handle XML documents</h3>
+<p>
+An XML document is described by the <code>XMLDoc</code> struct and is handled through all <code>XMLDoc_*</code> methods.<br/>
+All calls to these methods are supposed made on an already-initialized document:<br/>
+Create and initialize an <code>XMLDoc</code> object:
+<table><tr>
+<td width="40%">
+<pre class="code">
+XMLDoc doc;
+XMLDoc_init(&doc);
+</pre>
+</td>
+<td width="*" align="center">or</td>
+<td width="40%">
+<pre class="code">
+XMLDoc* doc = (XMLDoc*)malloc(sizeof(XMLDoc));
+XMLDoc_init(doc);
+</pre>
+</td>
+</tr></table>
+</p>
+
+<a name="READ"/>
+<h4>Read an XML document from a file</h4>
+<p>
+It is as simple as a call to one of the <code>XMLDoc_parse_file</code> method:
+<pre class="code">
+XMLDoc_parse_file("path_to_my_file.xml", &doc);
+XMLDoc_parse_file_DOM("path_to_my_file.xml", &doc);
+XMLDoc_parse_file_SAX("path_to_my_file.xml", &sax_callbacks, &user_data);
+</pre>
+The first two methods are the same and use the DOM implementation, creating the XML tree internally.
+You can navigate through it after the whole file has been loaded (to add or remove nodes).<br/>
+The last method uses SAX implementation and calls the callback functions given in <code>sax_callbacks</code>.
+</p>
+
+<a name="SAX"/>
+<h5>SAX parser</h5>
+<p>
+The SAX parser is called with an extra <code>user_data</code> argument that will be given back to all
+callbacks. It can be a pointer to an <code>XMLDoc</code> structure or any other user-defined info.<br/>
+There are only 6 callbacks that can be called when using the SAX parser (plus an additional one if needed):
+<ul>
+<li><code>start_doc</code> is called when document parsing starts, before parsing the first node.</li>
+<li><code>start_node</code> is called when a new node has been found (e.g. "<code>&lt;newNode param="val"&gt;</code>")</li>
+<li><code>end_node</code> is called when a node is being closed. (e.g. "<code>&lt;/newNode&gt;</code>")</li>
+<li><code>new_text</code> is called when text has been read from a node(e.g. "<code>&lt;newNode&gt;My text&lt;/newNode&gt;</code>")</li>
+<li><code>end_doc</code> is called when document parsing ends. No other callbacks will be called after.</li>
+<li><code>on_error</code> is called when an error occurs during parsing. Parsing stops after.</li>
+<li><code>all_event</code> is given for those who prefer to handle all such events in a single function instead of three
+(e.g. to get a static variable for the node)
+</li>
+</ul>
+Each callback receive a <code>SAX_Data</code> argument where it is possible to know the name of the file/stream being
+parsed and the line number in the stream. This also where the <code>user_data</code> is found back.
+</p>
+
+<p>
+Both <code>start_node</code> and <code>end_node</code> receive an <code>XMLNode</code> parameter which contains
+information about the <code>tag</code> and all attributes read.<br/>
+It also has the <code>tag_type</code> attribute set to know if the node is a comment or prolog.
+</p>
+
+<p>
+Each callback should return non-zero to tell the parser to go on with parsing, or return 0 to stop parsing.<br/>
+<strong>NB: it is possible to change the callbacks by passing the 'sax_callbacks' as the 'user_data' as well, and changing
+it inside the callback itself!</strong><br/>
+<pre class="code">
+int end(const XMLNode* node, SAX_Callbacks* cb);
+int my_special_end(const XMLNode* node, SAX_Callbacks* cb);
+
+int end(const XMLNode* node, SAX_Callbacks* cb)
+{
+	/* Process end of 'node' */
+}
+
+int start(const XMLNode* node, SAX_Callbacks* cb)
+{
+	/* Do fancy stuff */
+	if (something_relevant)
+		cb->end = my_special_end; /* From now on, 'my_special_end' will be used instead of 'end' */
+}
+
+int my_special_end(const XMLNode* node, SAX_Callbacks* cb)
+{
+	/* Do something special for these special 'node' */
+	if (something_not_relevant_anymore)
+		cb->end = end; /* Go back to normal node end processing */
+}
+
+XMLDoc_parse_file_SAX("path_to_my_file.xml", &sax_callbacks, &sax_callbacks);
+</pre>
+</p>
+
+<a name="DOM"/>
+<h5>DOM parser</h5>
+<p>
+The DOM parser uses internally the SAX implementation with 6 specific callbacks.
+These callbacks are made available so that you can use them to load a whole XML document to memory
+but you would like to run some extra processing on the fly, as the document is being read.<br/>
+In this case, you have to use the SAX parser and define your own callbacks to run your processing
+before calling the "official" DOM callbacks that will create the document DOM structure.<br/>
+To achieve that, you <strong>HAVE TO</strong> use a <code>DOM_through_SAX</code> struct as the user pointer and initialize
+its 'doc' member with your initialized <code>XMLDoc</code> document and call the DOM callbacks with this.<br/>
+Here is an example to compute nesting while the document is being DOM-style loaded.
+ 
+<pre class="code">
+int depth, max_depth;
+
+int my_start(const XMLNode* node, struct _DOM_through_SAX* dom)
+{
+	if(++depth &gt; max_depth) max_depth = depth;
+	return DOMXMLDoc_node_start(node, dom);
+}
+int my_end(const XMLNode* node, struct _DOM_through_SAX* dom)
+{
+	depth--;
+	return DOMXMLDoc_node_end(node, dom);
+}
+void test_DOM_from_SAX(void)
+{
+	DOM_through_SAX dom;
+	SAX_Callbacks sax;
+	XMLDoc doc;
+
+	XMLDoc_init(&doc);
+	dom.doc = &doc;
+	dom.current = NULL;
+	
+	SAX_Callbacks_init_DOM(&sax);
+	sax.start_node = my_start;
+	sax.end_node = my_end;
+	
+	depth = max_depth = 0;
+	
+	XMLDoc_parse_file_SAX("/home/matth/Code/tmp/big.xml", &sax, &dom);
+	
+	printf("Max depth: %d\n", max_depth);
+	
+	XMLDoc_free(&doc);
+}
+</pre>
+</p>
+
+<p>
+It is also possible to parse a character buffer instead of a file, using the <code>XMLDoc_parse_buffer_*</code> instead
+of <code>XMLDoc_parse_file_*</code> functions.
+</p>
+
+<a name="WRITE"/>
+<h4>Create an XML document</h4>
+<p>
+After an XML document has been initialized, you can start adding elements using the
+<code>XMLDoc_add_node</code> method.<br/>
+Note that <code>XMLNode</code> objects should be allocated before being added. They can
+be "filled" either before or after insertion.<br/>
+Use the <code>XMLNode_alloc</code> method to allocate XML nodes.
+<pre class="code">
+XMLDoc doc;
+XMLNode* node;
+
+XMLDoc_init(&doc);
+
+node = XMLNode_alloc();
+XMLNode_set_tag(node, "xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+XMLNode_set_type(node, TAG_INSTR);
+XMLDoc_add_node(&doc, node);
+
+node = XMLNode_alloc();
+XMLNode_set_tag(node, " Pre-comment ");
+XMLNode_set_type(node, TAG_COMMENT);
+XMLDoc_add_node(&doc, node);
+
+node = XMLNode_alloc();
+XMLNode_set_tag(node, "\nAnother one\nMulti-line...\n");
+XMLNode_set_type(node, TAG_COMMENT);
+XMLDoc_add_node(&doc, node);
+
+node = XMLNode_alloc();
+XMLNode_set_tag(node, "properties");
+XMLNode_set_type(node, TAG_FATHER);
+XMLDoc_add_node(&doc, node); // Becomes root node because of 'TAG_FATHER'
+
+node = XMLNode_alloc();
+XMLNode_set_type(node, TAG_COMMENT);
+XMLNode_set_tag(node, "Hello World!");
+XMLDoc_add_child_root(&doc, node);
+
+node = XMLNode_alloc();
+XMLNode_set_tag(node, "info");
+XMLNode_set_text(node, "This is my name");
+XMLNode_set_attribute(node, "type", "Name");
+XMLDoc_add_child_root(&doc, node);
+</pre>
+will produce the following XML:
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;!-- Pre-comment --&gt;
+&lt;!--
+Another one
+Multi-line...
+--&gt;
+&lt;properties&gt;
+        &lt;!--Hello World!--&gt;
+	&lt;info type="Name"&gt;This is my name&lt;/info&gt;
+&lt;/properties&gt;
+</pre>
+</p>
+
+<p>
+Once the XML document has been created, it can be exported to a file with the <code>XMLDoc_print</code> method.
+It is possible to turn on/off different options to get a "pretty print" (human readable) using the <code>tag_sep</code>
+and <code>child_sep</code> parameters. It can be output to an already-opened file, that can be <code>stdout</code> if needed.
+<pre class="code">
+void XMLDoc_print(XMLDoc* doc, FILE* f, char* tag_sep, char* child_sep, int sz_line, int nb_char_tab);
+</pre>
+<ul>
+<li>
+	<code>tag_sep</code> is a string that will be used to separate tags from each other.
+	<code>"\n"</code> should be used for pretty print.
+</li>
+<li>
+	<code>child_sep</code> is a string that will be added to <code>tag_sep</code> to separate
+	children tags from their father tag. <code>"\t"</code> or <code>"    "</code> should be used for pretty print.
+</li>
+</ul>
+Additional parameters can be provided to automatically split a node on several lines according to
+a line size (the <code>sz_line</code> parameter), as well as specifying how many characters a <code>tab</code>
+should be accounted for (the <code>nb_char_tab</code> parameter).
+</p>
+
+<a name="SEARCH"/>
+<h4>Search in an XML document</h4>
+<p>
+The search can be performed on <code>XMLNode</code> structures, which is of course easier if the original document was read
+using the DOM function, or re-created by the user from the SAX callbacks.
+</p>
+
+<p>
+<code>XMLSearch_init</code> should be called first on an <code>XMLSearch</code> structure to zero all members.<br/>
+Then, use the <code>XMLSearch_search_set_tag</code>, <code>XMLSearch_search_set_text</code> and <code>XMLSearch_search_add_attribute</code>
+to specify one or more search criteria.
+</p>
+
+<p>
+The <code>XMLSearch</code> structure is used to search through an <code>XMLNode</code> tree, using regexp-like:
+<ul>
+<li>
+	<code>tag</code> will try to match a node tag. <code>NULL</code> or empty-string will not use the tag to test
+	nodes so any node can match.<br/>
+	Use the <code>XMLSearch_search_set_tag</code> function to set the search regexp for the tag.
+</li>
+<li>
+	<code>text</code> will try to match a node text. <code>NULL</code> will not use the text to test nodes so any
+	node can match.<br/>
+	Use the <code>XMLSearch_search_set_text</code> function to set the search regexp for the text.
+</li>
+<li>
+	<code>attributes</code> will be filled by the <code>XMLSearch_search_add_attribute</code> where is specified
+	the attribute name and potentially value. If <code>value</code> is NULL, only the attribute presence is checked.
+	An empty-string as a value is valid and will match an attribute name with an empty value (e.g. <code>name=""</code>).
+</li>
+</ul>
+Match on names and values is made using a regexp-like string. It does not fully comply to usual regexps and so far, only
+'<code>?</code>' (any single character) and '<code>*</code>' (any possibly-empty string) are available but it is possible
+to use a custom function by calling <code>XMLSearch_set_regexpr_compare</code>. The given function takes the string to test
+and the pattern to match and should return <code>true</code> whenever the string matches the pattern.<br/>
+'<code>\</code>' can be used to escape the next character.
+</p>
+
+<p>
+Use the <code>XMLSearch_next</code> function to start searching for the first matching node. The first parameter is the
+node where to start the search from. Search will be made inside the whole children tree.<br/>
+Next matching node is found by calling <code>XMLSearch_next</code> using the last matching node as a start.<br/>
+<code>NULL</code> is returned when no more matching node are found inside the original <code>from</code> node hierarchy.<br/>
+<strong>BE CAREFUL! The initial <code>from</code> node is not tested!</strong> It has to be tested separately with the
+<code>XMLSearch_node_matches</code> function.
+</p>
+
+<p>
+NB: If you do not need search capabilities, you can remove the sxmlsearch.c from your project, saving 6 Kb! :-)
+</p>
+
+<p>
+<pre class="code">
+XMLDoc doc;
+XMLSearch search;
+XMLNode* node;
+
+XMLDoc_init(&doc);
+XMLDoc_parse_file_DOM("my_xml_file.xml", &doc);
+
+XMLSearch_init(&search);
+XMLSearch_search_set_tag(&search, "month*");
+XMLSearch_search_add_attribute(&search, "presence", NULL);
+XMLSearch_search_add_attribute(&search, "value", "a*");
+
+node = doc.nodes[doc.i_root];
+if (XMLSearch_node_matches(node, &search))
+	printf("Found match: &lt;%s&gt;\n", node-&gt;tag);
+while ((node = XMLSearch_next(node, &search)) != NULL) {
+	printf("Found match: &lt;%s&gt;\n", node-&gt;tag);
+}
+
+XMLSearch_free(&search);
+XMLDoc_free(&doc);
+</pre>
+</p>
+
+<a name="XPATH"/>
+<p>
+<h5>XPath</h5>
+XPath-like queries can be used to initialize a search struct. It does not totally comply to
+<a href="http://www.w3schools.com/XPath/default.asp">XPath</a> grammar but can be used as an easier way to create a
+search tree.<br/>
+<ul>
+<li>Search on node tag is performed by giving the tag to match, or '<code>*</code>' for any tag.</li>
+<li>Search on node text is performed by specifying '<code>.="text regexp to search"</code>' between the <code>[]</code>
+after the tag.</li>
+<li>Attributes search is performed by giving the attribute name prefixed by '<code>@</code>' between <code>[]</code>. Additional
+attributes are specified by separating their names/values with a comma '<code>,</code>'.
+	<ul>
+	<li>To test for attribute presence only, just specify the name <code>[@AttributeName]</code></li>
+	<li>
+		To test if an attribute value equals a pattern, use '<code>=</code>' to separate the name and the value
+		<code>[@AttributeName="AttributeValue"]</code>
+	</li>
+	<li>
+		To test if an attribute value does not equal a pattern, use '<code>!=</code>' to separate the name and
+		the value <code>[@AttributeName!="AttributeValue"]</code>
+	</li>
+	</ul>
+</ul>
+Like in XPath, search on children is performed by using '<code>/</code>' as a separator.<br/>
+Call <code>XMLSearch_init_from_XPath</code> to create a search tree from an XPath query.<br/>
+<br/>
+<code>tagFather[@name, @id!='0', .='toto*']/tagChild[.='search *', @attrib='val']</code> will be searching for node
+of tag "<code>tagChild</code>" and text is "<code>search *</code>", having  an attribute named "<code>attrib</code>"
+which value is "<code>val</code>".<br/>
+Additionally, these nodes should have as a father a node of tag "<code>tagFather</code>" with an attribute named
+"<code>name</code>" of any value, another attribute named "<code>id</code>" which value should not be "<code>0</code>"
+and with text starting with "<code>toto</code>".
+<pre>
+&lt;xml&gt;
+	&lt;tagFather id="1" name="Pere"&gt;toto et tata
+		&lt;tagChild attrib="val"&gt;search some text&lt;/tagChild&gt;
+	&lt;/tagFather&gt;
+&lt;/xml&gt;
+</pre>
+</p>
+
+<a name="CUSTOM"/>
+<p>
+<h4>Handle new tags</h4>
+As sxmlc does not handle all W3C XML tags, you can specify your own tags so that they can be interpreted instead
+of aborting with a "Syntax error"! ;-)<br/>
+Such "user tags" are defined through the <code>XML_register_user_tag</code> with 3 information:
+<ul>
+<li>The <code>tag_type</code> which is a number uniquely identifying the type of tag.<br/>
+It <strong>HAS TO</strong> be at least <code>TAG_USER</code> or the tag cannot be registered. However, no check
+is performed for duplicate so you can specify twice the same tag number (but why would you? ;-)).</li>
+<li>The <code>start</code> and <code>end</code> are strings that are to be looked for respectively after '&lt;'
+and before '&gt;'</li>
+</ul>
+When parsing such nodes, the whole text between <code>start</code> and <code>end</code> strings will be stored in
+the '<code>tag</code>' member of an <code>XMLNode</code>. The text itself is kept "as is" but you can remove potential
+escape characters with the <code>str_unescape</code> function.
+</p>
+<p>
+NB: Internally, that is how comments, processing instructions and CDATA are handled.
+</p>
+
+<p>
+<pre class="code">
+XML_register_user_tag(TAG_USER+1, "&lt;#[MYTAG-", "-]&gt;");
+XML_parse_1string("&lt;#[MYTAG-Hello, World!-]&gt;", &node);
+printf(node.tag); /* Will display "Hello, World!" */
+</pre>
+<pre>
+&lt;xml&gt;
+	&lt;#[MYTAG-Hello, World!-]&gt;
+&lt;/xml&gt;
+</pre>
+</p>
+
+</div>
+
+<div id="ft">
+<p>
+<a href="http://sourceforge.net/">
+Project Web Hosted by <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=351439&amp;type=16" alt="SourceForge.net" />
+</a>
+</p>
+
+<p>
+&copy;Copyright 1999-2010 -
+<a href="http://geek.net" title="Network which provides and promotes Open Source software downloads, development, discussion and news.">
+Geeknet</a>, Inc., All Rights Reserved
+</p>
+
+<p>
+<a href="http://sourceforge.net/about">About</a>
+-
+<a href="http://sourceforge.net/tos/tos.php">Legal</a>
+-
+<a href="http://p.sf.net/sourceforge/getsupport">Help</a>
+</p>
+</div>
+
+</body>
+</html>

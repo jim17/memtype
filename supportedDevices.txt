@@ -1,0 +1,15 @@
+### PC - Linux
+working, exceptions:
+
+### PC - MacOSX
+working, exceptions:
+
+### PC - Windows
+working, exceptions:
+
+### Android
+Versions Supported:
+4.2.2 - rk3066 nimbo.tv dongle
+4.4   - Motorola MotoG
+
+

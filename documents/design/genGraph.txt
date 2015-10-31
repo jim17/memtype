@@ -1,0 +1,3 @@
+
+# Download Graphviz and execute:
+dot -Tpng uif.gv -o uif.png
