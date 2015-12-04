@@ -184,6 +184,7 @@ uint16_t readXML(char * filePath);
 uint8_t HIDread(usbDevice_t *dev, uint8_t reportId, uint8_t *buff, uint16_t size);
 
 void readAllCredentials(uint8_t* buff, char* filePath);
+uint8_t* readCredential(uint8_t* current, uint8_t* buff, FILE* file);
 void XML_createTag(FILE* file, char *tagName, char* text);
 
 uint16_t ncrypt(char* src, char* dst, uint16_t len);
@@ -468,7 +469,10 @@ void cmdRead(usbDevice_t *dev, uint16_t len)
 {
     HIDread(dev, 2, flashMemory, len);
     if (globalArgs.fFlag)
+    {
+    	fprintf( stderr, "readAllCredentials\n");
         readAllCredentials(flashMemory, globalArgs.fileName);
+    }
 }
 
 void cmdWrite(usbDevice_t *dev, uint8_t* buff, uint16_t len)
@@ -562,31 +566,62 @@ void cmdEcho(ucp_cmd_t* cmd)
     
 }
 
-uint8_t* readCredential( credentialFlash_t* cred, uint8_t* current, uint8_t* base)
+uint8_t* readCredential(uint8_t* c, uint8_t* buff, FILE* file)
 {
-    uint8_t* c;
-    c = (uint8_t*)current;
+	credentialFlash_t cred;
+	char tempDecryptBuff[4096];
+	uint8_t* ptr;
+	int ctr, i, offset;
     
-    cred->name = c;
-    while((*c++)!='\0');
-    cred->line1 = c;
-    while((*c++)!='\0');
-    cred->hop = c;
-    while((*c++)!='\0');
-    cred->line2 = c;
-    while((*c++)!='\0');
-    cred->submit = c;
-    while((*c++)!='\0');
-    cred->next = ((uint16_t)c[1] << 8) + c[0];
-    cred->nextaddr = &base[cred->next];
-    return cred->nextaddr;
+	/* Credential */
+	ptr = c;
+    cred.name = c;
+    while(*ptr++ != 0);
+    cred.next = ((uint16_t)ptr[1] << 8) + ptr[0];
+    cred.nextaddr = &buff[cred.next];
+
+    /* Decrypt */
+    ptr += 2;
+    offset = 0;
+    while(ctr < 4)
+    {
+    	decrypt( &ptr[offset], &tempDecryptBuff[offset], 16);
+    	for(i=0; i<16; i++)
+    	{
+    		if(tempDecryptBuff[offset+i] == 0)
+    		{
+    			ctr++;
+    		}
+    	}
+    	offset += 16;
+    }
+
+    cred.line1 = tempDecryptBuff;
+    ptr = tempDecryptBuff;
+    while(*ptr++ != 0);
+    cred.hop = ptr;
+    while(*ptr++ != 0);
+    cred.line2 = ptr;
+    while(*ptr++ != 0);
+    cred.submit = ptr;
+
+    /* Create Tags */
+	XML_createTag(file, "name", cred.name);
+	XML_createTag(file, "user", cred.line1);
+	XML_createTag(file, "hop", cred.hop);
+	XML_createTag(file, "pass", cred.line2);
+	XML_createTag(file, "submit", cred.submit);
+
+    return cred.nextaddr;
 }
 
 void readAllCredentials(uint8_t* buff, char* filePath)
 {
-    credentialFlash_t cr[4096];
+    fprintf( stderr, "testPoint\n");
     FILE* file;
+    fprintf( stderr, "File Path: %s\n", filePath);
     file = fopen(filePath, "w");
+//    file = stderr;
     uint8_t* ptr = buff;
     int i;
     if (file != NULL)
@@ -596,18 +631,13 @@ void readAllCredentials(uint8_t* buff, char* filePath)
         for(i=0; i<4096; i++)
         {
            fprintf(file,"<cred>\n"); //openning CRED tag
-           ptr = readCredential( &cr[i], ptr, buff);
-           XML_createTag(file, "name", cr[i].name);           
-           XML_createTag(file, "user", cr[i].line1);
-           XML_createTag(file, "hop", cr[i].hop);
-           XML_createTag(file, "pass", cr[i].line2);
-           XML_createTag(file, "submit", cr[i].submit);
+           ptr = readCredential(ptr, buff, file);
            fprintf(file,"</cred>\n"); //closing CRED tag
            if(ptr == buff || ptr == 0 ) break; //No more credentials left
         }
         fprintf(file,"</mt>"); //closing MT tag
-        fclose(file);
-    }   
+    }
+    fclose(file);
 }
 
 /* Abstraction function to create XML tags */
@@ -853,6 +883,20 @@ uint16_t decrypt(char* src, char* dst, uint16_t len)
     char* ptr_src;
     char* ptr_dst;
     char swap[4];
+
+    // change 32 bit endiannes to be as same as the device
+    for(i=0; i<sizeof(key); i+=4)
+    {
+        swap[0] = key[i];
+        swap[1] = key[i+1];
+        swap[2] = key[i+2];
+        swap[3] = key[i+3];
+
+        key[i] = swap[3];
+        key[i+1] = swap[2];
+        key[i+2] = swap[1];
+        key[i+3] = swap[0];
+    }
 
     ptr_src = src;
 // change 32 bit endiannes to be as same as the device
