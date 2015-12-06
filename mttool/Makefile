@@ -23,7 +23,7 @@ EXE_SUFFIX=
 endif
 
 CC= gcc
-CFLAGS=	-g -O -Wall $(USBFLAGS)
+CFLAGS=	-g -O -static -Wall $(USBFLAGS)
 LIBS= $(USBLIBS)
 SXMLPATH = ./sxmlc/src/
 SXMLOBJ = $(SXMLPATH)sxmlc.o $(SXMLPATH)sxmlsearch.o
