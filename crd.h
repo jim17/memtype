@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 
-#define MAX_CRED_FLASH_SIZE (2048)
+#define MAX_CRED_FLASH_SIZE (512)
 #define CRD_START_STR  "[CREDENTIALS]"
 
 
