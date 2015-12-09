@@ -17,6 +17,7 @@
 #define UCP_CMD_SET_PIN     0x07
 #define UCP_CMD_READ_PIN  0x08
 #define UCP_CMD_KEYBOARD 0x09
+#define UCP_CMD_KEYBOARD_PRESS  0x69
 
 /* ERROR CODES */
 #define UCP_ERR             0xF0 /* generic error */
@@ -48,6 +49,8 @@ typedef struct
 /* Public vars */
 extern uint8_t UCP_state;
 extern ucp_pkt_t customReport ;//= {.buff = "hello\r\n"};
+extern volatile uint8_t USB_keycode;
+extern volatile uint8_t USB_modifier;
 
 /* Public functions */
 void UCP_Init(void);

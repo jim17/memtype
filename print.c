@@ -1,5 +1,8 @@
 #include "print.h"
 
+extern volatile uint8_t USB_keycode;
+extern volatile uint8_t USB_modifier;
+
 typedef enum
 {
     INIT = 0,
@@ -44,6 +47,13 @@ void pressKeyByChar(char ascii)
     reportBuffer.modifier  = ((SHIFT_MASK) & key) >> 6;
     reportBuffer.modifier |= (ALTGR_MASK) & key;
     reportBuffer.keycode  = (~(SHIFT_MASK|ALTGR_MASK)) & key;
+}
+
+void pressKey(uint8_t key, uint8_t modifier)
+{
+    //Initializing
+	USB_keycode = key;
+	USB_modifier = modifier;
 }
 
 void releaseKeys(void)

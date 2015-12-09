@@ -174,7 +174,9 @@ int main(void)
         if(usbInterruptIsReady()){
             UCP_WriteTask();
             LED_TOGGLE();
-            printUpdate();
+            //printUpdate();
+            reportBuffer.modifier = USB_modifier;
+            reportBuffer.keycode = USB_keycode;
             usbSetInterrupt((void*)&reportBuffer, sizeof(reportBuffer));
         }
     }

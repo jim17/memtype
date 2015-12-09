@@ -18,6 +18,8 @@ volatile uint16_t flashWriteAddr;
 volatile uint8_t buffIndex;
 volatile uint8_t usbWrite = 0;
 volatile uint8_t usbWriteAccepted = 0;
+volatile uint8_t USB_keycode = 0;
+volatile uint8_t USB_modifier = 0;
 
 /* INFO Data, the first byte is for cmd */
 typedef struct
@@ -105,11 +107,6 @@ void UCP_Decode(uint8_t *data, uint8_t len)
         customReport.buf[0]=UCP_CMD_ERROR;
         customReport.buf[1]=UCP_ERR_SIZE;
     }
-    else if (UCP_state == DEVICE_LOCKED)
-    {
-        customReport.buf[0]=UCP_CMD_ERROR;
-        customReport.buf[1]=UCP_ERR_LOCKED;
-    }
     else if (UCP_state == WRITTING)
     {
         if( (usbWrite == 0) && (readOffset < readEnd))
@@ -194,6 +191,10 @@ void UCP_Decode(uint8_t *data, uint8_t len)
                 readOffset = (uint16_t)keyboardLUT_ES;
                 readEnd = (uint16_t)keyboardLUT_ES+KEYBOARD_SIZE;
                 break;
+            case UCP_CMD_KEYBOARD_PRESS:
+            	USB_keycode = data[1];
+            	USB_modifier = data[2];
+            	break;
             case UCP_CMD_DATA:
                 break;
             case UCP_CMD_INFO:
