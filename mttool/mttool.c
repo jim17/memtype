@@ -188,10 +188,11 @@ uint8_t* readCredential(uint8_t* current, uint8_t* buff, FILE* file);
 void XML_createTag(FILE* file, char *tagName, char* text);
 
 uint16_t ncrypt(char* src, char* dst, uint16_t len);
-uint16_t decrypt(char* src, char* dst, uint16_t len);
+uint16_t dcrypt(char* src, char* dst, uint16_t len);
 
 int main(int argc, char **argv)
 {
+
 
     int option = 0;      // For getopt temp option
 
@@ -567,7 +568,8 @@ void cmdEcho(ucp_cmd_t* cmd)
 }
 
 uint8_t* readCredential(uint8_t* c, uint8_t* buff, FILE* file)
-{
+{   
+    
 	credentialFlash_t cred;
 	char tempDecryptBuff[4096];
 	uint8_t* ptr;
@@ -583,9 +585,11 @@ uint8_t* readCredential(uint8_t* c, uint8_t* buff, FILE* file)
     /* Decrypt */
     ptr += 2;
     offset = 0;
+    ctr=0;
     while(ctr < 4)
     {
-    	decrypt( &ptr[offset], &tempDecryptBuff[offset], 16);
+
+    	dcrypt( &ptr[offset], &tempDecryptBuff[offset], 16);
     	for(i=0; i<16; i++)
     	{
     		if(tempDecryptBuff[offset+i] == 0)
@@ -868,7 +872,7 @@ uint16_t ncrypt(char* src, char* dst, uint16_t len)
 
 }
 
-uint16_t decrypt(char* src, char* dst, uint16_t len)
+uint16_t dcrypt(char* src, char* dst, uint16_t len)
 {
 
     uint8_t key[16];
@@ -877,8 +881,7 @@ uint16_t decrypt(char* src, char* dst, uint16_t len)
     memcpy(&key[4],globalArgs.pin,4);
     memcpy(&key[8],globalArgs.pin,4);
     memcpy(&key[12],globalArgs.pin,4);
-
-
+    
     uint16_t i;
     char* ptr_src;
     char* ptr_dst;
