@@ -40,7 +40,7 @@ struct globalArgs_t
     int fFlag;              //to File?
     int offset;             //Offset
     int size;               //Size
-    const char* fileName;   //File name
+    char* fileName;   //File name
     FILE* file;             //the file pointer to use
 } globalArgs;
 
@@ -99,7 +99,7 @@ int             err;
 
 /* ------------------------------------------------------------------------- */
 
-static void hexdump(char *buffer, int len)
+static void hexdump(uint8_t *buffer, int len)
 {
 int     i;
 FILE    *fp = stderr;
@@ -122,21 +122,21 @@ FILE    *fp = stderr;
 /* Specific protocol */
 typedef struct __attribute__((packed))
 {
-    char reportid;
-    char cmd;
-    char buff[7];
+    uint8_t reportid;
+    uint8_t cmd;
+    uint8_t buff[7];
 } ucp_cmd_t;
 
 typedef struct __attribute__((packed))
 {
-    char reportid;
-    char data[8];
+    uint8_t reportid;
+    uint8_t data[8];
 } ucp_request_t;
 
 typedef struct __attribute__((packed))
 {
-    char reportid;
-    char data[8];
+    uint8_t reportid;
+    uint8_t data[8];
 } ucp_response_t;
 
 typedef struct __attribute__((packed))
@@ -158,11 +158,11 @@ typedef struct __attribute__((packed))
 
 typedef struct
 {
-    char* name;
-    char* line1;
-    char* hop;
-    char* line2;
-    char* submit;
+    uint8_t* name;
+    uint8_t* line1;
+    uint8_t* hop;
+    uint8_t* line2;
+    uint8_t* submit;
     uint16_t next;
     uint8_t* nextaddr;
 } credentialFlash_t;
@@ -184,13 +184,15 @@ uint16_t readXML(char * filePath);
 uint8_t HIDread(usbDevice_t *dev, uint8_t reportId, uint8_t *buff, uint16_t size);
 
 void readAllCredentials(uint8_t* buff, char* filePath);
+uint8_t* readCredential(uint8_t* current, uint8_t* buff, FILE* file);
 void XML_createTag(FILE* file, char *tagName, char* text);
 
-uint16_t ncrypt(char* src, char* dst, uint16_t len);
-uint16_t decrypt(char* src, char* dst, uint16_t len);
+uint16_t ncrypt(uint8_t* src, uint8_t* dst, uint16_t len);
+uint16_t dcrypt(uint8_t* src, uint8_t* dst, uint16_t len);
 
 int main(int argc, char **argv)
 {
+
 
     int option = 0;      // For getopt temp option
 
@@ -355,7 +357,7 @@ int main(int argc, char **argv)
                     fprintf( stderr, "DATA\n");
                     break;
                 case UCP_CMD_INFO:
-                    fprintf( stderr, "sizeof(info) -> %u\n", sizeof(deviceInfo));
+                    fprintf( stderr, "sizeof(info) -> %lu\n", sizeof(deviceInfo));
                     memcpy((void*)&deviceInfo, (void*)buffer.buff, sizeof(deviceInfo));
                     
                     /* Call info */
@@ -468,7 +470,10 @@ void cmdRead(usbDevice_t *dev, uint16_t len)
 {
     HIDread(dev, 2, flashMemory, len);
     if (globalArgs.fFlag)
+    {
+    	fprintf( stderr, "readAllCredentials\n");
         readAllCredentials(flashMemory, globalArgs.fileName);
+    }
 }
 
 void cmdWrite(usbDevice_t *dev, uint8_t* buff, uint16_t len)
@@ -493,7 +498,6 @@ void cmdSetPin(usbDevice_t *dev){
 void cmdKeyboard(usbDevice_t *dev){
     const int keybSIZE = 1024;
     char keyb[keybSIZE];
-    size_t len = 0;
     uint8_t buf[128];
     char* tok;
     int i = 0;
@@ -562,31 +566,65 @@ void cmdEcho(ucp_cmd_t* cmd)
     
 }
 
-uint8_t* readCredential( credentialFlash_t* cred, uint8_t* current, uint8_t* base)
-{
-    uint8_t* c;
-    c = (uint8_t*)current;
+uint8_t* readCredential(uint8_t* c, uint8_t* buff, FILE* file)
+{   
     
-    cred->name = c;
-    while((*c++)!='\0');
-    cred->line1 = c;
-    while((*c++)!='\0');
-    cred->hop = c;
-    while((*c++)!='\0');
-    cred->line2 = c;
-    while((*c++)!='\0');
-    cred->submit = c;
-    while((*c++)!='\0');
-    cred->next = ((uint16_t)c[1] << 8) + c[0];
-    cred->nextaddr = &base[cred->next];
-    return cred->nextaddr;
+	credentialFlash_t cred;
+	uint8_t tempDecryptBuff[4096];
+	uint8_t* ptr;
+	int ctr, i, offset;
+    
+	/* Credential */
+	ptr = c;
+    cred.name = c;
+    while(*ptr++ != 0);
+    cred.next = ((uint16_t)ptr[1] << 8) + ptr[0];
+    cred.nextaddr = &buff[cred.next];
+
+    /* Decrypt */
+    ptr += 2;
+    offset = 0;
+    ctr=0;
+    while(ctr < 4)
+    {
+
+    	dcrypt( &ptr[offset], &tempDecryptBuff[offset], 16);
+    	for(i=0; i<16; i++)
+    	{
+    		if(tempDecryptBuff[offset+i] == 0)
+    		{
+    			ctr++;
+    		}
+    	}
+    	offset += 16;
+    }
+
+    cred.line1 = tempDecryptBuff;
+    ptr = tempDecryptBuff;
+    while(*ptr++ != 0);
+    cred.hop = ptr;
+    while(*ptr++ != 0);
+    cred.line2 = ptr;
+    while(*ptr++ != 0);
+    cred.submit = ptr;
+
+    /* Create Tags */
+	XML_createTag(file, "name",(char*) cred.name);
+	XML_createTag(file, "user",(char*) cred.line1);
+	XML_createTag(file, "hop",(char*) cred.hop);
+	XML_createTag(file, "pass",(char*) cred.line2);
+	XML_createTag(file, "submit",(char*) cred.submit);
+
+    return cred.nextaddr;
 }
 
 void readAllCredentials(uint8_t* buff, char* filePath)
 {
-    credentialFlash_t cr[4096];
+    fprintf( stderr, "testPoint\n");
     FILE* file;
+    fprintf( stderr, "File Path: %s\n", filePath);
     file = fopen(filePath, "w");
+//    file = stderr;
     uint8_t* ptr = buff;
     int i;
     if (file != NULL)
@@ -596,18 +634,13 @@ void readAllCredentials(uint8_t* buff, char* filePath)
         for(i=0; i<4096; i++)
         {
            fprintf(file,"<cred>\n"); //openning CRED tag
-           ptr = readCredential( &cr[i], ptr, buff);
-           XML_createTag(file, "name", cr[i].name);           
-           XML_createTag(file, "user", cr[i].line1);
-           XML_createTag(file, "hop", cr[i].hop);
-           XML_createTag(file, "pass", cr[i].line2);
-           XML_createTag(file, "submit", cr[i].submit);
+           ptr = readCredential(ptr, buff, file);
            fprintf(file,"</cred>\n"); //closing CRED tag
            if(ptr == buff || ptr == 0 ) break; //No more credentials left
         }
         fprintf(file,"</mt>"); //closing MT tag
-        fclose(file);
-    }   
+    }
+    fclose(file);
 }
 
 /* Abstraction function to create XML tags */
@@ -642,11 +675,10 @@ uint16_t readXML(char* filePath)
     //XMLSearch_search_add_attribute(&search, "presence", NULL);
     //XMLSearch_search_add_attribute(&search, "value", "a*");
     
-    char* buffptr = flashMemory;
-    char* nextCredential_ptr;
-    char* encryptStart;
+    uint8_t* buffptr = flashMemory;
+    uint8_t* nextCredential_ptr;
+    uint8_t* encryptStart;
     uint16_t length;
-    uint16_t i;
 
     node = doc.nodes[doc.i_root];
     if (XMLSearch_node_matches(node, &search))
@@ -675,7 +707,7 @@ uint16_t readXML(char* filePath)
             
             
             if(name->text != 0)
-                buffptr = buffptr + sprintf(buffptr, "%s", name->text);
+                buffptr = buffptr + sprintf((char*)buffptr, "%s", name->text);
             else
                 *buffptr = 0;
             buffptr += 1;
@@ -686,32 +718,32 @@ uint16_t readXML(char* filePath)
             encryptStart = buffptr; // encryption must start here ! 
             
             if(user->text != 0)
-                buffptr = buffptr + sprintf(buffptr, "%s", user->text);
+                buffptr = buffptr + sprintf((char*)buffptr, "%s", user->text);
             else
                 *buffptr = 0;
             buffptr += 1;
             
             if(hop->text != 0)
-                buffptr = buffptr + sprintf(buffptr, "%s", hop->text);
+                buffptr = buffptr + sprintf((char*)buffptr, "%s", hop->text);
             else
                 *buffptr = 0;
             buffptr += 1;
             
             if(pass->text != 0)
-                buffptr = buffptr + sprintf(buffptr, "%s", pass->text);
+                buffptr = buffptr + sprintf((char*)buffptr, "%s", pass->text);
             else
                 *buffptr = 0;
             buffptr += 1;
             
             if(submit->text != 0)
-                buffptr = buffptr + sprintf(buffptr, "%s", submit->text);
+                buffptr = buffptr + sprintf((char*)buffptr, "%s", submit->text);
             else
                 *buffptr = 0;
             buffptr += 1;
             
             // call encryption here !
-            char source[4096];
-            char dest[4096];
+            uint8_t source[4096];
+            uint8_t dest[4096];
             uint16_t len = buffptr - encryptStart;
             // buffptr must be incremented to meet block size of encryption
             
@@ -729,18 +761,18 @@ uint16_t readXML(char* filePath)
             // copy credentials into 
             memcpy((void*)(source), (void*)encryptStart, len);
 
-            fprintf(stderr, "\n PLAIN BLOCK TEXT\n", len );
+            fprintf(stderr, "\n PLAIN BLOCK TEXT\n" );
 
-            fprintf(stderr, "\n ENCRYPTED BLOCK LEN %d\n", len );
+            fprintf(stderr, "\n ENCRYPTED BLOCK LEN %d\n",len );
             // start encryption here!
             length = ncrypt(source, dest, len);
             hexdump(encryptStart, len);
             memcpy((void*)encryptStart, dest, len);
             hexdump(encryptStart, len);
-            fprintf(stderr, "\n -----------------\n ", len );
+            fprintf(stderr, "\n -----------------\n " );
 
 
-            uint16_t ptr = ((buffptr) - (char*)flashMemory);
+            uint16_t ptr = ((buffptr) - flashMemory);
             *nextCredential_ptr = (ptr & 0x00FF);
             *(nextCredential_ptr+1) = (ptr & 0xFF00)>> 8;
 
@@ -751,7 +783,7 @@ uint16_t readXML(char* filePath)
     *nextCredential_ptr = 0;
     *(nextCredential_ptr+1) = 0;
 
-    uint16_t size = (buffptr - (char*)flashMemory);
+    uint16_t size = (buffptr - flashMemory);
 
     hexdump(flashMemory, size);
     
@@ -762,7 +794,7 @@ uint16_t readXML(char* filePath)
 }
 
 // returns the block length
-uint16_t ncrypt(char* src, char* dst, uint16_t len)
+uint16_t ncrypt(uint8_t* src, uint8_t* dst, uint16_t len)
 {
 
     uint8_t key[16];
@@ -775,9 +807,7 @@ uint16_t ncrypt(char* src, char* dst, uint16_t len)
     uint16_t i;
     uint8_t* ptr_src;
     uint8_t* ptr_dst;
-    uint32_t var = 0;
     struct NESSIEstruct keystruct;
-    char outs[200];
     uint8_t swap[4];
 
     // change 32 bit endiannes to be as same as the device
@@ -838,7 +868,7 @@ uint16_t ncrypt(char* src, char* dst, uint16_t len)
 
 }
 
-uint16_t decrypt(char* src, char* dst, uint16_t len)
+uint16_t dcrypt(uint8_t* src, uint8_t* dst, uint16_t len)
 {
 
     uint8_t key[16];
@@ -847,12 +877,25 @@ uint16_t decrypt(char* src, char* dst, uint16_t len)
     memcpy(&key[4],globalArgs.pin,4);
     memcpy(&key[8],globalArgs.pin,4);
     memcpy(&key[12],globalArgs.pin,4);
-
-
+    
     uint16_t i;
-    char* ptr_src;
-    char* ptr_dst;
-    char swap[4];
+    uint8_t* ptr_src;
+    uint8_t* ptr_dst;
+    uint8_t swap[4];
+
+    // change 32 bit endiannes to be as same as the device
+    for(i=0; i<sizeof(key); i+=4)
+    {
+        swap[0] = key[i];
+        swap[1] = key[i+1];
+        swap[2] = key[i+2];
+        swap[3] = key[i+3];
+
+        key[i] = swap[3];
+        key[i+1] = swap[2];
+        key[i+2] = swap[1];
+        key[i+3] = swap[0];
+    }
 
     ptr_src = src;
 // change 32 bit endiannes to be as same as the device
@@ -870,7 +913,6 @@ uint16_t decrypt(char* src, char* dst, uint16_t len)
     }
     
     struct NESSIEstruct keystruct;
-    char outs[200];
     
     NESSIEkeysetup (key,&keystruct);
     ptr_src = src;
