@@ -1,8 +1,3 @@
 EESchema-DOCLIB  Version 2.0
 #
-$CMP USB_A
-D A connector
-K USB USB_A
-$ENDCMP
-#
 #End Doc Library
