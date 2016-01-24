@@ -122,9 +122,9 @@ def NoekeonDecrypt(WorkingKey, State):
 print "0x55 binary: %s"%(bin(0x55))
 print bin(ROTL32(0x55, 1))
 print bin(ROTR32(0x55, 1))
-"""
 text = ""
 for num in NoekeonDecrypt([0,0,0,0],NoekeonEncrypt([0,0,0,0], [0,0,0,0])):
     text = text + "%08x"%(num)
 
 print text
+"""
