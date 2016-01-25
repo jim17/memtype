@@ -6,23 +6,25 @@ import usb.util
 import time
 from noekeon import *
 
-SET_REPORT_TIME_WAIT = 0.05
-GET_REPORT_TIME_WAIT = 0.05
+SET_REPORT_TIME_WAIT = 0.00
+GET_REPORT_TIME_WAIT = 0.00
 
-
+"""
+Takes low byte of 16 bit var
+"""
 def lo(num):
 	return num & 0xFF
 
-
+"""
+Takes high byte of 16 bit var
+"""
 def hi(num):
 	return (num & 0xFF00) >> 8
 
-def to32BE(num1,num2,num3,num4):
-	return (num1 << 24) + (num2 << 16) + (num3 << 8) + num4
-
-def to32LE(num1=0,num2=0,num3=0,num4=0):
-	return (num4 << 24) + (num3 << 16) + (num2 << 8) + num1
-
+"""
+Input: 0xaa,0xbb,0xcc,0xdd
+Outupt: 0xddccbbaa
+"""
 def group8to32(b=[]):
 	tmp = []
 
@@ -34,6 +36,10 @@ def group8to32(b=[]):
 
 	return tmp
 
+"""
+Input: 0xddccbbaa
+Output: 0xaa,0xbb,0xcc,0xdd
+"""
 def ungroup32to8(b=[]):
 	tmp = []
 	for i in range(len(b)):
@@ -45,7 +51,11 @@ def ungroup32to8(b=[]):
 
 	return tmp
 
-
+"""
+Input: Credential List
+Output: Credential Block in the form
+	[CredName,Offset,[Encrypted: user,hop,pass,submit]] * Number of credentials
+"""
 def encryptCredentialList(cl=[], key=[0,0,0,0]):
 	tmp = []
 	for c in cl:
@@ -59,6 +69,7 @@ def encryptCredentialList(cl=[], key=[0,0,0,0]):
 """
 Input: Credential Block in the form
 	[CredName,Offset,[Encrypted: user,hop,pass,submit]] * Number of credentials
+Output: Credential List
 """
 def decryptCredentialList(cb=[], key=[0,0,0,0]):
 	cred = credential()
@@ -99,7 +110,9 @@ def decryptCredentialList(cb=[], key=[0,0,0,0]):
 
 	return credList
 
-
+"""
+Find HID usb device based on VID and PID
+"""
 def findHIDDevice(vendor_id, product_id, print_debug):
 	# Find our device
 	hid_device = usb.core.find(idVendor=vendor_id, idProduct=product_id)
@@ -130,6 +143,9 @@ def findHIDDevice(vendor_id, product_id, print_debug):
 	# Return device
 	return hid_device
 
+"""
+USB SetReport for HID USB device
+"""
 def usbhidSetReport(device, buff, reportId):
 							 # bmRequestType, bmRequest, wValue            wIndex
 	if device.ctrl_transfer(0x20,          0x09,      0x0300 | reportId,   0,  buff, 5000) != len(buff):
@@ -138,6 +154,9 @@ def usbhidSetReport(device, buff, reportId):
 	time.sleep(SET_REPORT_TIME_WAIT)
 	return len(buff)
 
+"""
+USB GetReport for HID USB device
+"""
 def usbhidGetReport(device, reportId, l):
 							 # bmRequestType, bmRequest, wValue            wIndex
 	buff = device.ctrl_transfer(0xA0,          0x01,  0x0300 | reportId,   0,  l , 5000);
@@ -147,6 +166,9 @@ def usbhidGetReport(device, reportId, l):
 	time.sleep(GET_REPORT_TIME_WAIT)
 	return buff.tolist()
 
+"""
+credential class
+"""
 class credential:
 	def __init__(self, name="", user="", hop="", passw="", submit=""):
 		# Initialize with VID and PID
@@ -201,7 +223,7 @@ class credential:
 				else:
 					self.submit = self.submit + chr(c)
 
-		return
+		return self
 ## Memtype COMM Types
 class deviceInfo:
 	def __init__(self, version=[0,0,0], credSize=0):
@@ -260,7 +282,7 @@ class memtype:
 
 		return info
 
-  	def read(self, credSize=512, offset=0):
+  	def read(self, credSize=2048, offset=0):
 		pkt = array('B')
                 pkt.append(2)
                 pkt.append(lo(offset))
