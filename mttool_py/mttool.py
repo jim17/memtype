@@ -4,7 +4,7 @@ import usb.core
 import usb.control
 import usb.util
 import time
-from keyboard import *
+#from keyboard import *
 
 USB_VID					= 0x1209
 USB_PID					= 0xA033
@@ -192,6 +192,6 @@ if __name__ == '__main__':
 		print "some Error appeared"
 		sys.exit(0)
 	else:
-		keyboardTest(hid_device)
+		readInfo(hid_device)
 
 	usb.util.dispose_resources(hid_device)

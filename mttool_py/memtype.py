@@ -6,9 +6,9 @@ import usb.util
 import time
 from noekeon import *
 
-SET_REPORT_TIME_WAIT = 0.00
-GET_REPORT_TIME_WAIT = 0.00
-
+SET_REPORT_TIME_WAIT = 0.01
+GET_REPORT_TIME_WAIT = 0.01
+DEFAULT_CREDENTIAL_SIZE = 2048
 """
 Takes low byte of 16 bit var
 """
@@ -72,7 +72,7 @@ def encryptCredentialList(cl=[], key=[0,0,0,0]):
 		# STEP 2 add credential into format:
 		#  [CredName,Offset,[Encrypted: user,hop,pass,submit]]
 		offset += len(cname) + offsetSize + len(eb)
-		print offset
+		#print offset
 		tmp.extend(cname)
 		tmp.extend([lo(offset), hi(offset)])
 		tmp.extend(eb)
@@ -144,7 +144,7 @@ def findHIDDevice(vendor_id, product_id, print_debug):
 	if platform.system() == "Linux":
 		# Need to do things differently
 		try:
-			hid_device.detach_kernel_driver(0)
+			#hid_device.detach_kernel_driver(0) # this line makes memtype crash in sending key codes
 			hid_device.reset()
 		except Exception, e:
 			pass # Probably already detached
@@ -166,7 +166,7 @@ def usbhidSetReport(device, buff, reportId):
 							 # bmRequestType, bmRequest, wValue            wIndex
 	if device.ctrl_transfer(0x20,          0x09,      0x0300 | reportId,   0,  buff, 5000) != len(buff):
 		print "Error usbhidSetReport"
-		return -1
+		return []
 	time.sleep(SET_REPORT_TIME_WAIT)
 	return len(buff)
 
@@ -178,9 +178,39 @@ def usbhidGetReport(device, reportId, l):
 	buff = device.ctrl_transfer(0xA0,          0x01,  0x0300 | reportId,   0,  l , 5000);
 	if buff == None:
 		print "Error usbhidGetReport"
-		return -1
+		return []
 	time.sleep(GET_REPORT_TIME_WAIT)
 	return buff.tolist()
+
+"""
+USB Send message, always do a Set report and get back the answer
+    the answer should be equal to Set report for a succesfull CMD
+"""
+def usbSendMsg(dev, msg, reportId, cmdLen=8):
+	if(msg != 8):
+		print "ERR msg length must be 8"
+		return None
+
+	pkt = array('B', msg)
+	if( usbhidSetReport(dev, pkt, reportId) != 8):
+		print "ERR Set Report"
+		return None
+
+	answer = usbhidGetReport(dev, reportId, 8)
+	if(pkt[:cmdLen] != answer[:cmdLen]):
+		print "Packet: ", pkt.tolist()
+		print "Answer: ", answer.tolist()
+		print "ERR pkt != answer"
+		return None
+
+	return answer.tolist()
+
+"""
+USB Get message, only do a Get Report used to read Data
+"""
+def usbGetMsg(dev, reportId):
+        answer = usbhidGetReport(dev, reportId, 8)
+        return answer.tolist()
 
 """
 credential class
@@ -289,19 +319,12 @@ class memtype:
 			return 0
 
 	def disconnect(self):
-		usb.util.dispose_resources(self.dev)
+		if(self.dev != None):
+			usb.util.dispose_resources(self.dev)
 
 	def info(self):
-		pkt = array('B')
-	        pkt.append(5)
-        	pkt.append(0)
-        	pkt.append(0)
-        	pkt.append(0)
-        	pkt.append(0)
-        	pkt.append(0)
-        	pkt.append(0)
-        	pkt.append(0)
-
+		pkt = array('B',[5, 0, 0, 0, 0, 0, 0, 0])
+		
 		if self.printDebug: print pkt.tolist()
 
 		if( usbhidSetReport(self.dev, pkt, self.reportId) != 8):
@@ -316,16 +339,51 @@ class memtype:
 
 		return info
 
-  	def read(self, credSize=2048, offset=0):
-		pkt = array('B')
-                pkt.append(2)
-                pkt.append(lo(offset))
-                pkt.append(hi(offset))
-                pkt.append(lo(credSize))
-                pkt.append(hi(credSize))
-                pkt.append(0)
-                pkt.append(0)
-                pkt.append(0)
+	def write(self, block=[], offset=0):
+		if( len(block) > self.info().credSize ):
+			if self.printDebug: print "ERR block size greater than expted !"
+			return None
+
+		# Block to send must be multiple of 8
+		credSize = len(block)
+		if( credSize % 8 ):
+			block.extend( [0]*(8-(credSize%8)) )
+
+		# Prepare Write CMD
+		pkt = array('B',[3, lo(offset), hi(offset), lo(credSize), hi(credSize), 0, 0, 0])
+		if( usbhidSetReport(self.dev, pkt, self.reportId) != 8):
+			if self.printDebug: print "ERR Set Report"
+                        return None
+		# Check CMD sent successfully
+		answer = usbhidGetReport(self.dev, self.reportId, 8)
+                if(pkt.tolist() != answer):
+                        if self.printDebug:
+                                print "Packet: ", pkt.tolist()
+                                print "Answer: ", answer
+                                print "ERR pkt != answer"
+
+		# Send DATA, wait 50ms between transfers
+		for i in range(0, len(block), 8):
+			# Prepare packet
+			pkt = array('B', block[i:i+8])
+			if( usbhidSetReport(self.dev, pkt, self.reportId) != 8):
+                        	if self.printDebug: print "ERR Set Report"
+                        	return None
+			
+			answer = usbhidGetReport(self.dev, self.reportId, 8)
+			if(pkt.tolist() != answer):
+				if self.printDebug:
+					print "Packet: ", pkt.tolist()
+					print "Answer: ", answer
+					print "ERR pkt != answer"
+			
+			# 50ms to let memtype do usbInterruptIsReady
+			time.sleep(0.05)
+
+                return block
+	
+  	def read(self, credSize=DEFAULT_CREDENTIAL_SIZE, offset=0):
+		pkt = array('B',[2, lo(offset), hi(offset), lo(credSize), hi(credSize), 0, 0, 0])
 		
 		if( usbhidSetReport(self.dev, pkt, self.reportId) != 8):
 			if self.printDebug: print "ERR Set Report"
@@ -334,7 +392,7 @@ class memtype:
 		answer = usbhidGetReport(self.dev, self.reportId, 8)
 		if(pkt.tolist() != answer):
 			if self.printDebug:
-				print "Packet: ", pkt
+				print "Packet: ", pkt.tolist()
 				print "Answer: ", answer
 				print "ERR pkt != answer"
 
@@ -348,15 +406,12 @@ class memtype:
 if __name__ == '__main__':
 	# Search for the memtype and read hid data
 	m = memtype()
-	print m.info()
+	m.info()
 	block = m.read()
-	m.disconnect()
-	#block = [ 0x57,0x65,0x6c,0x63,0x6f,0x6d,0x65,0x00,0x3a,0x00,0x79,0x62,0x6f,0xc8,0x0f,0xeb,0x16,0x21,0x95,0xdd,0x0f,0x42,0xe5,0x33,0x9f,0xb7,0x8d,0x43,0xb4,0xaa,0xb7,0xac,0xf0,0xe3,0xc4,0x71,0xcd,0xe1,0xa2,0x4f,0x15,0x33,0x65,0x41,0x1d,0xee,0xac,0xf3,0x5c,0x00,0xd1,0x8f,0x62,0x28,0x79,0x61,0xf9,0xba,0x41,0x62,0x6f,0x75,0x74,0x00,0x72,0x00,0x16,0xdc,0x40,0xd1,0xe4,0x36,0x4d,0xa7,0x8a,0x3d,0x5c,0x19,0x94,0xe1,0x88,0xdf,0xbf,0x68,0x01,0xac,0x46,0x8c,0x4b,0x9d,0x01,0x55,0x24,0x07,0x85,0x80,0xa0,0x62,0x39,0xab,0x03,0xc8,0x84,0x64,0xfa,0xf1,0xa3,0xb7,0x74,0x7b,0xa3,0xf3,0x05,0xcb,0x52,0x6f,0x75,0x74,0x65,0x72,0x20,0x44,0x65,0x66,0x61,0x75,0x6c,0x74,0x00,0x93,0x00,0x08,0xa9,0x43,0x69,0xd2,0x61,0x54,0xe0,0x6c,0x18,0xd5,0x72,0x4b,0x0d,0xe6,0x62 ] 
 	cl = decryptCredentialList(block, key=[0x30303030,0x30303030,0x30303030,0x30303030])
-	tmp = "--"
-	for i in encryptCredentialList(cl, key=[0x30303030,0x30303030,0x30303030,0x30303030]):
-		tmp += "0x%02x," % i
-	#tmp = "block = ["
-	#for i in cl[0].encrypt(key=[0x30303030,0x30303030,0x30303030,0x30303030]):
-	#	tmp += "0x%02x," % i
-	print tmp[:-1]
+	for i in range(len(cl)):
+		c.name = "credName%d"%i
+	
+	block = encryptCredentialList(cl, key=[0x30303030,0x30303030,0x30303030,0x30303030])
+	m.write(block)
+	m.disconnect()
