@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from array import array
 import platform
 import usb.core
