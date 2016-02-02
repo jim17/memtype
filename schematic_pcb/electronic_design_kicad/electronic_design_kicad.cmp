@@ -1,93 +1,162 @@
-Cmp-Mod V01 Created by Cvpcb (2014-jul-16 BZR unknown)-product   date = Sun 16 Nov 2014 11:17:35 AM CET
+Cmp-Mod V01 Created by PcbNew   date = Tue 02 Feb 2016 04:42:32 PM CET
 
 BeginCmp
-TimeStamp = /5432C46A;
+TimeStamp = 56905262
+Path = /568D5081
+Reference = P1;
+ValeurCmp = USB_A;
+IdModule  = USB_A_MALE;
+EndCmp
+
+BeginCmp
+TimeStamp = 5467B0F9
+Path = 
+Reference = area0x33;
+ValeurCmp = LOGO;
+IdModule  = projectLib:logo;
+EndCmp
+
+BeginCmp
+TimeStamp = 54687AF1
+Path = /5432C46A
 Reference = C1;
 ValeurCmp = 100n;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /546248F6;
+TimeStamp = 54687AFD
+Path = /546248F6
 Reference = D1;
 ValeurCmp = 3V6;
 IdModule  = projectLib:SOT-23;
 EndCmp
 
 BeginCmp
-TimeStamp = /5432C05B;
-Reference = IC1;
-ValeurCmp = ATTINY85-S;
-IdModule  = projectLib:SOIC-8-W;
-EndCmp
-
-BeginCmp
-TimeStamp = /5432DE6D;
-Reference = P1;
-ValeurCmp = USB;
-IdModule  = projectLib:usbA_std_pcb;
-EndCmp
-
-BeginCmp
-TimeStamp = /5461193C;
-Reference = P2;
-ValeurCmp = JOYSTICK;
-IdModule  = projectLib:JOYSTICK;
-EndCmp
-
-BeginCmp
-TimeStamp = /5432D93B;
+TimeStamp = 54687B1B
+Path = /5432D93B
 Reference = R1;
 ValeurCmp = 1k5;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /5432D997;
+TimeStamp = 54687B27
+Path = /5432D997
 Reference = R2;
 ValeurCmp = 68R;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /5432D99D;
+TimeStamp = 54687B33
+Path = /5432D99D
 Reference = R3;
 ValeurCmp = 68R;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /543D97EE;
-Reference = R4;
+TimeStamp = 54687B3F
+Path = /543D97EE
+Reference = R5;
 ValeurCmp = 560k;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /543DDBE5;
-Reference = R5;
+TimeStamp = 54687B4B
+Path = /543DDBE5
+Reference = R4;
 ValeurCmp = 1k;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /543DDC38;
+TimeStamp = 54687B57
+Path = /543DDC38
 Reference = R6;
 ValeurCmp = 1k;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /543DDC92;
+TimeStamp = 54687B63
+Path = /543DDC92
 Reference = R7;
 ValeurCmp = 1k;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /543DE0DD;
+TimeStamp = 54687B6F
+Path = /543DE0DD
 Reference = R8;
 ValeurCmp = 1k;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = 568D5B21
+Path = /568C61B8
+Reference = C2;
+ValeurCmp = 4n7;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = 568D5B22
+Path = /5432C05B
+Reference = IC1;
+ValeurCmp = ATTINY85-S;
+IdModule  = projectLib:SO8_200mil_wide;
+EndCmp
+
+BeginCmp
+TimeStamp = 568D5B68
+Path = /568C5F4F
+Reference = R9;
+ValeurCmp = 1M;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = 568D5B91
+Path = /568D12B4
+Reference = P2;
+ValeurCmp = CONN_6;
+IdModule  = projectLib:SKRHAAE010;
+EndCmp
+
+BeginCmp
+TimeStamp = 569037A4
+Path = /56901E90
+Reference = D2;
+ValeurCmp = LED GREEN;
+IdModule  = LEDs:LED_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = 569037B5
+Path = /569024A8
+Reference = D3;
+ValeurCmp = LED RED;
+IdModule  = LEDs:LED_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = 569037D3
+Path = /5690360A
+Reference = R10;
+ValeurCmp = 68R;
+IdModule  = projectLib:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = 569037E0
+Path = /569034B6
+Reference = R11;
+ValeurCmp = 68R;
 IdModule  = projectLib:SMD-0805;
 EndCmp
 
