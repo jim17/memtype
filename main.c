@@ -24,10 +24,7 @@ at least be connected to INT0 as well.
 #include "oddebug.h"        /* This is also an example for using debug macros */
 #include "led.h"            /* Led defines for debugging */
 
-//#include "password.h"
-
-//PROGMEM const char myPass[] = PASSWORD;
-
+#include "osccal.h"
 #include "print.h"
 #include "adm.h"
 #include "uib.h"
@@ -140,6 +137,8 @@ uchar usbFunctionSetup(uchar data[8])
 
 int main(void)
 {
+    //cli(); /* Ensure usb interrupts enabled by bootloader alter disconnect of usb */
+    wdt_enable(WDTO_1S);
     SCH_Init();
     ADM_Init();
     UIB_Init();
@@ -147,16 +146,15 @@ int main(void)
     LED_Init();
     CRD_Init();
     UCP_Init();
+    OSCCAL_Init();
 
-    cli(); /* Ensure usb interrupts enabled by bootloader alter disconnect of usb */
+    /* USB Init */
+    usbInit();
     usbDeviceDisconnect();  /* enforce re-enumeration, do this while interrupts are disabled! */
     _delay_ms(500);
     usbDeviceConnect();
 
-    /* USB Init must be after forcing USB reenumeration */
-    usbInit();
     sei();
-    wdt_enable(WDTO_1S);
 
     
     /* 1 - Keyboard report id
