@@ -26,16 +26,14 @@ uint8_t sch_lastTimerVal;
 uint8_t sch_tick; /* incremented each 1ms */
 
 /* Private Functions */
-static void sch_Task_1ms(void)
-{
+static void sch_Task_1ms(void){
     UIB_Task();
     UIF_Task(); /* UIF must be called in the same task as UIB task or higher period */
 }
 
 /* Public Functions */
 /* Here configure the timer to be used */
-void SCH_Init(void)
-{
+void SCH_Init(void){
     sch_cfg_r = (sch_CTC) | (sch_PWM) | (sch_CP) | (sch_PR);
     sch_ctrl_r = (sch_value);
     sch_lastTimerVal = 0u;
@@ -43,8 +41,7 @@ void SCH_Init(void)
 }
 
 /* Cyclic Task where the different tasks are executed */
-void SCH_Task(void)
-{
+void SCH_Task(void){
     uint8_t sch_timer_temp = sch_timer;
 
     if(sch_lastTimerVal != sch_timer_temp)

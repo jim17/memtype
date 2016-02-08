@@ -43,4 +43,4 @@ enum
     FLASH,      //STRING IN FLASH
 };
 
-#endif //__PRINT_H__
+#endif /* __PRINT_H__ */

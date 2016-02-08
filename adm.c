@@ -27,7 +27,7 @@
 #define adm_newVal()    (adm_ctrl_R0 & adm_VALRDY)
 
 /* ADC New Value Clean */
-#define adm_newValClean() {adm_ctrl_R0 |= adm_VALRDY;}
+#define adm_newValClean() {adm_ctrl_R0 |= adm_VALRDY; }
 
 /* ADC Value */
 #define adm_Val()   (ADCH)
@@ -35,11 +35,10 @@
 /* Local Variable */
 uint8_t adm_ADCValue;
 
-void ADM_Init(void)
-{
+void ADM_Init(void){
     DDRB &= ~(1 << 2);
     PORTB &= ~(1 << 2);
-    
+
     adm_cfg_R = (adm_VREF | adm_ADLAR | adm_ADCCH);
 
     adm_ctrl_R0 = (adm_ENABLE | adm_START | adm_TRG | adm_VALRDY | adm_INTEN | adm_CONVTIME);
@@ -47,8 +46,7 @@ void ADM_Init(void)
     adm_ctrl_R1 = (adm_BIN | adm_IPR | adm_TRGSRC);
 }
 
-void ADM_Task(void)
-{
+void ADM_Task(void){
     if (adm_newVal() > 0u)
     {
         adm_newValClean();

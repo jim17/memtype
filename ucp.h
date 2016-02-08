@@ -59,4 +59,4 @@ void UCP_WriteTask(void);
 #define UCP_Unlock() { UCP_state = IDLE; }
 #define UCP_Lock()   { UCP_state = DEVICE_LOCKED; }
 
-#endif /* _UIF_H_ */
+#endif /* _UCP_H_ */
