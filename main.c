@@ -152,7 +152,7 @@ int main(void){
 
         if(usbInterruptIsReady()) {
             UCP_WriteTask();
-            LED_TOGGLE();
+            LED_Task();
             printUpdate();
             usbSetInterrupt((void*)&reportBuffer, sizeof(reportBuffer));
         }

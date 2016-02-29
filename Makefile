@@ -21,7 +21,7 @@ MICRONUCLEUS = sudo tools/$(MN) --run
 CFLAGS  = -Iusbdrv -I. -DDEBUG_LEVEL=0 -DTUNE_OSCCAL=0 -DCALIBRATE_OSCCAL=0 -Wall
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
 CFLAGS += -std=gnu99 -Werror -mcall-prologues -fno-tree-scev-cprop -fno-split-wide-types
-OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o main.o hid_defines.o print.o adm.o uib.o uif.o sch.o opt.o fls.o usi.o ucp.o crd.o noekeon.o osccal.o #osccalASM.o
+OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o main.o hid_defines.o print.o adm.o uib.o uif.o sch.o opt.o fls.o usi.o ucp.o crd.o noekeon.o osccal.o led.o #osccalASM.o
 
 UNCRUSTIFY_FILES := $(wildcard *.c)
 

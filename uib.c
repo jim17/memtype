@@ -55,19 +55,19 @@ void UIB_Task(void){
     /* The if comparison goes from highest ADC value to the lowest one*/
     if(ADM_GetAdcValue() > RANGE4)
     {
-        UIB_buttonPressed = UP;
+        UIB_buttonPressed = RANGE4_PRESSED;
     }
     else if(ADM_GetAdcValue() > RANGE3 )
     {
-        UIB_buttonPressed = RIGHT;
+        UIB_buttonPressed = RANGE3_PRESSED;
     }
     else if(ADM_GetAdcValue() > RANGE2)
     {
-        UIB_buttonPressed = DOWN;
+        UIB_buttonPressed = RANGE2_PRESSED;
     }
     else if(ADM_GetAdcValue() > RANGE1)
     {
-        UIB_buttonPressed = LEFT;
+        UIB_buttonPressed = RANGE1_PRESSED;
     }
     else
     {
