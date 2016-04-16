@@ -59,6 +59,34 @@ def ungroup32to8(b=[]):
 
 
 """
+Input: pin in string format "0000" to "9999" 4 digits
+Output: memtype pin to key format
+        "0000" => [ 0x30303030, 0x30303030, 0x30303030, 0x30303030 ]
+"""
+def pinToKey(pinStr=""):
+    key = [0, 0, 0, 0]
+    pin = 0000
+
+    if (len(pinStr) != 4):
+        print "ERR pin length"
+    else:
+        pin = int(pinStr)
+        if (pin <= 9999) or (pin >= 0000):
+            digit0 = ord(pinStr[3])
+            digit1 = ord(pinStr[2])
+            digit2 = ord(pinStr[1])
+            digit3 = ord(pinStr[0])
+            key = [(digit3 << 24) + (digit2 << 16) + (digit1 << 8) + digit0,
+                   (digit3 << 24) + (digit2 << 16) + (digit1 << 8) + digit0,
+                   (digit3 << 24) + (digit2 << 16) + (digit1 << 8) + digit0,
+                   (digit3 << 24) + (digit2 << 16) + (digit1 << 8) + digit0]
+        else:
+            print "ERR pin value"
+
+    return key
+
+
+"""
 Input: Credential List
 Output: Credential Block in the form
 	[CredName,Offset,[Encrypted: user,hop,pass,submit]] * Number of credentials
@@ -426,10 +454,11 @@ if __name__ == '__main__':
     m = memtype()
     m.info()
     block = m.read()
-    cl = decryptCredentialList(block, key=[0x30303030, 0x30303030, 0x30303030, 0x30303030])
+    cl = decryptCredentialList(block, key=pinToKey("0000"))
     for i in range(len(cl)):
-        block = encryptCredentialList(cl, key=[0x30303030, 0x30303030, 0x30303030, 0x30303030])
-        m.write(block)
-        m.disconnect()
-        c.name = "credName%d" % i
+        cl[i].name = "credName%d" % i
+
+    block = encryptCredentialList(cl, key=pinToKey("0000"))
+    m.write(block)
+    m.disconnect()
 
