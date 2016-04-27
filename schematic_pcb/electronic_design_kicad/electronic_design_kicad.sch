@@ -448,13 +448,13 @@ Wire Wire Line
 Wire Wire Line
 	8300 2850 8300 1450
 Text Label 7850 1950 0    60   ~ 0
-UP
+RIGHT
 Text Label 7850 1750 0    60   ~ 0
-LEFT
+UP
 Text Label 7850 1650 0    60   ~ 0
 DOWN
 Text Label 7850 1450 0    60   ~ 0
-RIGHT
+LEFT
 $Comp
 L R R9
 U 1 1 568C5F4F
