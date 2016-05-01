@@ -184,7 +184,7 @@ void UCP_Decode(uint8_t *data, uint8_t len){
         case UCP_CMD_READ_PIN:
             UCP_state = READING_CMD;
             readOffset = (uint16_t)LOCK_HASH;
-            readEnd = readOffset + 16;
+            readEnd = (uint16_t)LOCK_HASH + 16;
             readType = 2;     /* Eeprom */
             break;
         case UCP_CMD_KEYBOARD:

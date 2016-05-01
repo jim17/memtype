@@ -54,7 +54,7 @@ void USI_fsm(uint8_t button){
         break;
     case UP:
         deleteStr();
-        usi_previous();
+        usi_next();
         break;
     case RIGHT:
         deleteStr();
@@ -86,7 +86,7 @@ void USI_fsm(uint8_t button){
         break;
     case DOWN:
         deleteStr();
-        usi_next();
+        usi_previous();
         break;
     default:
         break;
