@@ -166,6 +166,9 @@ void printUpdate(void){
         }else{
             kbd_status=RELEASED;
             debounceCount = 0;
+            if(strBuf[actString].len > 0) {
+                strBuf[actString].len--;
+            }
         }
         break;
 
