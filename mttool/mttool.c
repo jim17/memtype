@@ -430,6 +430,7 @@ uint8_t HIDwrite(usbDevice_t *dev, uint8_t reportId, uint8_t *buff, uint16_t siz
                 
         if(usleep(50000) < 0) // sleep 50 ms
         {
+
             fprintf( stderr, "sleep ERR\n");
         }
     }

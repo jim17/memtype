@@ -119,7 +119,7 @@ section at the end of this file).
 /* Define this to 1 if the device has its own power supply. Set it to 0 if the
  * device is powered from the USB bus.
  */
-#define USB_CFG_MAX_BUS_POWER           50
+#define USB_CFG_MAX_BUS_POWER           200
 /* Set this variable to the maximum USB bus power consumption of your device.
  * The value is in milliamperes. [It will be divided by two since USB
  * communicates power requirements in units of 2 mA.]
@@ -210,17 +210,17 @@ section at the end of this file).
 
 #ifndef __ASSEMBLER__
         void calibrateOscillatorASM(void);
- 
+        extern void OSCCAL_Start(void);
   #if AUTO_EXIT_NO_USB_MS>0
     extern uint16_union_t idlePolls;
     #define USB_RESET_HOOK(resetStarts)  if(!resetStarts){ idlePolls.b[1]=0; calibrateOscillatorASM();}
   #else
-    #define USB_RESET_HOOK(resetStarts)  if(!resetStarts){ calibrateOscillatorASM();}
+    #define USB_RESET_HOOK(resetStarts)  if(!resetStarts){ OSCCAL_Start();}//calibrateOscillatorASM();}
   #endif
 
-  #define USB_CFG_HAVE_MEASURE_FRAME_LENGTH   0
 #endif
 
+#define USB_CFG_HAVE_MEASURE_FRAME_LENGTH   1
 
 /* define this macro to 1 if you want the function usbMeasureFrameLength()
  * compiled in. This function can be used to calibrate the AVR's RC oscillator.

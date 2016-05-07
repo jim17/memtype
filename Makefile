@@ -21,7 +21,9 @@ MICRONUCLEUS = sudo tools/$(MN) --run
 CFLAGS  = -Iusbdrv -I. -DDEBUG_LEVEL=0 -DTUNE_OSCCAL=0 -DCALIBRATE_OSCCAL=0 -Wall
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
 CFLAGS += -std=gnu99 -Werror -mcall-prologues -fno-tree-scev-cprop -fno-split-wide-types
-OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o main.o hid_defines.o print.o adm.o uib.o uif.o sch.o opt.o fls.o usi.o ucp.o crd.o noekeon.o osccalASM.o
+OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o main.o hid_defines.o print.o adm.o uib.o uif.o sch.o opt.o fls.o usi.o ucp.o crd.o noekeon.o osccal.o led.o #osccalASM.o
+
+UNCRUSTIFY_FILES := $(wildcard *.c)
 
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(F_CPU) $(CFLAGS) -mmcu=$(DEVICE)
 LDFLAGS = -Wl,-Map=main.map,--relax,--gc-sections
@@ -121,7 +123,7 @@ program: flash fuse
 flash: main.hex
 #	$(AVRDUDE) -U flash:w:main.hex:i
 	$(MICRONUCLEUS) main.hex
-upload: main.hex
+upload: main.hex main.eep
 	$(AVRDUDE) -U flash:w:main.hex -U eeprom:w:main.eep -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m
 
 # rule for deleting dependent files (those which can be built by Make):
@@ -166,3 +168,6 @@ disasm:	main.elf
 
 cpp:
 	$(COMPILE) -E main.c
+
+check: $(UNCRUSTIFY_FILES)
+	uncrustify -c uncrustify/style.cfg --no-backup $^

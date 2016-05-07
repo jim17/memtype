@@ -17,11 +17,8 @@
 #define uib_SECOND_DEBOUNCE (1000u)
 #define uib_REPEAT_DEBOUNCE (250u) /* debounce time for repeated pushes */
 
-enum UIB_states
-{
-    INIT_DEBOUNCE = 0u,
-    SECOND_DEBOUNCE,
-    REPEAT_DEBOUNCE,
+enum UIB_states {
+    INIT_DEBOUNCE = 0u,SECOND_DEBOUNCE,REPEAT_DEBOUNCE,
 };
 
 /* Debug Code */
@@ -29,7 +26,7 @@ enum UIB_states
 #if DBG
 #include "print.h"
 #define PRINT(x)    printStr((void*)x, RAM);
-#else
+#else /* if DBG */
 #define PRINT(x)
 #endif
 
@@ -43,43 +40,40 @@ static uint8_t uib_state = INIT_DEBOUNCE;
 void UIB_Init(void);
 void UIB_Task(void);
 
-void UIB_Init(void)
-{
+void UIB_Init(void){
     return;
 }
 
-static void uib_buttonChanged(void)
-{
+static void uib_buttonChanged(void){
     UIB_buttonChanged = 1u;
     UIB_debounceCtr = 0u;
 }
 
-void UIB_Task(void)
-{
+void UIB_Task(void){
     UIB_lastButtonPressed = UIB_buttonPressed;
 
     /* The if comparison goes from highest ADC value to the lowest one*/
     if(ADM_GetAdcValue() > RANGE4)
     {
-        UIB_buttonPressed = UP;
+        UIB_buttonPressed = RANGE4_PRESSED;
     }
     else if(ADM_GetAdcValue() > RANGE3 )
     {
-        UIB_buttonPressed = RIGHT;
+        UIB_buttonPressed = RANGE3_PRESSED;
     }
     else if(ADM_GetAdcValue() > RANGE2)
     {
-        UIB_buttonPressed = DOWN;
+        UIB_buttonPressed = RANGE2_PRESSED;
     }
     else if(ADM_GetAdcValue() > RANGE1)
     {
-        UIB_buttonPressed = LEFT;
+        UIB_buttonPressed = RANGE1_PRESSED;
     }
     else
     {
         UIB_buttonPressed = NOT_PRESSED;
     }
-    
+
     if(UIB_lastButtonPressed == UIB_buttonPressed)
     {
         UIB_debounceCtr++;
@@ -89,55 +83,55 @@ void UIB_Task(void)
         uib_state = INIT_DEBOUNCE;
         UIB_debounceCtr = 0u;
     }
-    
+
     // by default buttonChanged = 0
     UIB_buttonChanged = 0u;
-    
+
     switch (uib_state)
     {
-        case INIT_DEBOUNCE:
-            if( UIB_debounceCtr >= uib_INIT_DEBOUNCE )
-            {
-                uib_buttonChanged();
-                uib_state++;
-            }
-            break;
-               
-        case SECOND_DEBOUNCE:
-            if( UIB_debounceCtr >= uib_SECOND_DEBOUNCE )
-            {
-                uib_buttonChanged();
-                uib_state++;
-            }
-            break;
-            
-        case REPEAT_DEBOUNCE:
-            if( UIB_debounceCtr >= uib_REPEAT_DEBOUNCE )
-            {
-                uib_buttonChanged();
-            }
-            break;
+    case INIT_DEBOUNCE:
+        if( UIB_debounceCtr >= uib_INIT_DEBOUNCE )
+        {
+            uib_buttonChanged();
+            uib_state++;
+        }
+        break;
+
+    case SECOND_DEBOUNCE:
+        if( UIB_debounceCtr >= uib_SECOND_DEBOUNCE )
+        {
+            uib_buttonChanged();
+            uib_state++;
+        }
+        break;
+
+    case REPEAT_DEBOUNCE:
+        if( UIB_debounceCtr >= uib_REPEAT_DEBOUNCE )
+        {
+            uib_buttonChanged();
+        }
+        break;
     }
 
     #if DBG
     if(UIB_buttonChanged == 1)
     {
-        switch(UIB_buttonPressed){
-            case LEFT:
-                PRINT("LEFT\n");
-                break;
-            case UP:
-                PRINT("UP\n");
-                break;
-            case RIGHT:
-                PRINT("RIGHT\n");
-                break;
-            case DOWN:
-                PRINT("DOWN\n");
-                break;
-            default:
-                return;
-            }
+        switch(UIB_buttonPressed) {
+        case LEFT:
+            PRINT("LEFT\n");
+            break;
+        case UP:
+            PRINT("UP\n");
+            break;
+        case RIGHT:
+            PRINT("RIGHT\n");
+            break;
+        case DOWN:
+            PRINT("DOWN\n");
+            break;
+        default:
+            return;
+        }
     }
     #endif
 }
