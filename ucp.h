@@ -5,6 +5,7 @@
 #define _UCP_H_
 
 #include <stdint.h>
+#include "led.h"
 
 /* PROTOCOL COMMANDS */ /*TO BE ADJUSTED TO REAL ONES*/
 #define UCP_CMD_ERROR   0x00
@@ -56,7 +57,7 @@ void UCP_Decode(uint8_t *data, uint8_t len);
 void UCP_WriteTask(void);
 
 /* Macros */
-#define UCP_Unlock() { UCP_state = IDLE; }
-#define UCP_Lock()   { UCP_state = DEVICE_LOCKED; }
+#define UCP_Unlock() { UCP_state = IDLE; LedGreen(); }
+#define UCP_Lock()   { UCP_state = DEVICE_LOCKED; LedRed(); }
 
 #endif /* _UCP_H_ */

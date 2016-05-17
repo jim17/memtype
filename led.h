@@ -1,4 +1,7 @@
 
+#ifndef _LED_H_
+#define _LED_H_
+
 #define LED_DDR     (DDRB)
 #define LED_PORT    (PORTB)
 #define LED_RED     (1)
@@ -12,5 +15,26 @@
 #define LED_OFF            LED_LOW
 #define LED_TOGGLE(LED)    (LED_PORT ^= (1<<LED))
 
+#define LedOff()            {led = OFF;         }
+#define LedRed()            {led = RED;         }
+#define LedGreen()          {led = GREEN;       }
+#define LedBlinkRed()       {led = BLINK_RED;   }
+#define LedBlinkGreen()     {led = BLINK_GREEN; }
+#define LedBlinkBoth()      {led = BLINK_BOTH;  }
+
+/* Typedefs */
+typedef enum{
+    OFF,
+    RED,
+    GREEN,
+    BLINK_RED,
+    BLINK_GREEN,
+    BLINK_BOTH
+} ledStatus_t;
+
+extern uint8_t led;
+
 /* Main LED Task function */
 extern void LED_Task(void);
+
+#endif /* _LED_H_ */
