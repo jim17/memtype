@@ -85,7 +85,6 @@ static void opt_apply(void){
 
 static void opt_lock(void){
     deleteStr();
-    UIF_state = START;
     UIF_Init();
     LedOff();
 }

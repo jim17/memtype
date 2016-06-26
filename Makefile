@@ -156,7 +156,7 @@ main.elf: $(OBJECTS)	# usbdrv dependency only needed because we copy it
 main.hex: main.elf
 	rm -f main.hex
 	avr-objcopy -j .text -j .data -O ihex main.elf main.hex
-	avr-size --format=avr --mcu=$(DEVICE) main.elf
+	avr-size main.elf
 
 main.eep: main.elf
 	rm -f main.eep
