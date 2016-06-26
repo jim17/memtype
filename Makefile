@@ -124,7 +124,7 @@ flash: main.hex
 #	$(AVRDUDE) -U flash:w:main.hex:i
 	$(MICRONUCLEUS) main.hex
 upload: main.hex main.eep
-	$(AVRDUDE) -U flash:w:main.hex -U eeprom:w:main.eep -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m
+	$(AVRDUDE) -U flash:w:main.hex -U eeprom:w:main.eep -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m -U lock:w:0xfc:m
 
 # rule for deleting dependent files (those which can be built by Make):
 clean:
