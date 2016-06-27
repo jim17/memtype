@@ -1,5 +1,6 @@
 #include "ucp.h"
 #include "usi.h"
+#include "uif.h"
 #include "version.h"
 #include "crd.h"
 #include "fls.h"
@@ -18,6 +19,7 @@ volatile uint16_t flashWriteAddr;
 volatile uint8_t buffIndex;
 volatile uint8_t usbWrite = 0;
 volatile uint8_t usbWriteAccepted = 0;
+volatile uint8_t lockAfterSetPin=0;
 
 /* INFO Data, the first byte is for cmd */
 typedef struct
@@ -132,7 +134,12 @@ void UCP_Decode(uint8_t *data, uint8_t len){
             /* end of WRITE */
             if( readOffset >= readEnd )
             {
-                UCP_state = IDLE;
+                if(lockAfterSetPin){
+                    UIF_Init();
+                    lockAfterSetPin=0;
+                } else{
+                    UCP_state = IDLE;
+                }
             }
         }
         else
@@ -180,6 +187,7 @@ void UCP_Decode(uint8_t *data, uint8_t len){
             UCP_state = WRITE_EEPROM;
             readOffset = (uint16_t)LOCK_HASH;
             readEnd = (uint16_t)LOCK_HASH + 16;
+            lockAfterSetPin=1;
             break;
         case UCP_CMD_READ_PIN:
             UCP_state = READING_CMD;

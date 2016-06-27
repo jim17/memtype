@@ -4,6 +4,7 @@
 #include "uif.h"
 #include "uib.h"
 #include "fls.h"
+#include "led.h"
 #include "print.h"
 #include <avr/pgmspace.h>
 
@@ -40,6 +41,7 @@ void OPT_fsmStart(void){
     UIF_optionsIndex = 0;
     deleteStr();
     printStr((void*)opt_startStr, FLASH);
+    LedBlinkBoth();
 }
 
 /* Options Finite state machine */
@@ -83,15 +85,17 @@ static void opt_apply(void){
 
 static void opt_lock(void){
     deleteStr();
-    UIF_state = START;
     UIF_Init();
+    LedOff();
 }
 
 static void opt_printUser(void){
     deleteStr();
     crd_printDetail(CRD_USER, CRD_USER+1);
+    LedBlinkGreen();
 }
 static void opt_printPass(void){
     deleteStr();
     crd_printDetail(CRD_PASS, CRD_PASS+1);
+    LedBlinkRed();
 }

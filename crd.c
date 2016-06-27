@@ -3,6 +3,7 @@
 #include "opt.h"
 #include "uif.h"
 #include "uib.h"
+#include "ucp.h"
 #include "fls.h"
 #include "print.h"
 
@@ -47,6 +48,7 @@ void CRD_fsmStart(void){
     UIF_state = CREDENTIALS;
     deleteStr();
     crd_print();
+    UCP_Unlock();
 }
 
 /* Credentials Finite state machine */

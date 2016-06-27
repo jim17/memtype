@@ -124,7 +124,7 @@ flash: main.hex
 #	$(AVRDUDE) -U flash:w:main.hex:i
 	$(MICRONUCLEUS) main.hex
 upload: main.hex main.eep
-	$(AVRDUDE) -U flash:w:main.hex -U eeprom:w:main.eep -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m
+	$(AVRDUDE) -U flash:w:main.hex -U eeprom:w:main.eep -U lfuse:w:0xe1:m -U hfuse:w:0xdd:m -U efuse:w:0xfe:m -U lock:w:0xfc:m
 
 # rule for deleting dependent files (those which can be built by Make):
 clean:
@@ -156,7 +156,7 @@ main.elf: $(OBJECTS)	# usbdrv dependency only needed because we copy it
 main.hex: main.elf
 	rm -f main.hex
 	avr-objcopy -j .text -j .data -O ihex main.elf main.hex
-	avr-size --format=avr --mcu=$(DEVICE) main.elf
+	avr-size main.elf
 
 main.eep: main.elf
 	rm -f main.eep

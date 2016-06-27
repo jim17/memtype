@@ -65,7 +65,6 @@ void USI_fsm(uint8_t button){
             if(USI_pinCheck(userText+sizeof(PIN_str)-1) == 1)
             {
                 CRD_fsmStart();
-                UCP_Unlock();
             }
             /* Device Locked */
             else

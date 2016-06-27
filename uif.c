@@ -16,6 +16,7 @@ uint8_t UIF_userInputIndex = 0;
 const char uif_initStr[] PROGMEM = MEMTYPE_VERSION_STR;
 
 void UIF_Init(void){
+    UIF_state = START;
     printStr((void*)uif_initStr, FLASH);
     return;
 }
