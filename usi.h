@@ -9,5 +9,5 @@ void USI_fsm(uint8_t button);
 void USI_Init(void);
 
 // HASH
-extern uint8_t LOCK_HASH[16] EEMEM;
+extern const uint8_t LOCK_HASH[16] EEMEM;
 #endif

@@ -16,7 +16,7 @@ const char LOCK[] PROGMEM = "0000";
 const char PIN_str[] PROGMEM = "PIN: ";
 const char LOCKED_str[] PROGMEM = "PIN ERR";
 // PIN: 0000 default HASH
-uint8_t LOCK_HASH[16] EEMEM = {
+const uint8_t LOCK_HASH[16] EEMEM = {
     0xd4,0x4f,0xb2,0x7a,0x58,0xb4,0x27,0x4a,0x21,0xe6,0x8f,0x39,0x69,0x74,0x23,0x54
 };
 uint8_t USI_pinCheck(char pin[4]);
