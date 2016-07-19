@@ -7,14 +7,15 @@
 #include "print.h"
 
 static char userText[32];
+static char userPin[4];
 static uint8_t userTextIndex = 0;
 const char USI_keys[] PROGMEM = {
     '0','1','2','3','4','5','6','7','8','9'
 };                                                                        //,'A','B','C','D','E','F'};
 //"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const char LOCK[] PROGMEM = "0000";
 const char PIN_str[] PROGMEM = "PIN: ";
 const char LOCKED_str[] PROGMEM = "PIN ERR";
+
 // PIN: 0000 default HASH
 const uint8_t LOCK_HASH[16] EEMEM = {
     0xd4,0x4f,0xb2,0x7a,0x58,0xb4,0x27,0x4a,0x21,0xe6,0x8f,0x39,0x69,0x74,0x23,0x54
@@ -22,7 +23,8 @@ const uint8_t LOCK_HASH[16] EEMEM = {
 uint8_t USI_pinCheck(char pin[4]);
 
 static void usi_print(void){
-    userText[sizeof(PIN_str)-1+userTextIndex] = pgm_read_byte(&USI_keys[UIF_userInputIndex]);
+    userPin[userTextIndex] = pgm_read_byte(&USI_keys[UIF_userInputIndex]);
+    userText[sizeof(PIN_str)-1+userTextIndex] = userPin[userTextIndex];
     userText[sizeof(PIN_str)-1+userTextIndex+1] = 0;
     printStr(userText,RAM);
 }
@@ -58,11 +60,10 @@ void USI_fsm(uint8_t button){
         break;
     case RIGHT:
         deleteStr();
-        if(userTextIndex == (sizeof(LOCK)-2))     // real array elements (\0)
+        if(userTextIndex == (sizeof(userPin)-1))     // real array elements (\0)
         {
             /* Device Unlocked */
-            //if(strcmp_P(userText+sizeof(PIN_str)-1, LOCK) == 0)
-            if(USI_pinCheck(userText+sizeof(PIN_str)-1) == 1)
+            if(USI_pinCheck(userPin) == 1)
             {
                 CRD_fsmStart();
             }
@@ -79,6 +80,7 @@ void USI_fsm(uint8_t button){
         }
         else
         {
+            userText[sizeof(PIN_str)-1+userTextIndex] = '*';
             userTextIndex++;
             usi_print();
         }

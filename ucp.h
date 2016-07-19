@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include "led.h"
 
-/* PROTOCOL COMMANDS */ /*TO BE ADJUSTED TO REAL ONES*/
+/* PROTOCOL COMMANDS */
 #define UCP_CMD_ERROR   0x00
 #define UCP_CMD_RESET   0x01
 #define UCP_CMD_READ    0x02
