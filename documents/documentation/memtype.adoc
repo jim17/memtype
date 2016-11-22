@@ -23,7 +23,13 @@ MemType hardware, firmware, software tools and usage for any user level.
 == Introduction
 // TODO Add a license section including license
 Technically speaking the MemType is an open source `hardware password keeper`.
-This means it is basically a device focused in securely `storing passwords` to prevent anyone
-but the owner to access them. The `open source` part means that we share all the
+This means it is basically a device focused in securely `storing passwords`.
+The `open source` part means that we share all the
 software source files, hardware design files and documentation under the
 <<license>> conditions.
+
+Having the passwords stored in a password keeper has several advantages, but the
+two main are:
+
+* No need to repeat same pass in several places.
+* More secure passwords can be used, no need to remember them.
