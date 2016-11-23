@@ -15,7 +15,7 @@ aspects of the project by mailto:info@area0x33.com[email].
 ====
 
 [.text-center]
-image:mt1f.png[title="MemType prototype"] 
+image::mt1f.png[title="MemType prototype"] 
 
 Welcome to the MemType documentation, here you'll learn everything about the 
 MemType hardware, firmware, software tools and usage for any user level.
@@ -25,12 +25,12 @@ https://www.tindie.com/stores/area0x33/[tindie store]!
 
 
 == Introduction
-// TODO Add a license section including license
+
 Technically speaking the MemType is an open source `hardware password keeper`.
 This means it is basically a device focused in securely `storing passwords`.
 The `open source` part means that we share all the
 software source files, hardware design files and documentation under the
-<<license>> conditions.
+<<License>> conditions.
 
 Having the passwords stored in a password keeper has several advantages:
 
@@ -45,7 +45,29 @@ simple `low cost` device that's also great for `DIY makers` and `hackers`.
 
 === MemType features
 
-So lets check the main features with a small description:
+* `Encrypted storage` in the device using https://en.wikipedia.org/wiki/NOEKEON[NOEKEON] written
+in pure assembler!
+* `AES encrypted backups` on the PC using the <<MemTypeTool GUI>>.
+* Plug it into a `USB`, `no drivers or software for using it`.footnote:[Using it doesn't require 
+software or drivers. For managing operations like storing credentials or changing 
+the PIN the MemTypeTool is needed and depending on the OS the libusb driver.]!
+Works as a HID keyboard.
+* `Works anywhere!`. While others only work on webs or certain 
+apps, the MemType can be used anywhere from webs, apps, terminals or anywhere 
+it's allowed to type using a keyboard.
+* `One click login`. It stores and `types for you` not only the `password` but
+also the `user` without any interaction from your part, and it also submits it!
+* Add `delays` to `enter the password when it's asked`, for example in `ssh` or
+login forms where the user and password are asked in two steps.
+* `Dynamic storage`. You're `not limited` to a certain number of credentials, 
+just fill the 2KB storage with them.
+* `Assign names` to the credentials so you can find them easy and fast to use them.
+* Manage the device with the <<MemTypeTool GUI>> software, super easy and simple!
+* `Truly multiplatform`. The MemType works on `any device with usb` keyboard 
+capability like tablets, smart tv, and phones.
+* `Any keyboard layout`. Load the keyboard layout you've got working in your OS 
+using the <<MemTypeTool GUI>>. 
+* `Truly Open Source` Software and Hardware.
 
 === N_O_D_E Video review
 
@@ -64,7 +86,10 @@ video::O16U_TjAutU[youtube, width="800",height="500"]
 
 == Quick start
 
-== MemTypeGUI
+== MemTypeTool GUI
+[.text-center]
+image::screenshot.png[title="MemTypeTool GUI"] 
+
 
 === Windows installation
 
@@ -99,8 +124,28 @@ video::O16U_TjAutU[youtube, width="800",height="500"]
 == Hardware
 
 === PCB
+
 === BOM
 
 == Firmware
 
+== License
+
 == F.A.Q.
+
+[qanda]
+Can I make a MemType myself?::
+	Yes! It's a great DIY project!. 
+	You can make your PCB using the design files or order one from
+	OSHpark, buy the components, solder them, compile the firmware and burn
+	it into the microcontroller!
+
+How many credentials can be stored?::
+	The capacity of the credentials storage on the MemType is `2KB`.
+	Credentials are stored dinammically so `it'll depend on the length` of the
+	name, username, password etc...
+
+Can I make a backup of my credentials?::
+	Having a backup of the credentials is always a good idea. You can export
+	an encrypted file from the `MemTypeGUI` containning all your
+	credentials.
