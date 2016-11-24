@@ -433,6 +433,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_memtype_features">MemType features</a></li>
 <li><a href="#_credentials">Credentials</a></li>
+<li><a href="#_links">Links</a></li>
 <li><a href="#_n_o_d_e_video_review">N_O_D_E Video review</a></li>
 <li><a href="#_compare_to_pk1">Compare to PK1</a></li>
 <li><a href="#_compare_to_pk2">Compare to PK2</a></li>
@@ -454,6 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_use_a_credential">Use a credential</a></li>
 <li><a href="#_credential_details">Credential details</a></li>
 <li><a href="#_lock_the_device">Lock the device</a></li>
+<li><a href="#_advanced_uses">Advanced uses</a></li>
 </ul>
 </li>
 <li><a href="#_memtype_library">MemType library</a></li>
@@ -594,6 +596,82 @@ using the <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
 </div>
 <div class="sect2">
 <h3 id="_credentials">Credentials</h3>
+<div class="paragraph">
+<p>The data structure used by the MemType to store <code>passwords</code> and <code>usernames</code> is
+called a <code>credential</code>. Appart from passwords and usernames it also stores a
+field that stores the key combination to move from the user input to the
+password input, called <code>hop</code>. It also includes a field for storing the key
+combination to submit the login form or command, called <code>submit</code>. To help you
+find the credential you need, each of them has a name stored in the <code>name</code>
+field.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 85.7143%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name that&#8217;ll be shown while using the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>user</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the login.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>hop</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sequence of keyboard keys to move from the user input field to the password one. Usually <kbd>tab</kbd>, sometimes <kbd>Enter</kbd></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>password</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password that&#8217;ll be typed into the password input field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>submit</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sequence of keyboard keys to validate the login. Usually <kbd>Enter</kbd>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When a <code>credential</code> is applied, the MemType generates the key sequence like you
+were typing it into your keyboard, excluding the name by the order of the table above.</p>
+</div>
+<div class="paragraph">
+<p>In a login form, you focus the username field and then move the MemType joystick
+<kbd>up</kbd> and <kbd>down</kbd> looking for the credential you need. When you find the
+right credential, <kbd>enter</kbd> to apply it and the MemType will erase the credential
+name, type the username, move to the password input field, type it and submit. All
+this process is done much times faster than any person can type.</p>
+</div>
+<div class="paragraph">
+<p>There are some cases where you may need a <code>delay</code> in a certain point, for example
+when the login form asks for the user, validates it and then asks for the password.
+Such delays can be made by the MemType using one special character when editing
+the credential. This and more is explained in the <a href="#_advanced_uses">Advanced uses</a> section.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s easy to see how this credential structure can be used to <code>securely store</code> and
+type other kind of data like commands or <code>credit card numbers</code>.</p>
+</div>
+<div class="paragraph">
+<p>When buying online
+it&#8217;s faster and more secure to let the MemType type the credit card number than pulling
+out the creditcard with the number printed on it.</p>
+</div>
+<div class="paragraph">
+<p>A way of accomplishing it would be by having all the fields empty except
+the <code>password</code> field that would contain the <code>credit card number</code> and the name.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_links">Links</h3>
 
 </div>
 <div class="sect2">
@@ -765,6 +843,10 @@ Interface software called <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
 <h3 id="_lock_the_device">Lock the device</h3>
 
 </div>
+<div class="sect2">
+<h3 id="_advanced_uses">Advanced uses</h3>
+
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -835,7 +917,7 @@ credentials.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-24 20:52:57 CET
+Last updated 2016-11-24 22:09:53 CET
 </div>
 </div>
 </body>

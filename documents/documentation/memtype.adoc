@@ -72,6 +72,60 @@ using the <<MemTypeTool GUI>>.
 
 === Credentials
 
+The data structure used by the MemType to store `passwords` and `usernames` is
+called a `credential`. Appart from passwords and usernames it also stores a
+field that stores the key combination to move from the user input to the
+password input, called `hop`. It also includes a field for storing the key
+combination to submit the login form or command, called `submit`. To help you
+find the credential you need, each of them has a name stored in the `name`
+field.
+
+[cols="1,6", options="header"] 
+|===
+|Field
+|Description
+
+|*name*
+|The name that'll be shown while using the device.
+
+|*user*
+|The username of the login.
+
+|*hop*
+|The sequence of keyboard keys to move from the user input field to the password one. Usually kbd:[tab], sometimes kbd:[Enter]
+
+|*password*
+|The password that'll be typed into the password input field.
+
+|*submit*
+|The sequence of keyboard keys to validate the login. Usually kbd:[Enter].
+|===
+
+When a `credential` is applied, the MemType generates the key sequence like you 
+were typing it into your keyboard, excluding the name by the order of the table above.
+
+In a login form, you focus the username field and then move the MemType joystick
+kbd:[up] and kbd:[down] looking for the credential you need. When you find the 
+right credential, kbd:[enter] to apply it and the MemType will erase the credential
+name, type the username, move to the password input field, type it and submit. All
+this process is done much times faster than any person can type.
+
+There are some cases where you may need a `delay` in a certain point, for example
+when the login form asks for the user, validates it and then asks for the password.
+Such delays can be made by the MemType using one special character when editing
+the credential. This and more is explained in the <<Advanced uses>> section. 
+
+It's easy to see how this credential structure can be used to `securely store` and
+type other kind of data like commands or `credit card numbers`.
+
+When buying online
+it's faster and more secure to let the MemType type the credit card number than pulling
+out the creditcard with the number printed on it. 
+
+A way of accomplishing it would be by having all the fields empty except
+the `password` field that would contain the `credit card number` and the name. 
+
+=== Links
 
 === N_O_D_E Video review
 
@@ -169,6 +223,8 @@ image::screenshot.png[title="MemTypeTool GUI"]
 === Credential details
 
 === Lock the device
+
+=== Advanced uses
 
 
 == MemType library
