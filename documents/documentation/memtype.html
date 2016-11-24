@@ -432,6 +432,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_introduction">Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#_memtype_features">MemType features</a></li>
+<li><a href="#_credentials">Credentials</a></li>
 <li><a href="#_n_o_d_e_video_review">N_O_D_E Video review</a></li>
 <li><a href="#_compare_to_pk1">Compare to PK1</a></li>
 <li><a href="#_compare_to_pk2">Compare to PK2</a></li>
@@ -592,6 +593,10 @@ using the <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_credentials">Credentials</h3>
+
+</div>
+<div class="sect2">
 <h3 id="_n_o_d_e_video_review">N_O_D_E Video review</h3>
 <div class="paragraph">
 <p>If you want a great video introduction and review of the MemType, check the
@@ -621,7 +626,78 @@ following awesome video made by
 <div class="sect1">
 <h2 id="_quick_start">Quick start</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Open a <code>text editor</code> and connect the MemType to the <code>USB</code> port of your computer.
+You&#8217;ll see the <code>red led</code> <span class="icon red"><i class="fa fa-circle"></i></span> turning on indicating it&#8217;s being
+<code>powered</code> correctly and it&#8217;s <code>locked</code>.</p>
+</div>
+<div class="paragraph">
+<p>On the text editor it will write a <code>welcome message</code> indicating it&#8217;s firmware
+version:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>MemType 3.1.0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You don&#8217;t have to delete what it writes, it deletes it&#8217;s own text to write new
+one, <code>that&#8217;s how the MemType communicates with you</code>.
+Now you can unlock it entering the <code>PIN</code>, by default it&#8217;s <code>0000</code>. To enter the PIN
+use the <code>joystick</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>up <span class="icon"><i class="fa fa-arrow-up"></i></span> increases the number.</p>
+</li>
+<li>
+<p>down <span class="icon"><i class="fa fa-arrow-down"></i></span> decreases.</p>
+</li>
+<li>
+<p>towards the connector <span class="icon"><i class="fa fa-arrow-right"></i></span> accepts the number.</p>
+</li>
+<li>
+<p>the opposite joystick movement <span class="icon"><i class="fa fa-arrow-left"></i></span> to cancel.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll refer to these movements
+<kbd>up</kbd>, <kbd>down</kbd>, <kbd>enter</kbd> and <kbd>back</kbd> respectively.</p>
+</div>
+<div class="paragraph">
+<p>You should have now the pin entered:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PIN: 0000</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One more <kbd>enter</kbd> and it&#8217;ll validate and show the name of the first credential
+and the green led <span class="icon green"><i class="fa fa-circle"></i></span> will be on.
+If the PIN is incorrect an error message will be displayed:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PIN ERR</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The MemType comes preloaded with 3 dummy credentials so you can play the first
+time. Move <kbd>up</kbd> and <kbd>down</kbd> to see their names, apply one with the
+<kbd>enter</kbd> movement on the joystick, see the details with one <kbd>back</kbd>
+movement and lock the device with one more <kbd>back</kbd> movement (2 in total)
+turning the red led <span class="icon red"><i class="fa fa-circle"></i></span> on again.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s the basic usage of the MemType, now to be useful it has to contain the
+credentials you&#8217;ll use, setup a <strong>different PIN</strong>, and be loaded with the same
+<code>keyboard layout</code> as your operating system or you&#8217;ll see strange characters. To do
+all this management on the device there is an easy to use Graphical User
+Interface software called <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -759,7 +835,7 @@ credentials.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-23 23:18:55 CET
+Last updated 2016-11-24 20:52:57 CET
 </div>
 </div>
 </body>
