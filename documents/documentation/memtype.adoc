@@ -1,7 +1,6 @@
 = MemType Documentation
 area0x33 <info@area0x33.com>
 :icons: font
-:data-uri:
 :experimental:
 :toc: right
 
@@ -269,11 +268,19 @@ Example ubuntu installation steps:
 
 === Usage
 
+
+WARNING: When you execute the MemTypeTool GUI, the first thing to do is to `unlock` the
+memtype (if it's still locked) as it needs to be properly unlocked by `PIN` in
+order to accept any command from the GUI. 
+
+TIP: You can use the `bottom input text` to communicate with your memtype, `focusing
+it` with a mouse click if it's not already focused.
+
 ==== Setting the keyboard layout
 
-Using the GUI you can change the MemType keyboard layout to match your computer
-keyboard layout. The current available layouts files are located under keyboard
-directory.
+Using the GUI you can change the `MemType keyboard layout` to match your `computer
+keyboard layout`. The current available layouts files are located under `keyboard
+directory`.
 
 ==== Setting the P.I.N.
 
