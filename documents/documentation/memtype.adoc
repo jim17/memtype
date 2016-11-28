@@ -16,7 +16,7 @@ aspects of the project by mailto:info@area0x33.com[email].
 ====
 
 [.text-center]
-image::mt1f.png[title="MemType prototype"] 
+image::memtype.jpg[MemType,400,266,title="MemType"] 
 
 Welcome to the MemType documentation, here you'll learn everything about the 
 MemType hardware, firmware, software tools and usage for any user level.
@@ -26,6 +26,9 @@ https://www.tindie.com/stores/area0x33/[tindie store]!
 
 
 == Introduction
+
+[.text-center]
+image::memtype_front.jpg[MemType,400,266,title="MemType top face"] 
 
 Technically speaking the MemType is an open source `hardware password keeper`.
 This means it is basically a device focused in securely `storing passwords`.
@@ -136,11 +139,8 @@ https://www.youtube.com/channel/UCvrLvII5oxSWEMEkszrxXEA[N_O_D_E].
 [.text-center]
 video::O16U_TjAutU[youtube, width="800",height="500"]
 
-=== Compare to PK1
+=== Compare to others password keepers
 
-=== Compare to PK2
-
-=== Compare to PK3
 
 == Quick start
 
@@ -195,16 +195,85 @@ Interface software called <<MemTypeTool GUI>>.
 [.text-center]
 image::screenshot.png[title="MemTypeTool GUI"] 
 
+The MemTypeTool GUI can be downloaded from :
+https://github.com/oyzzo/MemTypeTool
+
+It is developed using python 2.7 , pyqt4, and libusb so it should work anywhere you
+can get this dependencies running. It has been tested on Windows, Linux and
+MacOS.
+
+To run the `MemTypeTool`:
+
+	python main.py
+
 
 === Windows installation
 
+WARNING: It has been tested in windows up to 8.1. It has been reported to not work in
+windows 10.
+
+TIP: Using a linux virtual machine can be a workaround for the moment.
+
+. Install python 2.7.
+.. https://www.python.org/downloads/
+
+. Add python to your path:
+
+	C:\Python27\;C:\Python27\Scripts\
+
+. Download and install PyQt for python 2.7.
+.. https://riverbankcomputing.com/software/pyqt/download
+
+. Download, unzip and install libusb:
+.. https://github.com/walac/pyusb/archive/master.zip
+
+	python setup.py install
+
+. Plug in the Memtype and let windows install the drivers for the device (we'll
+change them in the next step).
+
+. Download and extract libusb-win32:
+.. http://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/libusb-win32-bin-1.2.6.0.zip/download
+
+. Execute install-filter-win (find it inside extracted folder, under /bin/x86 or
+other if your windows is 64bits).
+
+.. Select Install Filter, next.
+
+[.text-center]
+image::install-filter-win-1.png[Filter step 1,title="Windows libusb filter, step 1"] 
+
+
+.. Select Memtype (pid a033) and click Install
+
+[.text-center]
+image::install-filter-win-2.png[Filter step 2,title="Windows libusb filter, step 2"] 
+
+
+.. Done!!! you can check it with the testlibusb-win found next to
+install-filter-win:
+
+[.text-center]
+image::testlibusb-win.png[Test filter windows,title="Check windows filter"] 
+
+
 === Linux installation
+
+Example ubuntu installation steps:
+
+	apt-get install python
+	apt-get install python-pyqt4
+	pip install pyusb
 
 === MacOS installation
 
 === Usage
 
 ==== Setting the keyboard layout
+
+Using the GUI you can change the MemType keyboard layout to match your computer
+keyboard layout. The current available layouts files are located under keyboard
+directory.
 
 ==== Setting the P.I.N.
 
