@@ -456,7 +456,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_advanced_uses">Advanced uses</a></li>
 </ul>
 </li>
-<li><a href="#_memtype_library">MemType library</a></li>
+<li><a href="#_memtype_library">MemType library</a>
+<ul class="sectlevel2">
+<li><a href="#_noekeon_py">noekeon.py</a></li>
+<li><a href="#_memtype_py">memtype.py</a></li>
+</ul>
+</li>
 <li><a href="#_hardware">Hardware</a>
 <ul class="sectlevel2">
 <li><a href="#_pcb">PCB</a></li>
@@ -494,7 +499,7 @@ aspects of the project by <a href="mailto:info@area0x33.com">email</a>.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
-<img src="memtype.jpg" alt="MemType" width="400" height="266">
+<img src="memtype.jpg" alt="MemType" width="400" height="267">
 </div>
 <div class="title">Figure 1. MemType</div>
 </div>
@@ -952,20 +957,6 @@ pip install pyusb</pre>
 </div>
 <div class="sect2">
 <h3 id="_usage">Usage</h3>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-When you execute the MemTypeTool GUI, the first thing to do is to <code>unlock</code> the
-memtype (if it&#8217;s still locked) as it needs to be properly unlocked by <code>PIN</code> in
-order to accept any command from the GUI.
-</td>
-</tr>
-</table>
-</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -979,6 +970,13 @@ it</code> with a mouse click if it&#8217;s not already focused.
 </tr>
 </table>
 </div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="unlock.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_setting_the_keyboard_layout">Setting the keyboard layout</h4>
 <div class="paragraph">
@@ -986,18 +984,150 @@ it</code> with a mouse click if it&#8217;s not already focused.
 keyboard layout</code>. The current available layouts files are located under <code>keyboard
 directory</code>.</p>
 </div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="setkeyboard.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_setting_the_p_i_n">Setting the P.I.N.</h4>
-
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<code>Changing the default PIN</code> is a very important action that <code>should be done as soon
+as possible</code> before loading any credential into de MemType.
+</td>
+</tr>
+</table>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="setpin.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_adding_editing_and_deleting_credentials">Adding,Editing and Deleting credentials</h4>
-
+<h4 id="_reading_from_device">Reading from device</h4>
+<div class="paragraph">
+<p>You can <code>read the credentials from the MemType</code> to do any action to them and write
+them back, or make an <code>encrypted</code> file <code>backup</code> by <a href="#_exporting_encrypted_file">Exporting encrypted file</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="read.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_exporting_and_importing_from_file">Exporting and importing from file</h4>
-
+<h4 id="_writting_to_device">Writting to device</h4>
+<div class="paragraph">
+<p>When you&#8217;ve got everything looking OK in the MemTypeTool GUI you have to <code>write
+the credentials</code> to the MemType device so you can use them.</p>
+</div>
+<div class="paragraph">
+<p>Another option would be to simply store them by <a href="#_exporting_encrypted_file">Exporting encrypted file</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="write.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_credentials">Adding credentials</h4>
+<div class="paragraph">
+<p>Adding credentials is easy, when you&#8217;ve got your new credentials created
+remember <a href="#_writting_to_device">Writting to device</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="add.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_editing_credentials">Editing credentials</h4>
+<div class="paragraph">
+<p>Editing is essential, edit to have your passwords in the credentials, usernames and any other field
+so you can forget them!</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="edit.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleting_credentials">Deleting credentials</h4>
+<div class="paragraph">
+<p>Delete by clicking into the <code>bin icon</code> of any credential. The <code>changes</code> will not
+take effect until you <code>write</code> to the device.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="delete.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exporting_encrypted_file">Exporting encrypted file</h4>
+<div class="paragraph">
+<p>You can have backups in your computer, or have one AES encrypted file containing all
+the credentials for a given user role in your company.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Don&#8217;t forget the file
+password or there&#8217;ll be no way of getting back the credentials from that file.
+</td>
+</tr>
+</table>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="export.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_importing_from_encrypted_file">Importing from encrypted file</h4>
+<div class="paragraph">
+<p>As easy as exporting, enter the file password and your credentials will be ready
+to be edited.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="import.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_adding_delays_to_credentials">Adding delays to credentials</h4>
@@ -1034,7 +1164,158 @@ directory</code>.</p>
 <div class="sect1">
 <h2 id="_memtype_library">MemType library</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The MemType library (<code>libsmttool</code>) is a <code>python library</code> that allows
+<code>communication</code>
+with the MemType in python. It allows all the operations that can be realized
+with the MemTypeTool GUI as it&#8217;s based on libsmttool.</p>
+</div>
+<div class="paragraph">
+<p>It can be found in this github:
+<a href="https://github.com/oyzzo/MemTypeTool/tree/master/libsmttool" class="bare">https://github.com/oyzzo/MemTypeTool/tree/master/libsmttool</a>.</p>
+</div>
+<div class="paragraph">
+<p>It also can be found under the <code>libsmttool</code> directory when downloading the
+MemTypeTool GUI.
+<a href="https://github.com/oyzzo/MemTypeTool/archive/master.zip" class="bare">https://github.com/oyzzo/MemTypeTool/archive/master.zip</a></p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s composed of two modules, the <code>noekeon.py</code> file and the <code>memtype.py</code> file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This library depends on:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>python2.7</p>
+</li>
+<li>
+<p>libusb-1.0-0</p>
+</li>
+<li>
+<p>pyusb</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_noekeon_py">noekeon.py</h3>
+<div class="paragraph">
+<p>As the memtype uses internally the noekeon algorithm for encrypting the
+credentials, this algorithm has to be used in the MemTypeTool GUI to decrypt
+them back.</p>
+</div>
+<div class="paragraph">
+<p>This file provides a python implementation based on the
+<a href="http://gro.noekeon.org/Noekeon-spec.pdf">noekeon specification</a>.</p>
+</div>
+<div class="paragraph">
+<p>NOEKEON is an iterated block cipher with a block and key length of 128 bits.</p>
+</div>
+<div class="paragraph">
+<p>The public methods implemented in the library are:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>NoekeonEncrypt(WorkingKey, State)</strong></p>
+</li>
+<li>
+<p><strong>NoekeonDecrypt(WorkingKey, State)</strong></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The Number of Rounds is defined by <code>NUMBER_OF_ROUNDS</code> and fixed to <code>16</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>WorkingKey</strong> format is 4 elements of 32 bit length each.</p>
+</div>
+<div class="paragraph">
+<p><strong>State</strong> is the information to be encrypted / decrypted in <code>4 elements of 32
+bit</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memtype_py">memtype.py</h3>
+<div class="paragraph">
+<p>MemType command library implementation.</p>
+</div>
+<div class="paragraph">
+<p>Public methods implemented in <code>memtype.py</code> file:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>memtype Class</strong> Communicates with the device.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>connect</strong> Open USB connection with device.</p>
+</li>
+<li>
+<p><strong>disconnect</strong> Close USB connection with device.</p>
+</li>
+<li>
+<p><strong>info</strong> Read info from device and return deviceInfo object.</p>
+</li>
+<li>
+<p><strong>write</strong> Write credentials to memtype credential reserved memory area,
+credential data must be encrypted with the right PIN.</p>
+</li>
+<li>
+<p><strong>read</strong> Read credentials from memtype, must be decrypted with the right PIN.</p>
+</li>
+<li>
+<p><strong>writePinHash</strong> Writes PIN hash into memtype, <strong>pinToHas</strong> function can be used
+to generate the hash.</p>
+</li>
+<li>
+<p><strong>readPinHash</strong> Reads the PIN hash from the memtype.</p>
+</li>
+<li>
+<p><strong>writeKeyboardLayout</strong> Writes a keyboard layout into the memtype device.</p>
+</li>
+<li>
+<p><strong>isLocked</strong> Returns TRUE if the memtype has not been unlocked with PIN.</p>
+</li>
+<li>
+<p><strong>validatePin</strong> When the memtype is unlocked, checks if a PIN corresponds to
+the PIN hash and returns TRUE, FALSE otherwise.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>decryptCredentialList(cl, key)</strong> Decrypts a credential list according to device
+implementation.</p>
+</li>
+<li>
+<p><strong>encryptCredentialList(cl, key)</strong> Encrypts a credential list according to
+device implementation.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1099,7 +1380,7 @@ credentials.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-28 23:07:12 CET
+Last updated 2016-11-30 20:17:22 CET
 </div>
 </div>
 </body>

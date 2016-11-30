@@ -15,14 +15,13 @@ aspects of the project by mailto:info@area0x33.com[email].
 ====
 
 [.text-center]
-image::memtype.jpg[MemType,400,266,title="MemType"] 
+image::memtype.jpg[MemType,400,267,title="MemType"] 
 
 Welcome to the MemType documentation, here you'll learn everything about the 
 MemType hardware, firmware, software tools and usage for any user level.
 
 If you fancy one, you can get it from our 
 https://www.tindie.com/stores/area0x33/[tindie store]!
-
 
 == Introduction
 
@@ -268,13 +267,11 @@ Example ubuntu installation steps:
 
 === Usage
 
-
-WARNING: When you execute the MemTypeTool GUI, the first thing to do is to `unlock` the
-memtype (if it's still locked) as it needs to be properly unlocked by `PIN` in
-order to accept any command from the GUI. 
-
 TIP: You can use the `bottom input text` to communicate with your memtype, `focusing
 it` with a mouse click if it's not already focused.
+
+[.text-center]
+video::unlock.mp4[]
 
 ==== Setting the keyboard layout
 
@@ -282,11 +279,80 @@ Using the GUI you can change the `MemType keyboard layout` to match your `comput
 keyboard layout`. The current available layouts files are located under `keyboard
 directory`.
 
+[.text-center]
+video::setkeyboard.mp4[]
+
+
 ==== Setting the P.I.N.
 
-==== Adding,Editing and Deleting credentials
+WARNING: `Changing the default PIN` is a very important action that `should be done as soon
+as possible` before loading any credential into de MemType.
 
-==== Exporting and importing from file
+[.text-center]
+video::setpin.mp4[]
+
+==== Reading from device
+
+You can `read the credentials from the MemType` to do any action to them and write
+them back, or make an `encrypted` file `backup` by <<Exporting encrypted file>>.
+
+[.text-center]
+video::read.mp4[]
+
+==== Writting to device
+
+When you've got everything looking OK in the MemTypeTool GUI you have to `write
+the credentials` to the MemType device so you can use them.
+
+Another option would be to simply store them by <<Exporting encrypted file>>.
+
+[.text-center]
+video::write.mp4[]
+
+==== Adding credentials
+
+Adding credentials is easy, when you've got your new credentials created
+remember <<Writting to device>>.
+
+[.text-center]
+video::add.mp4[]
+
+
+==== Editing credentials
+
+Editing is essential, edit to have your passwords in the credentials, usernames and any other field
+so you can forget them!
+
+[.text-center]
+video::edit.mp4[]
+
+
+==== Deleting credentials
+
+Delete by clicking into the `bin icon` of any credential. The `changes` will not
+take effect until you `write` to the device.
+
+[.text-center]
+video::delete.mp4[]
+
+==== Exporting encrypted file
+
+You can have backups in your computer, or have one AES encrypted file containing all
+the credentials for a given user role in your company. 
+
+WARNING: Don't forget the file
+password or there'll be no way of getting back the credentials from that file.
+
+[.text-center]
+video::export.mp4[]
+
+==== Importing from encrypted file
+
+As easy as exporting, enter the file password and your credentials will be ready
+to be edited.
+
+[.text-center]
+video::import.mp4[]
 
 ==== Adding delays to credentials
 
@@ -304,6 +370,83 @@ directory`.
 
 
 == MemType library
+
+The MemType library (`libsmttool`) is a `python library` that allows
+`communication`
+with the MemType in python. It allows all the operations that can be realized
+with the MemTypeTool GUI as it's based on libsmttool. 
+
+It can be found in this github:
+https://github.com/oyzzo/MemTypeTool/tree/master/libsmttool.
+
+It also can be found under the `libsmttool` directory when downloading the 
+MemTypeTool GUI.
+https://github.com/oyzzo/MemTypeTool/archive/master.zip
+
+It's composed of two modules, the `noekeon.py` file and the `memtype.py` file.
+
+[NOTE]
+=====
+This library depends on: 
+
+* python2.7
+* libusb-1.0-0
+* pyusb
+=====
+
+
+=== noekeon.py
+
+As the memtype uses internally the noekeon algorithm for encrypting the
+credentials, this algorithm has to be used in the MemTypeTool GUI to decrypt
+them back.
+
+This file provides a python implementation based on the
+http://gro.noekeon.org/Noekeon-spec.pdf[noekeon specification].
+
+NOEKEON is an iterated block cipher with a block and key length of 128 bits.
+
+The public methods implemented in the library are:
+
+=====
+ . *NoekeonEncrypt(WorkingKey, State)*
+ . *NoekeonDecrypt(WorkingKey, State)*
+=====
+
+The Number of Rounds is defined by `NUMBER_OF_ROUNDS` and fixed to `16`.
+
+*WorkingKey* format is 4 elements of 32 bit length each.
+
+*State* is the information to be encrypted / decrypted in `4 elements of 32
+bit`.
+
+
+=== memtype.py
+
+MemType command library implementation.
+
+Public methods implemented in `memtype.py` file:
+
+=====
+. *memtype Class* Communicates with the device.
+.. *connect* Open USB connection with device.
+.. *disconnect* Close USB connection with device.
+.. *info* Read info from device and return deviceInfo object.
+.. *write* Write credentials to memtype credential reserved memory area,
+credential data must be encrypted with the right PIN.
+.. *read* Read credentials from memtype, must be decrypted with the right PIN.
+.. *writePinHash* Writes PIN hash into memtype, *pinToHas* function can be used
+to generate the hash.
+.. *readPinHash* Reads the PIN hash from the memtype.
+.. *writeKeyboardLayout* Writes a keyboard layout into the memtype device.
+.. *isLocked* Returns TRUE if the memtype has not been unlocked with PIN.
+.. *validatePin* When the memtype is unlocked, checks if a PIN corresponds to
+the PIN hash and returns TRUE, FALSE otherwise.
+. *decryptCredentialList(cl, key)* Decrypts a credential list according to device
+implementation.
+. *encryptCredentialList(cl, key)* Encrypts a credential list according to
+device implementation.
+=====
 
 == Hardware
 
