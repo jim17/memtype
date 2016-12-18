@@ -58,8 +58,8 @@ extern const uint8_t credentials[MAX_CRED_FLASH_SIZE] PROGMEM;
 void CRD_fsm(uint8_t button);
 void CRD_fsmStart(void);
 void CRD_Init(void);
-uint16_t findEOS(uint16_t offset);
-void crd_printDetail(credPosition_t start, credPosition_t stop);
+void CRD_apply(void);
+void CRD_printDetail(credPosition_t start, credPosition_t stop);
 
 #endif /* _CRD_H_*/
 

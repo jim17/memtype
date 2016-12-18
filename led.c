@@ -1,10 +1,8 @@
 
 #include <avr/io.h>
 #include "led.h"
-#include "ucp.h"
-#include "uif.h"
 
-uint8_t led;
+ledStatus_t led;
 
 void LED_Task(void){
     static uint8_t i;

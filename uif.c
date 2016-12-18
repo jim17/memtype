@@ -27,7 +27,7 @@ void UIF_Task(void){
         {
         case START:
             UIF_state = USER_INPUT;
-            deleteStr();
+            print_deleteStr();
             USI_Init();
             break;
         case OPTIONS:
