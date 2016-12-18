@@ -41,7 +41,7 @@ void OPT_fsmStart(void){
     UIF_optionsIndex = 0;
     print_deleteStr();
     printStr((void*)opt_startStr, FLASH);
-    LedBlinkBoth();
+    LED_BlinkBoth();
 }
 
 /* Options Finite state machine */
@@ -86,16 +86,16 @@ static void opt_apply(void){
 static void opt_lock(void){
     print_deleteStr();
     UIF_Init();
-    LedOff();
+    LED_Off();
 }
 
 static void opt_printUser(void){
     print_deleteStr();
     CRD_printDetail(CRD_USER, CRD_USER+1);
-    LedBlinkGreen();
+    LED_BlinkGreen();
 }
 static void opt_printPass(void){
     print_deleteStr();
     CRD_printDetail(CRD_PASS, CRD_PASS+1);
-    LedBlinkRed();
+    LED_BlinkRed();
 }

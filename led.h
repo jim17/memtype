@@ -15,12 +15,12 @@
 #define LED_OFF            LED_LOW
 #define LED_TOGGLE(LED)    (LED_PORT ^= (1<<LED))
 
-#define LedOff()            {led = OFF;         }
-#define LedRed()            {led = RED;         }
-#define LedGreen()          {led = GREEN;       }
-#define LedBlinkRed()       {led = BLINK_RED;   }
-#define LedBlinkGreen()     {led = BLINK_GREEN; }
-#define LedBlinkBoth()      {led = BLINK_BOTH;  }
+#define LED_Off()            {led = OFF;         }
+#define LED_Red()            {led = RED;         }
+#define LED_Green()          {led = GREEN;       }
+#define LED_BlinkRed()       {led = BLINK_RED;   }
+#define LED_BlinkGreen()     {led = BLINK_GREEN; }
+#define LED_BlinkBoth()      {led = BLINK_BOTH;  }
 
 /* Typedefs */
 typedef enum{
@@ -32,7 +32,7 @@ typedef enum{
     BLINK_BOTH
 } ledStatus_t;
 
-extern uint8_t led;
+extern ledStatus_t led;
 
 /* Main LED Task function */
 extern void LED_Task(void);
