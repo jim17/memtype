@@ -42,13 +42,12 @@ enum
 /* Specific protocol */
 typedef struct
 {
-    //uint8_t cmd[1];
    uint8_t buf[8];
 } ucp_pkt_t; /* basic packet */
 
 /* Public vars */
 extern uint8_t UCP_state;
-extern ucp_pkt_t customReport ;//= {.buff = "hello\r\n"};
+extern ucp_pkt_t customReport ;
 
 /* Public functions */
 void UCP_Init(void);

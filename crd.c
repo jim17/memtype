@@ -123,9 +123,6 @@ void CRD_printDetail(uint8_t start, uint8_t stop){
 
 static void crd_print(void){
     PRINTCrdFlash(credential.name);
-    //memcpy_P((void*)cipher.plain, (void*)credentials, 16);
-    //noekeon_decrypt();
-    //PRINTCrdRAM(cipher.plain);
 }
 
 static void crd_previous(void){
@@ -168,7 +165,6 @@ static uint16_t crd_findEOS(uint16_t offset){
     {
         off++;
         c = pgm_read_byte(off);
-
     }
     off++;
     return off;

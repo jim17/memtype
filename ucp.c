@@ -226,7 +226,7 @@ void UCP_WriteTask(void){
             // if it's aligned or end, write to avoid waste of flash cycles
             if( ((readOffset%SPM_PAGESIZE) == 0) || (readOffset >= readEnd) )
             {
-                FLS_write((uint8_t*)tempBuff, flashWriteAddr, buffIndex, 0);
+                FLS_write((uint8_t*)tempBuff, flashWriteAddr, buffIndex);
                 flashWriteAddr += (buffIndex);
                 buffIndex = 0; // resetBufferIndex
 
