@@ -8,7 +8,7 @@
 #include "version.h"
 
 /* public variable */
-uint8_t UIF_state = START;
+uint8_t UIF_state;
 uint8_t UIF_credIndex = 0;
 uint8_t UIF_optionsIndex = 0;
 uint8_t UIF_userInputIndex = 0;
@@ -18,7 +18,6 @@ const char uif_initStr[] PROGMEM = MEMTYPE_VERSION_STR;
 void UIF_Init(void){
     UIF_state = START;
     printStr((void*)uif_initStr, FLASH);
-    return;
 }
 
 void UIF_Task(void){
@@ -42,8 +41,6 @@ void UIF_Task(void){
             break;
         }
     }
-
-    return;
 }
 
 void UIF_increment(uint8_t* val, uint8_t max){

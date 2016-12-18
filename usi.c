@@ -8,7 +8,7 @@
 
 static char userText[32];
 static char userPin[4];
-static uint8_t userTextIndex = 0;
+static uint8_t userTextIndex;
 const char USI_keys[] PROGMEM = {
     '0','1','2','3','4','5','6','7','8','9'
 };                                                                        //,'A','B','C','D','E','F'};
@@ -20,7 +20,12 @@ const char LOCKED_str[] PROGMEM = "PIN ERR";
 const uint8_t LOCK_HASH[16] EEMEM = {
     0xd4,0x4f,0xb2,0x7a,0x58,0xb4,0x27,0x4a,0x21,0xe6,0x8f,0x39,0x69,0x74,0x23,0x54
 };
-uint8_t USI_pinCheck(char pin[4]);
+
+/** Private Function declaration */
+static void usi_print(void);
+static void usi_previous(void);
+static void usi_next(void);
+static uint8_t usi_pinCheck(char pin[4]);
 
 static void usi_print(void){
     userPin[userTextIndex] = pgm_read_byte(&USI_keys[UIF_userInputIndex]);
@@ -37,6 +42,24 @@ static void usi_previous(void){
 static void usi_next(void){
     UIF_increment(&UIF_userInputIndex, sizeof(USI_keys));
     usi_print();
+}
+
+static uint8_t usi_pinCheck(char pin[4]){
+    uint8_t i;
+
+    for(i=0; i<16; i++) {
+        cipher.key[i] = pin[(i%4)];
+        cipher.plain[i] = pin[(i%4)];
+    }
+    noekeon_encrypt();
+
+    for(i=0; i<16; i++)
+    {
+        if(eeprom_read_byte(LOCK_HASH+i) != cipher.plain[i]) {
+            break;
+        }
+    }
+    return i==16;
 }
 
 void USI_Init(void){
@@ -63,7 +86,7 @@ void USI_fsm(uint8_t button){
         if(userTextIndex == (sizeof(userPin)-1))     // real array elements (\0)
         {
             /* Device Unlocked */
-            if(USI_pinCheck(userPin) == 1)
+            if(usi_pinCheck(userPin) == 1)
             {
                 CRD_fsmStart();
             }
@@ -74,8 +97,8 @@ void USI_fsm(uint8_t button){
                 userTextIndex = 0;
                 UIF_userInputIndex = 0;
                 memcpy_P((void*)userText, (void*)PIN_str, sizeof(PIN_str));
-                userText[sizeof(PIN_str)-1+userTextIndex] = pgm_read_byte(&USI_keys[UIF_userInputIndex]);
-                userText[sizeof(PIN_str)-1+userTextIndex+1] = 0;
+                //userText[sizeof(PIN_str)-1+userTextIndex] = pgm_read_byte(&USI_keys[UIF_userInputIndex]);
+                //userText[sizeof(PIN_str)-1+userTextIndex+1] = 0;
             }
         }
         else
@@ -92,22 +115,4 @@ void USI_fsm(uint8_t button){
     default:
         break;
     }
-}
-
-uint8_t USI_pinCheck(char pin[4]){
-    uint8_t i;
-
-    for(i=0; i<16; i++) {
-        cipher.key[i] = pin[(i%4)];
-        cipher.plain[i] = pin[(i%4)];
-    }
-    noekeon_encrypt();
-
-    for(i=0; i<16; i++)
-    {
-        if(eeprom_read_byte(LOCK_HASH+i) != cipher.plain[i]) {
-            break;
-        }
-    }
-    return i==16;
 }

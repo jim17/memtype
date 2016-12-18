@@ -3,7 +3,7 @@
 #include "sch.h"
 #include <stdint.h>
 #include <avr/io.h>
-#include "led.h"
+#include "adm.h"
 #include "uib.h"
 #include "uif.h"
 
@@ -26,7 +26,8 @@ uint8_t sch_lastTimerVal;
 uint8_t sch_tick; /* incremented each 1ms */
 
 /* Private Functions */
-static void sch_Task_1ms(void){
+static void sch_Task_10ms(void){
+    ADM_Task();
     UIB_Task();
     UIF_Task(); /* UIF must be called in the same task as UIB task or higher period */
 }
@@ -49,9 +50,9 @@ void SCH_Task(void){
         sch_tick++;
         sch_lastTimerVal = sch_timer_temp;
 
-        if( (sch_tick % 1) == 0 )
+        if( (sch_tick % 10) == 0 )
         {
-            sch_Task_1ms();
+            sch_Task_10ms();
         }
     }
 
