@@ -6,6 +6,8 @@
 #include "ucp.h"
 #include "print.h"
 
+#define USI_PIN_RETRIES     (3u)
+
 /** Global Data */
 // PIN: 0000 default HASH
 const uint8_t LOCK_HASH[16] EEMEM = {
@@ -19,14 +21,17 @@ static uint8_t userTextIndex;
 static const char USI_keys[] PROGMEM = {'0','1','2','3','4','5','6','7','8','9'};
 static const char PIN_str[] PROGMEM = "PIN: ";
 static const char LOCKED_str[] PROGMEM = "PIN ERR";
+static const char PINRESET_str[] PROGMEM = "PIN RESET to 0000";
 static const uint8_t LOCK_HASH_PGM[16] PROGMEM = {
     0xd4,0x4f,0xb2,0x7a,0x58,0xb4,0x27,0x4a,0x21,0xe6,0x8f,0x39,0x69,0x74,0x23,0x54
 };
+static uint8_t pin_retries = USI_PIN_RETRIES;
 
 /** Private Function declaration */
 static void usi_print(void);
 static void usi_previous(void);
 static void usi_next(void);
+static void usi_resetPin(void);
 static uint8_t usi_pinCheck(char pin[4]);
 
 void USI_Init(void){
@@ -60,7 +65,17 @@ void USI_fsm(uint8_t button){
             /* Device Locked */
             else
             {
-                printStr((void*)LOCKED_str,FLASH);
+
+
+                if(pin_retries > 0){
+                    printStr((void*)LOCKED_str,FLASH);
+                    pin_retries--;
+                } else{
+                    printStr((void*)PINRESET_str,FLASH);
+                    usi_resetPin();
+                    pin_retries = USI_PIN_RETRIES;
+                }
+
                 userTextIndex = 0;
                 UIF_userInputIndex = 0;
                 userPin[0] = '0';
@@ -116,4 +131,10 @@ static uint8_t usi_pinCheck(char pin[4]){
         }
     }
     return i==16;
+}
+
+static void usi_resetPin(void){
+    uint8_t hash[16];
+    memcpy_P((void*)hash, (void*)LOCK_HASH_PGM, sizeof(LOCK_HASH_PGM));
+    eeprom_update_block ((void*)hash, (void*)LOCK_HASH, sizeof(hash));
 }
