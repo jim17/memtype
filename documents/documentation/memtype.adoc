@@ -220,7 +220,7 @@ TIP: Using a linux virtual machine can be a workaround for the moment.
 	C:\Python27\;C:\Python27\Scripts\
 
 . Download and install PyQt for python 2.7.
-.. https://riverbankcomputing.com/software/pyqt/download
+.. https://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.4/ 
 
 . Download, unzip and install libusb:
 .. https://github.com/walac/pyusb/archive/master.zip
@@ -234,7 +234,7 @@ change them in the next step).
 .. http://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/libusb-win32-bin-1.2.6.0.zip/download
 
 . Execute install-filter-win (find it inside extracted folder, under /bin/x86 or
-other if your windows is 64bits).
+`other if your windows is 64bits`).
 
 .. Select Install Filter, next.
 
