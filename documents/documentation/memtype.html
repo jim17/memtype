@@ -419,12 +419,59 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-right">
 <div id="header">
 <h1>MemType Documentation</h1>
 <div class="details">
 <span id="author" class="author">area0x33</span><br>
 <span id="email" class="email"><a href="mailto:info@area0x33.com">info@area0x33.com</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_memtype_features">MemType features</a></li>
+<li><a href="#_credentials">Credentials</a></li>
+<li><a href="#_links">Links</a></li>
+<li><a href="#_n_o_d_e_video_review">N_O_D_E Video review</a></li>
+<li><a href="#_compare_to_others_password_keepers">Compare to others password keepers</a></li>
+</ul>
+</li>
+<li><a href="#_quick_start">Quick start</a></li>
+<li><a href="#_memtypetool_gui">MemTypeTool GUI</a>
+<ul class="sectlevel2">
+<li><a href="#_windows_installation">Windows installation</a></li>
+<li><a href="#_linux_installation">Linux installation</a></li>
+<li><a href="#_macos_installation">MacOS installation</a></li>
+<li><a href="#_usage">Usage</a></li>
+</ul>
+</li>
+<li><a href="#_using_the_memtype">Using the MemType</a>
+<ul class="sectlevel2">
+<li><a href="#_p_i_n_unlock">P.I.N. Unlock</a></li>
+<li><a href="#_use_a_credential">Use a credential</a></li>
+<li><a href="#_credential_details">Credential details</a></li>
+<li><a href="#_lock_the_device">Lock the device</a></li>
+<li><a href="#_advanced_uses">Advanced uses</a></li>
+</ul>
+</li>
+<li><a href="#_memtype_library">MemType library</a>
+<ul class="sectlevel2">
+<li><a href="#_noekeon_py">noekeon.py</a></li>
+<li><a href="#_memtype_py">memtype.py</a></li>
+</ul>
+</li>
+<li><a href="#_hardware">Hardware</a>
+<ul class="sectlevel2">
+<li><a href="#_pcb">PCB</a></li>
+<li><a href="#_bom">BOM</a></li>
+</ul>
+</li>
+<li><a href="#_firmware">Firmware</a></li>
+<li><a href="#_license">License</a></li>
+<li><a href="#_f_a_q">F.A.Q.</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
@@ -450,28 +497,890 @@ aspects of the project by <a href="mailto:info@area0x33.com">email</a>.</p>
 </tr>
 </table>
 </div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="memtype.jpg" alt="MemType" width="400" height="267">
+</div>
+<div class="title">Figure 1. MemType</div>
+</div>
 <div class="paragraph">
 <p>Welcome to the MemType documentation, here you&#8217;ll learn everything about the
 MemType hardware, firmware, software tools and usage for any user level.</p>
+</div>
+<div class="paragraph">
+<p>If you fancy one, you can get it from our
+<a href="https://www.tindie.com/stores/area0x33/">tindie store</a>!</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
+<div class="imageblock text-center">
+<div class="content">
+<img src="memtype_front.jpg" alt="MemType" width="400" height="266">
+</div>
+<div class="title">Figure 2. MemType top face</div>
+</div>
 <div class="paragraph">
 <p>Technically speaking the MemType is an open source <code>hardware password keeper</code>.
-This means it is basically a device focused in securely <code>storing passwords</code> to prevent anyone
-but the owner to access them. The <code>open source</code> part means that we share all the
+This means it is basically a device focused in securely <code>storing passwords</code>.
+The <code>open source</code> part means that we share all the
 software source files, hardware design files and documentation under the
-<a href="#license">[license]</a> conditions.</p>
+<a href="#_license">License</a> conditions.</p>
+</div>
+<div class="paragraph">
+<p>Having the passwords stored in a password keeper has several advantages:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No reusing same pass in different apps or webs.</p>
+</li>
+<li>
+<p>More secure and long passwords can be used, no need to remember them.</p>
+</li>
+<li>
+<p>No more forgotten passwords.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We like hardware password keepers but we couldn&#8217;t find one that satisfied our
+usability needs, also they were very expensive! That&#8217;s why we decided to make
+the MemType <code>loaded with features</code> and with a <code>reduced BOM</code> that results in a
+simple <code>low cost</code> device that&#8217;s also great for <code>DIY makers</code> and <code>hackers</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="_memtype_features">MemType features</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Encrypted storage</code> in the device using <a href="https://en.wikipedia.org/wiki/NOEKEON">NOEKEON</a> written
+in pure assembler!</p>
+</li>
+<li>
+<p><code>AES encrypted backups</code> on the PC using the <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
+</li>
+<li>
+<p>Plug it into a <code>USB</code>, <code>no drivers or software for using it</code>.<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>!
+Works as a HID keyboard.</p>
+</li>
+<li>
+<p><code>Works anywhere!</code>. While others only work on webs or certain
+apps, the MemType can be used anywhere from webs, apps, terminals or anywhere
+it&#8217;s allowed to type using a keyboard.</p>
+</li>
+<li>
+<p><code>One click login</code>. It stores and <code>types for you</code> not only the <code>password</code> but
+also the <code>user</code> without any interaction from your part, and it also submits it!</p>
+</li>
+<li>
+<p>Add <code>delays</code> to <code>enter the password when it&#8217;s asked</code>, for example in <code>ssh</code> or
+login forms where the user and password are asked in two steps.</p>
+</li>
+<li>
+<p><code>Dynamic storage</code>. You&#8217;re <code>not limited</code> to a certain number of credentials,
+just fill the 2KB storage with them.</p>
+</li>
+<li>
+<p><code>Assign names</code> to the credentials so you can find them easy and fast to use them.</p>
+</li>
+<li>
+<p>Manage the device with the <a href="#_memtypetool_gui">MemTypeTool GUI</a> software, super easy and simple!</p>
+</li>
+<li>
+<p><code>Truly multiplatform</code>. The MemType works on <code>any device with usb</code> keyboard
+capability like tablets, smart tv, and phones.</p>
+</li>
+<li>
+<p><code>Any keyboard layout</code>. Load the keyboard layout you&#8217;ve got working in your OS
+using the <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
+</li>
+<li>
+<p><code>Truly Open Source</code> Software and Hardware.</p>
+</li>
+</ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_credentials">Credentials</h3>
+<div class="paragraph">
+<p>The data structure used by the MemType to store <code>passwords</code> and <code>usernames</code> is
+called a <code>credential</code>. Appart from passwords and usernames it also stores a
+field that stores the key combination to move from the user input to the
+password input, called <code>hop</code>. It also includes a field for storing the key
+combination to submit the login form or command, called <code>submit</code>. To help you
+find the credential you need, each of them has a name stored in the <code>name</code>
+field.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 85.7143%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name that&#8217;ll be shown while using the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>user</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the login.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>hop</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sequence of keyboard keys to move from the user input field to the password one. Usually <kbd>tab</kbd>, sometimes <kbd>Enter</kbd></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>password</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password that&#8217;ll be typed into the password input field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>submit</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sequence of keyboard keys to validate the login. Usually <kbd>Enter</kbd>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When a <code>credential</code> is applied, the MemType generates the key sequence like you
+were typing it into your keyboard, excluding the name by the order of the table above.</p>
+</div>
+<div class="paragraph">
+<p>In a login form, you focus the username field and then move the MemType joystick
+<kbd>up</kbd> and <kbd>down</kbd> looking for the credential you need. When you find the
+right credential, <kbd>enter</kbd> to apply it and the MemType will erase the credential
+name, type the username, move to the password input field, type it and submit. All
+this process is done much times faster than any person can type.</p>
+</div>
+<div class="paragraph">
+<p>There are some cases where you may need a <code>delay</code> in a certain point, for example
+when the login form asks for the user, validates it and then asks for the password.
+Such delays can be made by the MemType using one special character when editing
+the credential. This and more is explained in the <a href="#_advanced_uses">Advanced uses</a> section.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s easy to see how this credential structure can be used to <code>securely store</code> and
+type other kind of data like commands or <code>credit card numbers</code>.</p>
+</div>
+<div class="paragraph">
+<p>When buying online
+it&#8217;s faster and more secure to let the MemType type the credit card number than pulling
+out the creditcard with the number printed on it.</p>
+</div>
+<div class="paragraph">
+<p>A way of accomplishing it would be by having all the fields empty except
+the <code>password</code> field that would contain the <code>credit card number</code> and the name.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_links">Links</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_n_o_d_e_video_review">N_O_D_E Video review</h3>
+<div class="paragraph">
+<p>If you want a great video introduction and review of the MemType, check the
+following awesome video made by
+<a href="https://www.youtube.com/channel/UCvrLvII5oxSWEMEkszrxXEA">N_O_D_E</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<iframe width="800" height="500" src="https://www.youtube.com/embed/O16U_TjAutU?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compare_to_others_password_keepers">Compare to others password keepers</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_start">Quick start</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Open a <code>text editor</code> and connect the MemType to the <code>USB</code> port of your computer.
+You&#8217;ll see the <code>red led</code> <span class="icon red"><i class="fa fa-circle"></i></span> turning on indicating it&#8217;s being
+<code>powered</code> correctly and it&#8217;s <code>locked</code>.</p>
+</div>
+<div class="paragraph">
+<p>On the text editor it will write a <code>welcome message</code> indicating it&#8217;s firmware
+version:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>MemType 3.1.0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You don&#8217;t have to delete what it writes, it deletes it&#8217;s own text to write new
+one, <code>that&#8217;s how the MemType communicates with you</code>.
+Now you can unlock it entering the <code>PIN</code>, by default it&#8217;s <code>0000</code>. To enter the PIN
+use the <code>joystick</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>up <span class="icon"><i class="fa fa-arrow-up"></i></span> increases the number.</p>
+</li>
+<li>
+<p>down <span class="icon"><i class="fa fa-arrow-down"></i></span> decreases.</p>
+</li>
+<li>
+<p>towards the connector <span class="icon"><i class="fa fa-arrow-right"></i></span> accepts the number.</p>
+</li>
+<li>
+<p>the opposite joystick movement <span class="icon"><i class="fa fa-arrow-left"></i></span> to cancel.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll refer to these movements
+<kbd>up</kbd>, <kbd>down</kbd>, <kbd>enter</kbd> and <kbd>back</kbd> respectively.</p>
+</div>
+<div class="paragraph">
+<p>You should have now the pin entered:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PIN: 0000</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One more <kbd>enter</kbd> and it&#8217;ll validate and show the name of the first credential
+and the green led <span class="icon green"><i class="fa fa-circle"></i></span> will be on.
+If the PIN is incorrect an error message will be displayed:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PIN ERR</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The MemType comes preloaded with 3 dummy credentials so you can play the first
+time. Move <kbd>up</kbd> and <kbd>down</kbd> to see their names, apply one with the
+<kbd>enter</kbd> movement on the joystick, see the details with one <kbd>back</kbd>
+movement and lock the device with one more <kbd>back</kbd> movement (2 in total)
+turning the red led <span class="icon red"><i class="fa fa-circle"></i></span> on again.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s the basic usage of the MemType, now to be useful it has to contain the
+credentials you&#8217;ll use, setup a <strong>different PIN</strong>, and be loaded with the same
+<code>keyboard layout</code> as your operating system or you&#8217;ll see strange characters. To do
+all this management on the device there is an easy to use Graphical User
+Interface software called <a href="#_memtypetool_gui">MemTypeTool GUI</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_memtypetool_gui">MemTypeTool GUI</h2>
+<div class="sectionbody">
+<div class="imageblock text-center">
+<div class="content">
+<img src="screenshot.png" alt="screenshot">
+</div>
+<div class="title">Figure 3. MemTypeTool GUI</div>
+</div>
+<div class="paragraph">
+<p>The MemTypeTool GUI can be downloaded from :
+<a href="https://github.com/oyzzo/MemTypeTool" class="bare">https://github.com/oyzzo/MemTypeTool</a></p>
+</div>
+<div class="paragraph">
+<p>It is developed using python 2.7 , pyqt4, and libusb so it should work anywhere you
+can get this dependencies running. It has been tested on Windows, Linux and
+MacOS.</p>
+</div>
+<div class="paragraph">
+<p>To run the <code>MemTypeTool</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>python main.py</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_windows_installation">Windows installation</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+It has been tested in windows up to 8.1. It has been reported to not work in
+windows 10.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Using a linux virtual machine can be a workaround for the moment.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install python 2.7.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="https://www.python.org/downloads/" class="bare">https://www.python.org/downloads/</a></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Add python to your path:</p>
+<div class="literalblock">
+<div class="content">
+<pre>C:\Python27\;C:\Python27\Scripts\</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download and install PyQt for python 2.7.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="https://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.4/" class="bare">https://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.4/</a></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Download, unzip and install libusb:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="https://github.com/walac/pyusb/archive/master.zip" class="bare">https://github.com/walac/pyusb/archive/master.zip</a></p>
+<div class="literalblock">
+<div class="content">
+<pre>python setup.py install</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Plug in the Memtype and let windows install the drivers for the device (we&#8217;ll
+change them in the next step).</p>
+</li>
+<li>
+<p>Download and extract libusb-win32:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="http://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/libusb-win32-bin-1.2.6.0.zip/download" class="bare">http://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/libusb-win32-bin-1.2.6.0.zip/download</a></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Execute install-filter-win (find it inside extracted folder, under /bin/x86 or
+<code>other if your windows is 64bits</code>).</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select Install Filter, next.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="install-filter-win-1.png" alt="Filter step 1">
+</div>
+<div class="title">Figure 4. Windows libusb filter, step 1</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select Memtype (pid a033) and click Install</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="install-filter-win-2.png" alt="Filter step 2">
+</div>
+<div class="title">Figure 5. Windows libusb filter, step 2</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Done!!! you can check it with the testlibusb-win found next to
+install-filter-win:</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="testlibusb-win.png" alt="Test filter windows">
+</div>
+<div class="title">Figure 6. Check windows filter</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_linux_installation">Linux installation</h3>
+<div class="paragraph">
+<p>Example ubuntu installation steps:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>apt-get install python
+apt-get install python-pyqt4
+pip install pyusb</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_macos_installation">MacOS installation</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_usage">Usage</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use the <code>bottom input text</code> to communicate with your memtype, <code>focusing
+it</code> with a mouse click if it&#8217;s not already focused.
+</td>
+</tr>
+</table>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="unlock.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_the_keyboard_layout">Setting the keyboard layout</h4>
+<div class="paragraph">
+<p>Using the GUI you can change the <code>MemType keyboard layout</code> to match your <code>computer
+keyboard layout</code>. The current available layouts files are located under <code>keyboard
+directory</code>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="setkeyboard.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_the_p_i_n">Setting the P.I.N.</h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<code>Changing the default PIN</code> is a very important action that <code>should be done as soon
+as possible</code> before loading any credential into de MemType.
+</td>
+</tr>
+</table>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="setpin.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reading_from_device">Reading from device</h4>
+<div class="paragraph">
+<p>You can <code>read the credentials from the MemType</code> to do any action to them and write
+them back, or make an <code>encrypted</code> file <code>backup</code> by <a href="#_exporting_encrypted_file">Exporting encrypted file</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="read.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_writting_to_device">Writting to device</h4>
+<div class="paragraph">
+<p>When you&#8217;ve got everything looking OK in the MemTypeTool GUI you have to <code>write
+the credentials</code> to the MemType device so you can use them.</p>
+</div>
+<div class="paragraph">
+<p>Another option would be to simply store them by <a href="#_exporting_encrypted_file">Exporting encrypted file</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="write.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_credentials">Adding credentials</h4>
+<div class="paragraph">
+<p>Adding credentials is easy, when you&#8217;ve got your new credentials created
+remember <a href="#_writting_to_device">Writting to device</a>.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="add.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_editing_credentials">Editing credentials</h4>
+<div class="paragraph">
+<p>Editing is essential, edit to have your passwords in the credentials, usernames and any other field
+so you can forget them!</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="edit.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleting_credentials">Deleting credentials</h4>
+<div class="paragraph">
+<p>Delete by clicking into the <code>bin icon</code> of any credential. The <code>changes</code> will not
+take effect until you <code>write</code> to the device.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="delete.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exporting_encrypted_file">Exporting encrypted file</h4>
+<div class="paragraph">
+<p>You can have backups in your computer, or have one AES encrypted file containing all
+the credentials for a given user role in your company.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Don&#8217;t forget the file
+password or there&#8217;ll be no way of getting back the credentials from that file.
+</td>
+</tr>
+</table>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="export.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_importing_from_encrypted_file">Importing from encrypted file</h4>
+<div class="paragraph">
+<p>As easy as exporting, enter the file password and your credentials will be ready
+to be edited.</p>
+</div>
+<div class="videoblock text-center">
+<div class="content">
+<video src="import.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_delays_to_credentials">Adding delays to credentials</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_the_memtype">Using the MemType</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_p_i_n_unlock">P.I.N. Unlock</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_use_a_credential">Use a credential</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_credential_details">Credential details</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_lock_the_device">Lock the device</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_advanced_uses">Advanced uses</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_memtype_library">MemType library</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The MemType library (<code>libsmttool</code>) is a <code>python library</code> that allows
+<code>communication</code>
+with the MemType in python. It allows all the operations that can be realized
+with the MemTypeTool GUI as it&#8217;s based on libsmttool.</p>
+</div>
+<div class="paragraph">
+<p>It can be found in this github:
+<a href="https://github.com/oyzzo/MemTypeTool/tree/master/libsmttool" class="bare">https://github.com/oyzzo/MemTypeTool/tree/master/libsmttool</a>.</p>
+</div>
+<div class="paragraph">
+<p>It also can be found under the <code>libsmttool</code> directory when downloading the
+MemTypeTool GUI.
+<a href="https://github.com/oyzzo/MemTypeTool/archive/master.zip" class="bare">https://github.com/oyzzo/MemTypeTool/archive/master.zip</a></p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s composed of two modules, the <code>noekeon.py</code> file and the <code>memtype.py</code> file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This library depends on:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>python2.7</p>
+</li>
+<li>
+<p>libusb-1.0-0</p>
+</li>
+<li>
+<p>pyusb</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_noekeon_py">noekeon.py</h3>
+<div class="paragraph">
+<p>As the memtype uses internally the noekeon algorithm for encrypting the
+credentials, this algorithm has to be used in the MemTypeTool GUI to decrypt
+them back.</p>
+</div>
+<div class="paragraph">
+<p>This file provides a python implementation based on the
+<a href="http://gro.noekeon.org/Noekeon-spec.pdf">noekeon specification</a>.</p>
+</div>
+<div class="paragraph">
+<p>NOEKEON is an iterated block cipher with a block and key length of 128 bits.</p>
+</div>
+<div class="paragraph">
+<p>The public methods implemented in the library are:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>NoekeonEncrypt(WorkingKey, State)</strong></p>
+</li>
+<li>
+<p><strong>NoekeonDecrypt(WorkingKey, State)</strong></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The Number of Rounds is defined by <code>NUMBER_OF_ROUNDS</code> and fixed to <code>16</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>WorkingKey</strong> format is 4 elements of 32 bit length each.</p>
+</div>
+<div class="paragraph">
+<p><strong>State</strong> is the information to be encrypted / decrypted in <code>4 elements of 32
+bit</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memtype_py">memtype.py</h3>
+<div class="paragraph">
+<p>MemType command library implementation.</p>
+</div>
+<div class="paragraph">
+<p>Public methods implemented in <code>memtype.py</code> file:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>memtype Class</strong> Communicates with the device.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>connect</strong> Open USB connection with device.</p>
+</li>
+<li>
+<p><strong>disconnect</strong> Close USB connection with device.</p>
+</li>
+<li>
+<p><strong>info</strong> Read info from device and return deviceInfo object.</p>
+</li>
+<li>
+<p><strong>write</strong> Write credentials to memtype credential reserved memory area,
+credential data must be encrypted with the right PIN.</p>
+</li>
+<li>
+<p><strong>read</strong> Read credentials from memtype, must be decrypted with the right PIN.</p>
+</li>
+<li>
+<p><strong>writePinHash</strong> Writes PIN hash into memtype, <strong>pinToHas</strong> function can be used
+to generate the hash.</p>
+</li>
+<li>
+<p><strong>readPinHash</strong> Reads the PIN hash from the memtype.</p>
+</li>
+<li>
+<p><strong>writeKeyboardLayout</strong> Writes a keyboard layout into the memtype device.</p>
+</li>
+<li>
+<p><strong>isLocked</strong> Returns TRUE if the memtype has not been unlocked with PIN.</p>
+</li>
+<li>
+<p><strong>validatePin</strong> When the memtype is unlocked, checks if a PIN corresponds to
+the PIN hash and returns TRUE, FALSE otherwise.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>decryptCredentialList(cl, key)</strong> Decrypts a credential list according to device
+implementation.</p>
+</li>
+<li>
+<p><strong>encryptCredentialList(cl, key)</strong> Encrypts a credential list according to
+device implementation.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware">Hardware</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_pcb">PCB</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_bom">BOM</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_firmware">Firmware</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_license">License</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_f_a_q">F.A.Q.</h2>
+<div class="sectionbody">
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>Can I make a MemType myself?</em></p>
+<p>Yes! It&#8217;s a great DIY project!.
+You can make your PCB using the design files or order one from
+OSHpark, buy the components, solder them, compile the firmware and burn
+it into the microcontroller!</p>
+</li>
+<li>
+<p><em>How many credentials can be stored?</em></p>
+<p>The capacity of the credentials storage on the MemType is <code>2KB</code>.
+Credentials are stored dinammically so <code>it&#8217;ll depend on the length</code> of the
+name, username, password etc&#8230;&#8203;</p>
+</li>
+<li>
+<p><em>Can I make a backup of my credentials?</em></p>
+<p>Having a backup of the credentials is always a good idea. You can export
+an encrypted file from the <code>MemTypeGUI</code> containning all your
+credentials.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. Using it doesn&#8217;t require software or drivers. For managing operations like storing credentials or changing the PIN the MemTypeTool is needed and depending on the OS the libusb driver.
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-22 23:12:37 CET
+Last updated 2017-02-27 19:38:38 CET
 </div>
 </div>
 </body>
