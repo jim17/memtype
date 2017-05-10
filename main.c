@@ -122,7 +122,7 @@ int main(void){
     wdt_enable(WDTO_1S);
     SCH_Init();
     ADM_Init();
-    UIB_Init();
+    /*UIB_Init();*/
     UIF_Init();
     LED_Init();
     CRD_Init();
@@ -147,7 +147,6 @@ int main(void){
     for(;; ) {                /* main event loop */
         wdt_reset();
         usbPoll();
-        ADM_Task();
         SCH_Task();
 
         if(usbInterruptIsReady()) {

@@ -2,7 +2,6 @@
 #include "fls.h"
 #include <avr/boot.h>
 #include <avr/pgmspace.h>
-
 #include <avr/interrupt.h>  /* for sei(), cli() */
 
 // attiny85 SPM_PAGESIZE is 64 bytes
@@ -12,8 +11,7 @@
 // Local functions prototype
 void fls_writePage(uint16_t byteaddr);
 void fls_erasePage(uint16_t byteaddr);
-void fls_loadPage(uint8_t* buff, uint16_t byteaddr);
-uint8_t fls_isErased(uint16_t startaddr, uint16_t size);
+void fls_loadPage(const uint8_t* buff, uint16_t byteaddr);
 
 void fls_writePage(uint16_t byteaddr) {
     cli();
@@ -26,7 +24,8 @@ void fls_erasePage(uint16_t byteaddr){
     boot_page_erase_safe(byteaddr);
     sei();
 }
-void fls_loadPage(uint8_t* buff, uint16_t byteaddr){
+
+void fls_loadPage(const uint8_t* buff, uint16_t byteaddr){
     uint8_t i;
     uint16_t w;
     for(i=0; i<SPM_PAGESIZE; i+=2)
@@ -38,22 +37,7 @@ void fls_loadPage(uint8_t* buff, uint16_t byteaddr){
     }
 }
 
-// return 1 (memory erased)
-// return 0 (memory not fully erased)
-uint8_t fls_isErased(uint16_t startaddr, uint16_t size){
-    uint16_t i;
-    for(i=0; i<size; i++)
-    {
-        if(pgm_read_byte(startaddr+i) != 0xFF)
-        {
-            return 0;
-        }
-    }
-
-    return 1;
-}
-
-void FLS_write(uint8_t* buff, uint16_t startaddr, uint16_t size,uint8_t erase){
+void FLS_write(uint8_t* buff, uint16_t startaddr, uint16_t size){
     uint8_t tempBuff[SPM_PAGESIZE];
     uint8_t eraseBuffStart;
     uint8_t eraseBuffEnd;
@@ -81,7 +65,7 @@ void FLS_write(uint8_t* buff, uint16_t startaddr, uint16_t size,uint8_t erase){
 
         for(j=eraseBuffStart; j<eraseBuffEnd; j++)
         {
-            tempBuff[j] = (erase==1) ? (0xFF) : (*buff++);
+            tempBuff[j] = *buff++;
         }
 
         fls_loadPage(tempBuff,alignedStartAddr);

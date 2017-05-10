@@ -39,9 +39,9 @@ const char opt_startStr[] PROGMEM = OPT_START_STR;
 void OPT_fsmStart(void){
     UIF_state = OPTIONS;
     UIF_optionsIndex = 0;
-    deleteStr();
+    print_deleteStr();
     printStr((void*)opt_startStr, FLASH);
-    LedBlinkBoth();
+    LED_BlinkBoth();
 }
 
 /* Options Finite state machine */
@@ -67,7 +67,7 @@ void OPT_fsm(uint8_t button){
 
 static void opt_previous(void){
     // select previous credential
-    deleteStr();
+    print_deleteStr();
     UIF_increment(&UIF_optionsIndex, MAX_OPT_SIZE);
     opt_apply();
 }
@@ -84,18 +84,18 @@ static void opt_apply(void){
 
 
 static void opt_lock(void){
-    deleteStr();
+    print_deleteStr();
     UIF_Init();
-    LedOff();
+    LED_Off();
 }
 
 static void opt_printUser(void){
-    deleteStr();
-    crd_printDetail(CRD_USER, CRD_USER+1);
-    LedBlinkGreen();
+    print_deleteStr();
+    CRD_printDetail(CRD_USER, CRD_USER+1);
+    LED_BlinkGreen();
 }
 static void opt_printPass(void){
-    deleteStr();
-    crd_printDetail(CRD_PASS, CRD_PASS+1);
-    LedBlinkRed();
+    print_deleteStr();
+    CRD_printDetail(CRD_PASS, CRD_PASS+1);
+    LED_BlinkRed();
 }

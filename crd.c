@@ -11,14 +11,12 @@
 #define PRINTCrdRAM(x)      printStr((void*)x, RAM)
 
 // Local Function prototype
-void crd_print(void);
-void crd_previous(void);
-void crd_next(void);
-void crd_apply(void);
-void crd_printDetail(credPosition_t start, credPosition_t stop);
-void crd_loadCredential(uint16_t cred);
-uint16_t crd_findEOS(uint16_t offset);
-uint8_t crd_find(uint8_t* start, uint8_t len);
+static void crd_print(void);
+static void crd_previous(void);
+static void crd_next(void);
+static void crd_loadCredential(uint16_t cred);
+static uint16_t crd_findEOS(uint16_t offset);
+static uint8_t crd_find(uint8_t* start, uint8_t len);
 
 cipher_t cipher;
 
@@ -46,7 +44,7 @@ void CRD_Init(void){
 /* Credentials Finite state machine [Start] */
 void CRD_fsmStart(void){
     UIF_state = CREDENTIALS;
-    deleteStr();
+    print_deleteStr();
     crd_print();
     UCP_Unlock();
 }
@@ -54,7 +52,7 @@ void CRD_fsmStart(void){
 /* Credentials Finite state machine */
 void CRD_fsm(uint8_t button){
 
-    deleteStr();
+    print_deleteStr();
 
     switch(button) {
     case LEFT:
@@ -64,7 +62,7 @@ void CRD_fsm(uint8_t button){
         crd_previous();
         break;
     case RIGHT:
-        crd_printDetail(CRD_USER, CRD_END);
+        CRD_printDetail(CRD_USER, CRD_END);
         break;
     case DOWN:
         crd_next();
@@ -74,35 +72,7 @@ void CRD_fsm(uint8_t button){
     }
 }
 
-void crd_print(void){
-    PRINTCrdFlash(credential.name);
-    //memcpy_P((void*)cipher.plain, (void*)credentials, 16);
-    //noekeon_decrypt();
-    //PRINTCrdRAM(cipher.plain);
-}
-
-void crd_previous(void){
-    uint16_t currentcred = (credential.name-(uint16_t)credentials);
-    uint16_t lastcred = 0;
-
-    while(credential.next != currentcred )
-    {
-        lastcred = credential.next;
-        crd_loadCredential(credential.next);
-    }
-    // select previous valid credential
-    crd_loadCredential(lastcred);
-    crd_print();
-}
-
-void crd_next(void){
-    // select next valid credential
-    crd_loadCredential(credential.next);
-    crd_print();
-}
-
-
-void crd_apply(){
+void CRD_apply(){
     if (counter >= crdStop) {
         return;
     }
@@ -142,8 +112,41 @@ void crd_apply(){
     position += size;
 }
 
+/* Writes the credential */
+void CRD_printDetail(uint8_t start, uint8_t stop){
+    position = 0;
+    counter = 0;
+    crdStart = start;
+    crdStop = stop;
+    CRD_apply();
+}
+
+static void crd_print(void){
+    PRINTCrdFlash(credential.name);
+}
+
+static void crd_previous(void){
+    uint16_t currentcred = (credential.name-(uint16_t)credentials);
+    uint16_t lastcred = 0;
+
+    while(credential.next != currentcred )
+    {
+        lastcred = credential.next;
+        crd_loadCredential(credential.next);
+    }
+    // select previous valid credential
+    crd_loadCredential(lastcred);
+    crd_print();
+}
+
+static void crd_next(void){
+    // select next valid credential
+    crd_loadCredential(credential.next);
+    crd_print();
+}
+
 /* load a credential from flash to working credential */
-void crd_loadCredential(uint16_t cred){
+static void crd_loadCredential(uint16_t cred){
     uint16_t offset = cred+(uint16_t)credentials; //counter
 
     credential.name = offset;
@@ -154,7 +157,7 @@ void crd_loadCredential(uint16_t cred){
 }
 
 /* return EOS '\0' position + 1 */
-uint16_t crd_findEOS(uint16_t offset){
+static uint16_t crd_findEOS(uint16_t offset){
     char c;
     uint16_t off = offset;
     c = pgm_read_byte(off);
@@ -162,32 +165,21 @@ uint16_t crd_findEOS(uint16_t offset){
     {
         off++;
         c = pgm_read_byte(off);
-
     }
     off++;
     return off;
 }
 
 /* return position of first EOS, len must be lower than 255*/
-uint8_t crd_find(uint8_t* start, uint8_t len){
+static uint8_t crd_find(uint8_t* start, uint8_t len){
     uint8_t i;
     uint8_t* ptr = start;
 
-    for(i=0; i<len; i++)
-    {
+    for(i=0; i<len; i++){
         if(ptr[i] == '\0') {
             break;
         }
     }
 
     return i;
-}
-
-/* Writes the credential */
-void crd_printDetail(uint8_t start, uint8_t stop){
-    position = 0;
-    counter = 0;
-    crdStart = start;
-    crdStop = stop;
-    crd_apply();
 }

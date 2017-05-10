@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include "led.h"
 
-/* PROTOCOL COMMANDS */ /*TO BE ADJUSTED TO REAL ONES*/
+/* PROTOCOL COMMANDS */
 #define UCP_CMD_ERROR   0x00
 #define UCP_CMD_RESET   0x01
 #define UCP_CMD_READ    0x02
@@ -42,13 +42,12 @@ enum
 /* Specific protocol */
 typedef struct
 {
-    //uint8_t cmd[1];
    uint8_t buf[8];
 } ucp_pkt_t; /* basic packet */
 
 /* Public vars */
 extern uint8_t UCP_state;
-extern ucp_pkt_t customReport ;//= {.buff = "hello\r\n"};
+extern ucp_pkt_t customReport ;
 
 /* Public functions */
 void UCP_Init(void);
@@ -57,7 +56,7 @@ void UCP_Decode(uint8_t *data, uint8_t len);
 void UCP_WriteTask(void);
 
 /* Macros */
-#define UCP_Unlock() { UCP_state = IDLE; LedGreen(); }
-#define UCP_Lock()   { UCP_state = DEVICE_LOCKED; LedRed(); }
+#define UCP_Unlock() { UCP_state = IDLE; LED_Green(); }
+#define UCP_Lock()   { UCP_state = DEVICE_LOCKED; LED_Red(); }
 
 #endif /* _UCP_H_ */

@@ -1,36 +1,43 @@
 #include "print.h"
+#include "crd.h"
+
+#define STRBUF_SIZE (5u)
 
 typedef enum
 {
-    INIT = 0,PRESSED,RELEASED,IDLE,DELETE,DELETE_PRESSED,
+    INIT = 0,
+    PRESSED,
+    RELEASED,
+    IDLE,
+    DELETE,
+    DELETE_PRESSED,
 }kbd_status_t;
 
 
 typedef struct
 {
     char *strPtr;
-    uchar info;
+    uint8_t info;
     uint8_t len;
     uint8_t callback;
 
 }strPtr_t;
 
-strPtr_t strBuf[5];
+strPtr_t strBuf[STRBUF_SIZE];
 
-uchar actString; //Cadena actual
-uchar cCount = 0; //Delete counter
-uchar EOS=0; //EndOfString
-uchar debounceCount = 0; //counter
+uint8_t actString; //Cadena actual
+uint8_t cCount = 0; //Delete counter
+uint8_t EOS=0; //EndOfString
+uint8_t debounceCount = 0; //counter
 keyboard_report_t reportBuffer;
 kbd_status_t kbd_status = INIT;
 
-extern void crd_apply(void);
+/** Private Function prototype */
+static void print_pressKey(char);
+static void print_releaseKey(void);
+static void print(char * str,uint8_t isRam, uint8_t len);
 
-void pressKeyByChar(char ascii){
-    //Initializing
-    reportBuffer.modifier=0;
-    reportBuffer.keycode=0;
-
+void print_pressKey(char ascii){
     //ascii to key
     char key = KEYBOARD_READ_BYTE((void*)(keyboardLUT_ES+ascii));
 
@@ -40,18 +47,18 @@ void pressKeyByChar(char ascii){
     reportBuffer.keycode  = (~(SHIFT_MASK|ALTGR_MASK)) & key;
 }
 
-void releaseKeys(void){
+static void print_releaseKey(void){
     //Initializing
     reportBuffer.modifier=0;
     reportBuffer.keycode=0;
 }
 
-static void print(char * str,uchar isRam, uint8_t len){
-    uchar cont=0;
-    uchar index;
+static void print(char * str,uint8_t isRam, uint8_t len){
+    uint8_t cont=0;
+    uint8_t index;
     while(cont < sizeof(strBuf))
     {
-        index = (actString+cont)%5;
+        index = (actString+cont)%STRBUF_SIZE;
         if(strBuf[index].info == EMPTY)
         {
             strBuf[index].info = isRam;
@@ -81,15 +88,6 @@ void print_nStr(char* str, uint8_t len){
     print((void*)str, RAM, len);
 }
 
-void IntToChar(uchar number,uchar * tostr){
-    tostr[0] = (number/100)+'0';
-    number %= 100;
-    tostr[1] = (number/10)+'0';
-    tostr[2] = (number%10)+'0';
-    tostr[3] = '\0';     //End of String
-
-}
-
 void printUpdate(void){
     char ascii = 0;
 
@@ -106,7 +104,7 @@ void printUpdate(void){
     case INIT:     //Initial debouncing
         if(debounceCount < INIT_DEBOUNCE)
         {
-            releaseKeys();
+            print_releaseKey();
             debounceCount++;
 
         }else{
@@ -115,7 +113,7 @@ void printUpdate(void){
         }
         break;
     case PRESSED:     //We release
-        releaseKeys();
+        print_releaseKey();
         kbd_status = RELEASED;
         if(strBuf[actString].len > 0) {
             strBuf[actString].len--;
@@ -127,13 +125,13 @@ void printUpdate(void){
         {
             EOS=1;
             strBuf[actString].info = EMPTY;
-            actString = (actString+1)%5;
+            actString = (actString+1)%STRBUF_SIZE;
         }
         else if( (strBuf[actString].callback != 0) && (strBuf[actString].len == 0) )
         {
 
             strBuf[actString].info = EMPTY;
-            crd_apply();
+            CRD_apply();
             if(strBuf[actString].info == EMPTY)
             {
                 EOS=1;
@@ -147,7 +145,7 @@ void printUpdate(void){
             {
                 kbd_status = IDLE;
             }else{
-                pressKeyByChar(ascii);
+                print_pressKey(ascii);
                 if(EOS==0) {    //not first char
                     cCount++;    //new char to delete
                 }else{      //first char of string
@@ -161,7 +159,7 @@ void printUpdate(void){
     case IDLE:
         if(debounceCount < IDLE_TIMEOUT)
         {
-            releaseKeys();
+            print_releaseKey();
             debounceCount++;
         }else{
             kbd_status=RELEASED;
@@ -175,32 +173,28 @@ void printUpdate(void){
     case DELETE:
         if(cCount > 0)
         {       //DELETING
-            pressKeyByChar(0x08);
+            print_pressKey(0x08);
             cCount--;
             kbd_status=DELETE_PRESSED;
         }else{     //DONE ERASING
-            releaseKeys();
+            print_releaseKey();
             //strBuf[actString].info = EMPTY;
             kbd_status=RELEASED;
             if(EOS==0)     //if half word printing
             {
                 EOS=1;    //INVALIDATE CURRENT TYPING
                 strBuf[actString].info = EMPTY;
-                actString = (actString+1)%5;
+                actString = (actString+1)%STRBUF_SIZE;
             }
         }
         break;
     case DELETE_PRESSED:
-        releaseKeys();
+        print_releaseKey();
         kbd_status=DELETE;
         break;
     }
 }
 
-void deleteStr(void){
-    kbd_status=DELETE;
-}
-void deleteNStr(uchar n){
-    cCount = n;
+void print_deleteStr(void){
     kbd_status=DELETE;
 }
