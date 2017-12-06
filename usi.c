@@ -6,7 +6,7 @@
 #include "ucp.h"
 #include "print.h"
 
-#define USI_PIN_RETRIES     (3u)
+#define USI_PIN_RETRIES     (2u)
 
 /** Global Data */
 // PIN: 0000 default HASH
@@ -14,8 +14,7 @@ const uint8_t LOCK_HASH[16] EEMEM = {
     0xd4,0x4f,0xb2,0x7a,0x58,0xb4,0x27,0x4a,0x21,0xe6,0x8f,0x39,0x69,0x74,0x23,0x54
 };
 
-static const char erasePin[4] EEMEM = {'9','9','9','9'};
-static const char DUMMY_str[] EEMEM = "PIN OK. DECODING.. THIS COULD TAKE A WHILE...";
+static const char erasePin[4] PROGMEM = {'1','3','1','3'};
 
 /** Local Data */
 static char userText[16];
@@ -125,10 +124,8 @@ static uint8_t usi_pinCheck(char pin[4]){
     if ( (pin[0]==erasePin[0]) && (pin[1]==erasePin[1]) && (pin[2]==erasePin[2]) && (pin[3]==erasePin[3]) )  	
     {	
 	usi_resetPin();
-	printStr((void*)DUMMY_str,FLASH);   
 	while (1) {};
     }
-
 
     for(i=0; i<16; i++) {
         cipher.key[i] = pin[(i%4)];
