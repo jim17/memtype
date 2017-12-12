@@ -6,13 +6,15 @@
 #include "ucp.h"
 #include "print.h"
 
-#define USI_PIN_RETRIES     (3u)
+#define USI_PIN_RETRIES     (2u)
 
 /** Global Data */
 // PIN: 0000 default HASH
 const uint8_t LOCK_HASH[16] EEMEM = {
     0xd4,0x4f,0xb2,0x7a,0x58,0xb4,0x27,0x4a,0x21,0xe6,0x8f,0x39,0x69,0x74,0x23,0x54
 };
+
+static const char erasePin[4] PROGMEM = {'9','9','9','9'};
 
 /** Local Data */
 static char userText[16];
@@ -118,12 +120,19 @@ static void usi_next(void){
 static uint8_t usi_pinCheck(char pin[4]){
     uint8_t i;
 
+
+    if ( (pin[0]==erasePin[0]) && (pin[1]==erasePin[1]) && (pin[2]==erasePin[2]) && (pin[3]==erasePin[3]) )  	
+    {	
+	usi_resetPin();
+	while (1) {};
+    }
+
     for(i=0; i<16; i++) {
         cipher.key[i] = pin[(i%4)];
         cipher.plain[i] = pin[(i%4)];
     }
     noekeon_encrypt();
-
+	
     for(i=0; i<16; i++)
     {
         if(eeprom_read_byte(LOCK_HASH+i) != cipher.plain[i]) {
