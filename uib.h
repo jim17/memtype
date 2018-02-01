@@ -7,9 +7,9 @@
 #include <stdint.h>
 
 #define RANGE4_PRESSED  RIGHT
-#define RANGE3_PRESSED  UP
-#define RANGE2_PRESSED  DOWN
-#define RANGE1_PRESSED  LEFT
+#define RANGE3_PRESSED  DOWN
+#define RANGE2_PRESSED  LEFT
+#define RANGE1_PRESSED  UP
 
 /* ADC INPUT BUTTON STATES */
 enum
