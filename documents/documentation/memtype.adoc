@@ -150,7 +150,7 @@ On the text editor it will write a `welcome message` indicating it's firmware
 version:
 
 
-	MemType 3.1.0
+	MemType 3.2.0
 
 
 You don't have to delete what it writes, it deletes it's own text to write new
@@ -196,74 +196,43 @@ image::screenshot.png[title="MemTypeTool GUI"]
 The MemTypeTool GUI can be downloaded from :
 https://github.com/oyzzo/MemTypeTool
 
-It is developed using python 2.7 , pyqt4, and libusb so it should work anywhere you
-can get this dependencies running. It has been tested on Windows, Linux and
-MacOS.
+It is developed using C++ , Qt5, and libusb. There is a `precompiled binary` release
+available for `Linux`. In case you use other operating system, there is a linux
+virtual machine `image` ready to run in `VirtualBox`.
 
-To run the `MemTypeTool`:
+=== Linux installation (binary release)
 
-	python main.py
+Download the binary release compressed file, extract it and run:
 
+	wget https://github.com/oyzzo/MemTypeTool/releases/download/1.0.1/MemTypeTool-1.0.1-linux_x64.tar.gz
+	tar xvf MemTypeTool-1.0.1-linux_x64.tar.gz
+	cd linux64
+	./MemTypeManager.sh
 
-=== Windows installation
+In order to have access to the USB devices from an
+unprivileged user:
 
-WARNING: It has been tested in windows up to 8.1. It has been reported to not work in
-windows 10.
+	wget https://raw.githubusercontent.com/oyzzo/MemTypeTool/master/99-MemType.rules	
+	sudo mv 99-MemType.rules /etc/udev/rules.d/
+	reboot
 
-TIP: Using a linux virtual machine can be a workaround for the moment.
-
-. Install python 2.7.
-.. https://www.python.org/downloads/
-
-. Add python to your path:
-
-	C:\Python27\;C:\Python27\Scripts\
-
-. Download and install PyQt for python 2.7.
-.. https://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.4/ 
-
-. Download, unzip and install libusb:
-.. https://github.com/walac/pyusb/archive/master.zip
-
-	python setup.py install
-
-. Plug in the Memtype and let windows install the drivers for the device (we'll
-change them in the next step).
-
-. Download and extract libusb-win32:
-.. http://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/libusb-win32-bin-1.2.6.0.zip/download
-
-. Execute install-filter-win (find it inside extracted folder, under /bin/x86 or
-`other if your windows is 64bits`).
-
-.. Select Install Filter, next.
-
-[.text-center]
-image::install-filter-win-1.png[Filter step 1,title="Windows libusb filter, step 1"] 
+=== Windows, macOS and others (VirtualBox Image)
 
 
-.. Select Memtype (pid a033) and click Install
+* Download the VirtualBox image from https://github.com/oyzzo/MemTypeTool/releases/download/1.0.1/Lubuntu.17.04.64bit.vmdk.7z
 
-[.text-center]
-image::install-filter-win-2.png[Filter step 2,title="Windows libusb filter, step 2"] 
+* Extract it using 7-Zip or similar (keka in macOS).
 
+* Install VirtualBox and Extensions from www.virtualbox.org.
 
-.. Done!!! you can check it with the testlibusb-win found next to
-install-filter-win:
+* Create a new Linux 64 bits virtualbox machine.
 
-[.text-center]
-image::testlibusb-win.png[Test filter windows,title="Check windows filter"] 
+* When asked for the drive, choose the extracted vmdk file.
 
+* Run the virtual Machine and add the memtype device to it.
 
-=== Linux installation
+* Run the MemTypeTool from the desktop.
 
-Example ubuntu installation steps:
-
-	apt-get install python
-	apt-get install python-pyqt4
-	pip install pyusb
-
-=== MacOS installation
 
 === Usage
 
