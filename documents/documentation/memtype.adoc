@@ -233,6 +233,11 @@ unprivileged user:
 
 * Run the MemTypeTool from the desktop.
 
+[NOTE]
+=====
+The password is the same as the user: `memtype`. Feel free to chage it.
+=====
+
 
 === Usage
 
@@ -322,110 +327,6 @@ to be edited.
 
 [.text-center]
 video::import.mp4[]
-
-==== Adding delays to credentials
-
-== Using the MemType
-
-=== P.I.N. Unlock
-
-=== Use a credential
-
-=== Credential details
-
-=== Lock the device
-
-=== Advanced uses
-
-
-== MemType library
-
-The MemType library (`libsmttool`) is a `python library` that allows
-`communication`
-with the MemType in python. It allows all the operations that can be realized
-with the MemTypeTool GUI as it's based on libsmttool. 
-
-It can be found in this github:
-https://github.com/oyzzo/MemTypeTool/tree/master/libsmttool.
-
-It also can be found under the `libsmttool` directory when downloading the 
-MemTypeTool GUI.
-https://github.com/oyzzo/MemTypeTool/archive/master.zip
-
-It's composed of two modules, the `noekeon.py` file and the `memtype.py` file.
-
-[NOTE]
-=====
-This library depends on: 
-
-* python2.7
-* libusb-1.0-0
-* pyusb
-=====
-
-
-=== noekeon.py
-
-As the memtype uses internally the noekeon algorithm for encrypting the
-credentials, this algorithm has to be used in the MemTypeTool GUI to decrypt
-them back.
-
-This file provides a python implementation based on the
-http://gro.noekeon.org/Noekeon-spec.pdf[noekeon specification].
-
-NOEKEON is an iterated block cipher with a block and key length of 128 bits.
-
-The public methods implemented in the library are:
-
-=====
- . *NoekeonEncrypt(WorkingKey, State)*
- . *NoekeonDecrypt(WorkingKey, State)*
-=====
-
-The Number of Rounds is defined by `NUMBER_OF_ROUNDS` and fixed to `16`.
-
-*WorkingKey* format is 4 elements of 32 bit length each.
-
-*State* is the information to be encrypted / decrypted in `4 elements of 32
-bit`.
-
-
-=== memtype.py
-
-MemType command library implementation.
-
-Public methods implemented in `memtype.py` file:
-
-=====
-. *memtype Class* Communicates with the device.
-.. *connect* Open USB connection with device.
-.. *disconnect* Close USB connection with device.
-.. *info* Read info from device and return deviceInfo object.
-.. *write* Write credentials to memtype credential reserved memory area,
-credential data must be encrypted with the right PIN.
-.. *read* Read credentials from memtype, must be decrypted with the right PIN.
-.. *writePinHash* Writes PIN hash into memtype, *pinToHas* function can be used
-to generate the hash.
-.. *readPinHash* Reads the PIN hash from the memtype.
-.. *writeKeyboardLayout* Writes a keyboard layout into the memtype device.
-.. *isLocked* Returns TRUE if the memtype has not been unlocked with PIN.
-.. *validatePin* When the memtype is unlocked, checks if a PIN corresponds to
-the PIN hash and returns TRUE, FALSE otherwise.
-. *decryptCredentialList(cl, key)* Decrypts a credential list according to device
-implementation.
-. *encryptCredentialList(cl, key)* Encrypts a credential list according to
-device implementation.
-=====
-
-== Hardware
-
-=== PCB
-
-=== BOM
-
-== Firmware
-
-== License
 
 == F.A.Q.
 
