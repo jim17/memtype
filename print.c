@@ -44,7 +44,13 @@ void print_pressKey(char ascii){
     //setup reportBuffer
     reportBuffer.modifier  = ((SHIFT_MASK) &key) >> 6;
     reportBuffer.modifier |= (ALTGR_MASK) &key;
-    reportBuffer.keycode  = (~(SHIFT_MASK|ALTGR_MASK)) & key;
+    // remapping of KEY_EUROPE_2 to original value
+    key = (~(SHIFT_MASK|ALTGR_MASK)) & key;
+    if(key == KEY_EUROPE_2) {
+        reportBuffer.keycode = KEY_EUROPE_2_ORG;
+    } else {
+        reportBuffer.keycode = key;
+    }
 }
 
 static void print_releaseKey(void){
