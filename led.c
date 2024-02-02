@@ -5,7 +5,7 @@
 ledStatus_t led;
 
 void LED_Task(void){
-    static uint8_t i;
+    static uint8_t i = 0;
 
     if( (i++ % 16) == 0){
         if(led == RED) {
